@@ -17,6 +17,6 @@ $output = [];
  			}
  $output_string = json_encode($all);
  		
-print_r($all);
+print_r($output_string);
  
 ?>
