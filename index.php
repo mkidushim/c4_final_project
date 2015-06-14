@@ -1,22 +1,27 @@
-<?php 
+<?php
 session_start();
-require('mysql_connect.php');
-$username = mysql_real_escape_string($_POST['username']);
-$password = mysql_real_escape_string(sha1($_POST['password']));
-
-$query= "SELECT * FROM `users` WHERE username = '$username' AND password = '$password'";
-$result = mysqli_query($con, $query);
-//print($result);
-$output = [];
-  		if (mysqli_num_rows($result) > 0){
-  			$all = mysqli_fetch_assoc($result);
-  				$_SESSION['user_id']= $all['user_id'];
-  				$output['success']= true;
-
-
- 			}
- $output_string = json_encode($all);
- 		
-print_r($output_string);
- 
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	 <meta charset="utf-8">
+	 <script src="https://maps.googleapis.com/maps/api/js"></script>
+	 <link rel="stylesheet" type="text/css" href="final.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="final.js"></script>
+</head>
+<body>
+<div class="main_content">
+<h1 class="text-center">Go to Lunch</h1>
+<form>
+	<input type="text" class="col-md-4 col-md-offset-4" id="username" name="username">
+	<input type="password" class="col-md-4 col-md-offset-4" id="password" name="password">
+	<button type="button" class="col-md-2 col-md-offset-5" id="login">login</button>
+	<button type="button" class="col-md-2 col-md-offset-5" id="logout">logout</button>
+</form>
+
+</div>
+</body>
+</html>

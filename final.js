@@ -26,7 +26,7 @@ function get_location() {
 
 function ajax_call() {
     $.ajax({
-        url: 'index.php',
+        url: 'home.php',
         data: {
             username: $('#username').val(),
             password: $('#password').val()
@@ -53,7 +53,7 @@ function ajax_call() {
 
 function to_landing() {
     $.ajax({
-        url: 'landing.html',
+        url: 'landing.php',
         method: 'POST',
         dataType: 'html',
         success: function(response) {
@@ -85,7 +85,7 @@ function to_landing() {
 
 function nav_home() {
     $.ajax({
-        url: 'landing.html',
+        url: 'landing.php',
         method: 'POST',
         dataType: 'html',
         success: function(response) {
@@ -107,7 +107,7 @@ function nav_home() {
 
 function nav_friends() {
     $.ajax({
-        url: 'friends.html',
+        url: 'friends.php',
         method: 'POST',
         dataType: 'html',
         success: function(response) {
@@ -129,7 +129,7 @@ function nav_friends() {
 
 function nav_lunch() {
     $.ajax({
-        url: 'lunch.html',
+        url: 'lunch.php',
         method: 'POST',
         dataType: 'html',
         success: function(response) {

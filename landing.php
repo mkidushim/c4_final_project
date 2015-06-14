@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <nav class="col-md-5">
     <li class="home">Home</li>
     <li class="friends">Friends</li>
