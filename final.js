@@ -43,7 +43,7 @@ function ajax_call() {
                 to_landing();
             } else {
                 console.log('error: ', response)
-                $('#main_content').html('error: ' + response);
+                $('.main_content').html('error: ' + response);
 
             }
 
