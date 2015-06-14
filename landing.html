@@ -1,14 +1,26 @@
-<div class="header col-md-12">
-	
-
+<nav class="col-md-5">
+    <li class="home">Home</li>
+    <li class="friends">Friends</li>
+    <li class="lunch">Make Lunch Appointment</li>
+</nav>
+<div class="col-md-6">
+    <ol class="recent lunches list-group">My Favorite Place
+        <li class="list-group-item">In'n'Out</li>
+        <li class="list-group-item">Original Pizza</li>
+        <li class="list-group-item">Togo's</li>
+        <li class="list-group-item">Jersey Mike's</li>
+    </ol>
 </div>
-<div class="lunch appoints col-md-12">
-	
-
+<div id="map-canvas" class="col-md-5"></div>
+<div class="col-md-6">
+    <ol class="recent lunches list-group">Recent Lunches
+        <li class="list-group-item">Dave</li>
+        <li class="list-group-item">Jason</li>
+        <li class="list-group-item">Alex</li>
+        <li class="list-group-item">Mom</li>
+    </ol>
 </div>
-<div id="map-canvas" class="col-md-8 col-md-offset-2"></div>
-<button type="button" onclick="get_location()">click to get location</button>
+<button type="button" class="col-md-3 col-md-offset-2" onclick="get_location()">Locate Me!</button>
 <div class="footer col-md-12">
-	<img class="col-md-1 col-md-offset-4" src="images/out_lunch.png">
-
+    <img class="col-md-1 col-md-offset-5" src="images/out_lunch.png">
 </div>
