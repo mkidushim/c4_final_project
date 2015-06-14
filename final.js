@@ -1,3 +1,31 @@
+function initialize() {
+	//  var pos = navigator.geolocation.getCurrentPosition();
+	// var lat = position.coords.latitude;
+	// var longitude = position.coords.longitude;
+  var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(lat, longitude),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+                                mapOptions);
+}
+function get_location(){
+
+
+	navigator.geolocation.getCurrentPosition(function(position) {
+  var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+                                mapOptions);
+
+
+});
+}
+
 function ajax_call() {
 	$.ajax({
 			url: 'index.php',
@@ -18,7 +46,7 @@ function ajax_call() {
 				}
 				else {
 					console.log('error: ', response)
-					$('#response').html('error: '+ response);
+					$('#main_content').html('error: '+ response);
 					
 				}
 				
@@ -37,7 +65,8 @@ $.ajax({
 					text: 'username:'+php_response['username'],
 					class: 'col-md-7'
 				})
-				$('.main_content').html(user).append(response);	
+				$('.main_content').html(user).append(response);
+				initialize();	
 				}
 				else{
 					console.log('error no page');
