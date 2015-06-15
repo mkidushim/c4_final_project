@@ -107,7 +107,7 @@ function nav_home() {
 
 function nav_friends() {
     $.ajax({
-        url: 'friends.php',
+        url: 'friends.html',
         method: 'POST',
         dataType: 'html',
         success: function(response) {
@@ -129,7 +129,7 @@ function nav_friends() {
 
 function nav_lunch() {
     $.ajax({
-        url: 'lunch.php',
+        url: 'lunch.html',
         method: 'POST',
         dataType: 'html',
         success: function(response) {
@@ -143,6 +143,19 @@ function nav_lunch() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
+
+        }
+    });
+}
+function get_friend_list(){
+	$.ajax({
+        url: 'friends.php',
+        method: 'POST',
+        dataType: 'html',
+        success: function(response) {
+            console.log(response);
+            $('.friend_list_sugg').html(response);
+       
 
         }
     });
@@ -161,5 +174,8 @@ $(document).ready(function() {
     })
     $('nav').on('click', '.friends', function() {
         nav_friends();
+    })
+    $('body').on('click','#btn_friend', function(){
+    	get_friend_list();
     })
 })

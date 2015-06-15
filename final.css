@@ -7,4 +7,9 @@ img.col-md-3 {
 }
 nav li {
 	display: inline-block;
+	padding: 20px;
+}
+nav li:hover {
+	color:white;
+	background-color: black;
 }

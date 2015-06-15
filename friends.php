@@ -1,18 +1,16 @@
-<h1>Friends</h1>
-<nav class="col-md-5">
-    <li class="home">Home</li>
-    <li class="friends">Friends</li>
-    <li class="lunch">Make Lunch Appointment</li>
-</nav>
-
 <?php
 require('mysql_connect.php');
-$freind_sugg = "SELECT * FROM users";
+$freind_sugg = "SELECT * FROM users ORDER BY user_id";
 $result = mysqli_query($con, $freind_sugg);
-$row = mysqli_fetch_assoc($con, $result);
-print_r($row);
-echo "<tr>";
-echo "<td>" . $row['username'] . "</td>";
-echo "<td>" . $row['email'] . "</td>";
-echo "</tr>";
+// $row = mysqli_fetch_assoc($result);
+echo "<table><tr><td>First</td><td>Last</td><td>email</td></tr>";
+while ($row = mysqli_fetch_assoc($result) ) {
+	print_r("<tr><td>".$row['first_name']."</td><td>".$row['last_name']."</td><td>".$row['email']."</td></tr>");
+
+
+
+}
+echo "</table>";
+// print_r($row['first_name']);
+
 ?>
