@@ -1,11 +1,17 @@
-<h2 class="text-center">Lunch</h2>
-<nav class="col-md-5 col-md-offset-4">
+<h2 class="col-md-5">Lunch</h2>
+<nav class="col-md-5 col-md-offset-2">
     <li class="home">Home</li>
     <li class="friends">Friends</li>
-    <li class="lunch">Make Lunch Appointment</li>
+    <li class="lunch">Go to Lunch</li>
 </nav>
-<div class="col-md-6 col-md-offset-4">
-	<input type="text" name="name" placeholder="Name">
-	<input type="text" name="food" placeholder="Restaurant">
-	<input type="text" name="range" placeholder="Miles Away">
+<form action="lunch.php" method="POST" class="col-md-12">
+	<input class="col-md-2" type="text" name="name" placeholder="Name">
+	<input class="col-md-2" type="text" name="food1" placeholder="Food Type">
+	<input class="col-md-2" type="text" name="food2" placeholder="Food Type">
+	<input class="col-md-2" type="text" name="food3" placeholder="Food Type">
+	<input class="col-md-2" type="text" name="range" placeholder="Miles Away">
+	<button class="col-md-1">submit friend</button>
+	<button id="add" class="col-md-1" type="button">add input</button>
+</form>
+
 </div>

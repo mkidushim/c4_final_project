@@ -13,3 +13,11 @@ nav li:hover {
 	color:white;
 	background-color: black;
 }
+table > tbody > tr > td {
+	  padding: 10px;
+  border: 2px solid;
+
+}
+button {
+	height: 25px;
+}
