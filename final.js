@@ -1,12 +1,14 @@
-var map;
+var map_o;
 var infowindow;
 var service;
 function initialize() {
+    navigator.geolocation.getCurrentPosition(function(position) {
       var pyrmont = new google.maps.LatLng(33.8665433, -117.1956316);
 
-    map = new google.maps.Map(document.getElementById('map-canvas'), {
+    map_o = new google.maps.Map(document.getElementById('map-canvas'), {
         center: pyrmont,
-        zoom: 15
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
     var request = {
@@ -15,7 +17,7 @@ function initialize() {
         types: ['food']
     };
     infowindow = new google.maps.InfoWindow();
-    service = new google.maps.places.PlacesService(map);
+    var service = new google.maps.places.PlacesService(map_o);
     service.nearbySearch(request, callback);
 }
 
@@ -25,33 +27,38 @@ function callback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
+            console.log(results);
         }
     }
 }
 
 function createMarker(place) {
+    console.log(place);
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
-        map: map,
+        map: map_o,
         position: place.geometry.location
     });
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(place.name);
-        infowindow.open(map, this);
+        infowindow.open(map_o, this);
     });
 }
 
 
 
 function get_location() {
+    if (!navigator.geolocation){
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
     navigator.geolocation.getCurrentPosition(function(position) {
         var mapOptions = {
             zoom: 15,
             center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-
         var map_new = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
         marker_user = new google.maps.Marker({
@@ -61,7 +68,7 @@ function get_location() {
         });
         google.maps.event.addListener(marker_user, 'click', function() {
         infowindow.setContent(marker_user.title);
-        infowindow.open(map, this);
+        infowindow.open(map_new, this);
     });
 
     });
