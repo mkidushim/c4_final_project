@@ -8,10 +8,11 @@ session_start();
 	 <meta charset="utf-8">
 	 <link rel="stylesheet" type="text/css" href="final.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 	 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+	 
 	<script src="final.js"></script>
 </head>
 <body>

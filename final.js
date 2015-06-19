@@ -1,58 +1,84 @@
 var map_o;
 var infowindow;
 var service;
+
 function initialize() {
+
     navigator.geolocation.getCurrentPosition(function(position) {
-      var pyrmont = new google.maps.LatLng(33.8665433, -117.1956316);
+        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        map_o = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: center,
+            zoom: 12,
 
-    map_o = new google.maps.Map(document.getElementById('map-canvas'), {
-        center: pyrmont,
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+        });
 
-    var request = {
-        location: pyrmont,
-        radius: 5000,
-        types: ['food']
-    };
-    infowindow = new google.maps.InfoWindow();
-    var service = new google.maps.places.PlacesService(map_o);
-    service.nearbySearch(request, callback);
+        var request = {
+            location: center,
+            radius: 10000,
+            types: ['cafe','meal_takeaway'||'meal_delivery'||"food"||"restaurant"],
+            keyword: "lunch",
+            sortby: "distance"
+        };
+        var cont_string =
+      '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Latitude and Longitude</h1>'+
+      '<div id="bodyContent">'+
+      '<p>Longitude: '+ Math.round(position.coords.longitude) + 'Latitude: ' +Math.round(position.coords.latitude) +'</p>';
+        infowindow = new google.maps.InfoWindow({
+            content: cont_string
+        });
+        var service = new google.maps.places.PlacesService(map_o);
+        service.nearbySearch(request, callback);
+        marker_user = new google.maps.Marker({
+            map: map_o,
+            position: center,   
+            title: "You are Here!",
+        });
+        google.maps.event.addListener(marker_user, 'click', function() {
+            infowindow.setContent(cont_string);
+            infowindow.open(map_o, marker_user);
+        });
+    })
 }
 
 function callback(results, status) {
-    console.log('callback function', results)
-    console.log('status function', status)
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-            console.log(results);
+    window.results= results;
+        console.log(results)
+        console.log(status)
+        window.place_name = results;
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+
+            }
         }
     }
-}
 
 function createMarker(place) {
     console.log(place);
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
         map: map_o,
-        position: place.geometry.location
+        position: place.geometry.location,
+        icon: "images/rest.png",
+        
     });
-
+var marker_content = "<h3>"+ place.name+"</h3><p> Rating: "+ place.rating + " </p>"
     google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(place.name);
-        infowindow.open(map_o, this);
+        infowindow.setContent(marker_content);
+        infowindow.open(map_o, marker);
     });
 }
 
 
 
 function get_location() {
-    if (!navigator.geolocation){
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-    return;
-  }
+    if (!navigator.geolocation) {
+        output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+        return;
+    }
     navigator.geolocation.getCurrentPosition(function(position) {
         var mapOptions = {
             zoom: 15,
@@ -65,15 +91,15 @@ function get_location() {
             map: map_new,
             position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
             title: "You are Here!"
+
         });
         google.maps.event.addListener(marker_user, 'click', function() {
-        infowindow.setContent(marker_user.title);
-        infowindow.open(map_new, this);
-    });
+            infowindow.setContent(marker_user.title);
+            infowindow.open(map_new, this);
+        });
 
     });
 }
-
 function ajax_call() {
     $.ajax({
         url: 'home.php',
@@ -84,15 +110,15 @@ function ajax_call() {
         method: 'POST',
         dataType: 'JSON',
         success: function(response) {
-            
+
             window.php_response = response;
             if (response) {
                 // console.log('result is true', response)
-            
-                
+
+
                 to_landing();
             } else {
-                
+
                 $('.main_content').html('error: ' + response);
 
             }
@@ -108,14 +134,16 @@ function to_landing() {
         dataType: 'html',
         success: function(response) {
             if (response) {
-                
+                initialize();
                 var user = $('<h3>', {
                     text: php_response['username'],
                     class: 'col-md-4 col-md-offset-3'
                 })
-
+                $('body').on('click', '#locate', function() {
+                    get_location();
+                })
                 $('.main_content').html(user).append(response);
-                initialize();
+
                 $('nav').on('click', 'home', function() {
                     nav_home();
                 })
@@ -141,7 +169,7 @@ function nav_home() {
         dataType: 'html',
         success: function(response) {
             to_landing();
-            
+
             $('nav').on('click', '.home', function() {
                 nav_home();
             })
@@ -163,7 +191,7 @@ function nav_friends() {
         dataType: 'html',
         success: function(response) {
             $('.main_content').html(response);
-            
+
             $('nav').on('click', '.home', function() {
                 nav_home();
             })
@@ -209,7 +237,7 @@ function get_friend_list() {
         method: 'POST',
         dataType: 'html',
         success: function(response) {
-            
+
             $('.friend_list_sugg').html(response);
 
 
