@@ -4,14 +4,13 @@
     <li class="friends">Friends</li>
     <li class="lunch">Go to Lunch</li>
 </nav>
-<form action="lunch.php" method="POST" class="col-md-12">
-	<input class="col-md-2" type="text" name="name" placeholder="Name">
-	<input class="col-md-2" type="text" name="food1" placeholder="Food Type">
-	<input class="col-md-2" type="text" name="food2" placeholder="Food Type">
-	<input class="col-md-2" type="text" name="food3" placeholder="Food Type">
-	<input class="col-md-2" type="text" name="range" placeholder="Miles Away">
-	<button class="col-md-1">submit friend</button>
+<!--<form action="lunch.php" method="POST" class="col-md-12">-->
+	<form class="col-md-12">
+	<input class="name col-md-2" type="text" name="name" placeholder="Name">
+	<input class="food col-md-2" type="text" name="food1" placeholder="Food Type">
+	<input class="range col-md-2" type="text" name="range" placeholder="Miles Away">
+	<button type="button" id="lunch_b" class="col-md-1">submit friend</button>
 	<button id="add" class="col-md-1" type="button">add input</button>
 </form>
-
+<div id="map-canvas2" class="col-md-5"></div>
 </div>

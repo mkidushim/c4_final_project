@@ -1,7 +1,50 @@
 var map_o;
 var infowindow;
 var service;
+var lunch_array= [];
+function send_food_request (){
+   var name = $('.name').val();
+   var food = $('.food').val();
+   var range = $('.range').val();
+   range = range * 1609;
+   navigator.geolocation.getCurrentPosition(function(position) {
+        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
+            center: center,
+            zoom: 12,
 
+        });
+
+        var request = {
+            location: center,
+            radius: range,
+            types: ('cafe'|'meal_takeaway'|'meal_delivery'|'food'|'restaurant'),
+            query: food,
+            
+        };
+        var cont_string =
+      '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>'+
+      '<div id="bodyContent">'+
+      '<p>Longitude: '+ Math.round(position.coords.longitude) + 'Latitude: ' +Math.round(position.coords.latitude) +'</p>';
+        infowindow = new google.maps.InfoWindow({
+            content: cont_string
+        });
+        var service = new google.maps.places.PlacesService(map_o);
+        service.textSearch(request, callback_l);
+        marker_user = new google.maps.Marker({
+            map: map_o,
+            position: center,   
+            title: "You are Here!",
+        });
+        google.maps.event.addListener(marker_user, 'click', function() {
+            infowindow.setContent(cont_string);
+            infowindow.open(map_o, marker_user);
+        });
+    })
+}
 function initialize() {
 
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -15,7 +58,7 @@ function initialize() {
         var request = {
             location: center,
             radius: 10000,
-            types: ['cafe','meal_takeaway'||'meal_delivery'||"food"||"restaurant"],
+            types: ['cafe','meal_takeaway','meal_delivery','food','restaurant'],
             keyword: "lunch",
             sortby: "distance"
         };
@@ -23,7 +66,7 @@ function initialize() {
       '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Latitude and Longitude</h1>'+
+      '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>'+
       '<div id="bodyContent">'+
       '<p>Longitude: '+ Math.round(position.coords.longitude) + 'Latitude: ' +Math.round(position.coords.latitude) +'</p>';
         infowindow = new google.maps.InfoWindow({
@@ -55,9 +98,21 @@ function callback(results, status) {
             }
         }
     }
+function callback_l(results, status) {
+    window.results= results;
+        console.log(results)
+        console.log(status)
+        window.place_name = results;
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                createMarker_l(results[i]);
 
+            }
+        }
+    }
 function createMarker(place) {
     console.log(place);
+    
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
         map: map_o,
@@ -65,14 +120,29 @@ function createMarker(place) {
         icon: "images/rest.png",
         
     });
-var marker_content = "<h3>"+ place.name+"</h3><p> Rating: "+ place.rating + " </p>"
+var marker_content = "<h4>"+ place.name+"</h4><p> Rating: "+ place.rating + " </p>"
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(marker_content);
         infowindow.open(map_o, marker);
     });
 }
 
-
+function createMarker_l(place) {
+    console.log(place);
+    lunch_array.push(place.name);
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+        map: map_o,
+        position: place.geometry.location,
+        icon: "images/rest.png",
+        
+    });
+var marker_content = "<h4>"+ place.name+"</h4><p> Rating: "+ place.rating + " </p>"
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(marker_content);
+        infowindow.open(map_o, marker);
+    });
+}
 
 function get_location() {
     if (!navigator.geolocation) {
@@ -221,6 +291,9 @@ function nav_lunch() {
             })
             $('nav').on('click', '.friends', function() {
                 nav_friends();
+            })
+            $('body').on('click', '#lunch_b', function() {
+                send_food_request();
             })
             $('body').on('click', '#add', function() {
                 console.log('button works');
