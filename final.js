@@ -2,6 +2,7 @@ var map_o;
 var infowindow;
 var service;
 var lunch_array= [];
+var place_id_holder;
 function send_food_request (){
    var name = $('.name').val();
    var food = $('.food').val();
@@ -137,7 +138,9 @@ function createMarker_l(place) {
         icon: "images/rest.png",
         
     });
-var marker_content = "<h4>"+ place.name+"</h4><p> Rating: "+ place.rating + " </p>"
+    console.log(place.place_id);
+    place_id_holder = place.place_id;
+var marker_content = "<h4>"+ place.name+"</h4><p> Rating: "+ place.rating;
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(marker_content);
         infowindow.open(map_o, marker);
