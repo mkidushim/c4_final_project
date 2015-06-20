@@ -1,14 +1,15 @@
 var map_o;
 var infowindow;
 var service;
-var lunch_array= [];
+var lunch_array = [];
 var place_id_holder;
-function send_food_request (){
-   var name = $('.name').val();
-   var food = $('.food').val();
-   var range = $('.range').val();
-   range = range * 1609;
-   navigator.geolocation.getCurrentPosition(function(position) {
+
+function send_food_request() {
+    var name = $('.name').val();
+    var food = $('.food').val();
+    var range = $('.range').val();
+    range = range * 1609;
+    navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
             center: center,
@@ -19,17 +20,17 @@ function send_food_request (){
         var request = {
             location: center,
             radius: range,
-            types: ('cafe'|'meal_takeaway'|'meal_delivery'|'food'|'restaurant'),
+            types: ('cafe' | 'meal_takeaway' | 'meal_delivery' | 'food' | 'restaurant'),
             query: food,
-            
+
         };
         var cont_string =
-      '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>'+
-      '<div id="bodyContent">'+
-      '<p>Longitude: '+ Math.round(position.coords.longitude) + 'Latitude: ' +Math.round(position.coords.latitude) +'</p>';
+            '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
+            '<div id="bodyContent">' +
+            '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string
         });
@@ -37,7 +38,7 @@ function send_food_request (){
         service.textSearch(request, callback_l);
         marker_user = new google.maps.Marker({
             map: map_o,
-            position: center,   
+            position: center,
             title: "You are Here!",
         });
         google.maps.event.addListener(marker_user, 'click', function() {
@@ -46,6 +47,7 @@ function send_food_request (){
         });
     })
 }
+
 function initialize() {
 
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -59,17 +61,17 @@ function initialize() {
         var request = {
             location: center,
             radius: 10000,
-            types: ['cafe','meal_takeaway','meal_delivery','food','restaurant'],
+            types: ['cafe', 'meal_takeaway', 'meal_delivery', 'food', 'restaurant'],
             keyword: "lunch",
             sortby: "distance"
         };
         var cont_string =
-      '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>'+
-      '<div id="bodyContent">'+
-      '<p>Longitude: '+ Math.round(position.coords.longitude) + 'Latitude: ' +Math.round(position.coords.latitude) +'</p>';
+            '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
+            '<div id="bodyContent">' +
+            '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string
         });
@@ -77,7 +79,7 @@ function initialize() {
         service.nearbySearch(request, callback);
         marker_user = new google.maps.Marker({
             map: map_o,
-            position: center,   
+            position: center,
             title: "You are Here!",
         });
         google.maps.event.addListener(marker_user, 'click', function() {
@@ -88,40 +90,42 @@ function initialize() {
 }
 
 function callback(results, status) {
-    window.results= results;
-        console.log(results)
-        console.log(status)
-        window.place_name = results;
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-                createMarker(results[i]);
+    window.results = results;
+    console.log(results)
+    console.log(status)
+    window.place_name = results;
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
 
-            }
         }
     }
+}
+
 function callback_l(results, status) {
-    window.results= results;
-        console.log(results)
-        console.log(status)
-        window.place_name = results;
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-                createMarker_l(results[i]);
+    window.results = results;
+    console.log(results)
+    console.log(status)
+    window.place_name = results;
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+            createMarker_l(results[i]);
 
-            }
         }
     }
+}
+
 function createMarker(place) {
     console.log(place);
-    
+
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
         map: map_o,
         position: place.geometry.location,
         icon: "images/rest.png",
-        
+
     });
-var marker_content = "<h4>"+ place.name+"</h4><p> Rating: "+ place.rating + " </p>"
+    var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating + " </p>"
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(marker_content);
         infowindow.open(map_o, marker);
@@ -136,11 +140,11 @@ function createMarker_l(place) {
         map: map_o,
         position: place.geometry.location,
         icon: "images/rest.png",
-        
+
     });
     console.log(place.place_id);
     place_id_holder = place.place_id;
-var marker_content = "<h4>"+ place.name+"</h4><p> Rating: "+ place.rating;
+    var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating;
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(marker_content);
         infowindow.open(map_o, marker);
@@ -173,6 +177,7 @@ function get_location() {
 
     });
 }
+
 function ajax_call() {
     $.ajax({
         url: 'home.php',
@@ -209,9 +214,10 @@ function to_landing() {
             if (response) {
                 initialize();
                 var user = $('<h3>', {
-                    text: php_response['username'],
-                    class: 'col-md-4 col-md-offset-3'
+                    text: "Welcome " + php_response['first_name'] + " " + php_response['last_name'] + "!",
+                    class: 'col-md-5 col-md-offset-1'
                 })
+                console.log(php_response)
                 $('body').on('click', '#locate', function() {
                     get_location();
                 })
@@ -296,11 +302,12 @@ function nav_lunch() {
                 nav_friends();
             })
             $('body').on('click', '#lunch_b', function() {
-                send_food_request();
+                add_person();
             })
-            $('body').on('click', '#add', function() {
+            $('body').on('click', '#add_all', function() {
                 console.log('button works');
-                add_input();
+                // add_input();
+                send_food_request();
             })
 
         }
@@ -377,6 +384,23 @@ function add_input() {
     $('#form_2').append(btn);
     $('#form_2').append(btn2);
     console.log(input_range);
+}
+
+function add_person() {
+    var name = $('.name').val();
+    var food = $('.food').val();
+    var range = $('.range').val();
+    var append_name = $(
+        "<li>",{
+        text: name,
+            class: "list-group-item"
+    });
+    var append_food_response = $(
+        "<li>",{
+        text: food,
+            class: "list-group-item"
+    });
+    $('#info').append(append_name).append(append_food_response)
 }
 $(document).ready(function() {
 
