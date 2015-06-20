@@ -11,7 +11,6 @@ session_start();
  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD8ZE_ieBsu_HpRitPXylhdDlKmfUCcstE"></script>
-
 	<script src="final.js"></script>
 </head>
 <body>

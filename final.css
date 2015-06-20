@@ -1,7 +1,12 @@
 img.col-md-3 {
     height: 50px;
 }
-
+.list-group-item {
+    margin-left: 20px;
+}
+.list-group-item {
+    margin-left: 20px;
+}
 #map-canvas {
     height: 300px;
 }
