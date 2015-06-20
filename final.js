@@ -3,6 +3,7 @@ var infowindow;
 var service;
 var lunch_array = [];
 var place_id_holder;
+var lunch_appoint_array=[];
 
 function send_food_request() {
     var name = $('.name').val();
@@ -151,32 +152,32 @@ function createMarker_l(place) {
     });
 }
 
-function get_location() {
-    if (!navigator.geolocation) {
-        output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-        return;
-    }
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var mapOptions = {
-            zoom: 15,
-            center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map_new = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-        marker_user = new google.maps.Marker({
-            map: map_new,
-            position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-            title: "You are Here!"
+// function get_location() {
+//     if (!navigator.geolocation) {
+//         output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+//         return;
+//     }
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//         var mapOptions = {
+//             zoom: 15,
+//             center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+//             mapTypeId: google.maps.MapTypeId.ROADMAP
+//         }
+//         var map_new = new google.maps.Map(document.getElementById('map-canvas'),
+//             mapOptions);
+//         marker_user = new google.maps.Marker({
+//             map: map_new,
+//             position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+//             title: "You are Here!"
 
-        });
-        google.maps.event.addListener(marker_user, 'click', function() {
-            infowindow.setContent(marker_user.title);
-            infowindow.open(map_new, this);
-        });
+//         });
+//         google.maps.event.addListener(marker_user, 'click', function() {
+//             infowindow.setContent(marker_user.title);
+//             infowindow.open(map_new, this);
+//         });
 
-    });
-}
+//     });
+// }
 
 function ajax_call() {
     $.ajax({
@@ -204,7 +205,7 @@ function ajax_call() {
         }
     });
 }
-
+// commented out google maps during developement already working
 function to_landing() {
     $.ajax({
         url: 'landing.html',
@@ -212,7 +213,7 @@ function to_landing() {
         dataType: 'html',
         success: function(response) {
             if (response) {
-                initialize();
+                // initialize();
                 var user = $('<h3>', {
                     text: "Welcome " + php_response['first_name'] + " " + php_response['last_name'] + "!",
                     class: 'col-md-5 col-md-offset-1'
@@ -302,12 +303,15 @@ function nav_lunch() {
                 nav_friends();
             })
             $('body').on('click', '#lunch_b', function() {
-                add_person();
+                add_person_DOM();
+                add_person_object();
+                
             })
             $('body').on('click', '#add_all', function() {
                 console.log('button works');
                 // add_input();
-                send_food_request();
+                // send_food_request();
+                random_select();
             })
 
         }
@@ -385,8 +389,20 @@ function add_input() {
     $('#form_2').append(btn2);
     console.log(input_range);
 }
-
-function add_person() {
+function add_person_object (){
+    var forms = {};
+    $('form').each(function(i){
+        forms[i] = {};
+        $(this).children('input').each(function(){
+            forms[i][$(this).attr('name')] = $(this).val();
+        });
+        lunch_appoint_array.push(forms[i])
+    });
+    console.log(forms)
+    
+    return forms;
+}
+function add_person_DOM() {
     var name = $('.name').val();
     var food = $('.food').val();
     var range = $('.range').val();
@@ -401,6 +417,28 @@ function add_person() {
             class: "list-group-item"
     });
     $('#info').append(append_name).append(append_food_response)
+}
+function random_select () {
+    var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
+    var append_name = $(
+        "<li>",{
+        text: rand.name,
+            class: "list-group-item"
+    });
+    var append_food = $(
+        "<li>",{
+        text: rand.food1,
+            class: "list-group-item"
+    });
+    var append_range = $(
+        "<li>",{
+        text: rand.range,
+            class: "list-group-item"
+    });
+    console.log(rand.food1);
+    $('#info > li').remove();
+    $('#info').append(append_name).append(append_food).append(append_range)
+
 }
 $(document).ready(function() {
 
