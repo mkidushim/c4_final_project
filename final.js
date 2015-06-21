@@ -3,13 +3,15 @@ var infowindow;
 var service;
 var lunch_array = [];
 var place_id_holder;
-var lunch_appoint_array=[];
+var lunch_appoint_array = [];
 var colors = ["#B8D430", "#3AB745", "#029990", "#3501CB",
-             "#2E2C75", "#673A7E", "#CC0071", "#F80120",
-             "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"];
+    "#2E2C75", "#673A7E", "#CC0071", "#F80120",
+    "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"
+];
 var restaraunts = ["Wendy's", "McDonalds", "Chick-fil-a", "Five Guys",
-                   "Gold Star", "La Mexicana", "Chipotle", "Tazza Mia",
-                   "Panera", "Just Crepes", "Arby's", "Indian"];
+    "Gold Star", "La Mexicana", "Chipotle", "Tazza Mia",
+    "Panera", "Just Crepes", "Arby's", "Indian"
+];
 var startAngle = 0;
 var arc = Math.PI / 6;
 var spinTimeout = null;
@@ -17,10 +19,12 @@ var spinArcStart = 10;
 var spinTime = 0;
 var spinTimeTotal = 0;
 var ctx;
+var winner_array = [];
+
 function send_food_request() {
     var name = $('.name').val();
-    var food = $('.food').val();
     var range = $('.range').val();
+    var food = winner_array[0].food;
     range = range * 1609;
     navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -192,32 +196,32 @@ function createMarker_l(place) {
 // }
 
 function ajax_call() {
-    $.ajax({
-        url: 'home.php',
-        data: {
-            username: $('#username').val(),
-            password: $('#password').val()
-        },
-        method: 'POST',
-        dataType: 'JSON',
-        success: function(response) {
+        $.ajax({
+            url: 'home.php',
+            data: {
+                username: $('#username').val(),
+                password: $('#password').val()
+            },
+            method: 'POST',
+            dataType: 'JSON',
+            success: function(response) {
 
-            window.php_response = response;
-            if (response) {
-                // console.log('result is true', response)
+                window.php_response = response;
+                if (response) {
+                    // console.log('result is true', response)
 
 
-                to_landing();
-            } else {
+                    to_landing();
+                } else {
 
-                $('.main_content').html('error: ' + response);
+                    $('.main_content').html('error: ' + response);
+
+                }
 
             }
-
-        }
-    });
-}
-// commented out google maps during developement already working
+        });
+    }
+    // commented out google maps during developement already working
 function to_landing() {
     $.ajax({
         url: 'landing.html',
@@ -318,41 +322,43 @@ function nav_lunch() {
             $('body').on('click', '#lunch_b', function() {
                 add_person_DOM();
                 add_person_object();
-                
+
             })
             $('body').on('click', '#add_all', function() {
                 console.log('button works');
-                // add_input();
-                // send_food_request();
+
+
                 random_select();
             })
-
+            $('body').on('click', '#add_map', function() {
+                send_food_request();
+            })
         },
-        complete: function(response){
+        complete: function(response) {
             draw();
         }
     });
 }
 
 function get_friend_list() {
-    $.ajax({
-        url: 'friends.php',
-        method: 'POST',
-        dataType: 'html',
-        success: function(response) {
+        $.ajax({
+            url: 'friends.php',
+            method: 'POST',
+            dataType: 'html',
+            success: function(response) {
 
-            $('.friend_list_sugg').html(response);
+                $('.friend_list_sugg').html(response);
 
 
-        }
-    });
-}
-//Not using this function add_input anymore
-function add_person_object (){
+            }
+        });
+    }
+    //Not using function add_input anymore
+function add_person_object() {
     var forms = {};
-    $('form').each(function(i){
+    $('form').each(function(i) {
         forms[i] = {};
-        $(this).children('input').each(function(){
+        $(this).children('input').each(function() {
             forms[i][$(this).attr('name')] = $(this).val();
         });
         lunch_appoint_array.push(forms[i])
@@ -360,57 +366,78 @@ function add_person_object (){
     console.log(forms)
     return forms;
 }
+
 function add_person_DOM() {
     var name = $('.name').val();
     var food = $('.food').val();
     var range = $('.range').val();
     var append_name = $(
-        "<li>",{
-        text: name,
+        "<li>", {
+            text: "Name: " + name,
             class: "list-group-item"
-    });
+        });
     var append_food_response = $(
-        "<li>",{
-        text: food,
+        "<li>", {
+            text: "Food: " + food,
             class: "list-group-item"
-    });
+        });
     var append_range = $(
-        "<li>",{
-        text: range,
+        "<li>", {
+            text: "Range: " + range,
             class: "list-group-item"
-    });
+        });
     $('#info').append(append_name).append(append_food_response).append(append_range)
 }
-function random_select () {
-    var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
-     var winner = $(
-        "<li>",{
-        text: "Winner!",
-            class: "list-group-item-success text-center"
-    });
-    var append_name = $(
-        "<li>",{
-        text: rand.name,
-            class: "list-group-item-success text-center"
-    });
-    var append_food = $(
-        "<li>",{
-        text: rand.food1,
-            class: "list-group-item-success text-center"
-    });
-    var append_range = $(
-        "<li>",{
-        text: rand.range,
-            class: "list-group-item-success text-center"
-    });
-    console.log(rand.food1);
+
+function random_select() {
     $('#info > li').remove();
-    $('#info').append(winner).append(append_name).append(append_food).append(append_range)
+    var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
+    winner_array.push(rand);
+    //  var winner = $(
+    //     "<li>",{
+    //     text: "Winner!",
+    //         class: "list-group-item-success text-center"
+    // });
+    var append_name = $(
+        "<li>", {
+            text: "Name: " + rand.name,
+            class: "list-group-item-success text-center"
+        });
+    var append_food = $(
+        "<li>", {
+            text: "Food: " + rand.food1,
+            class: "list-group-item-success text-center"
+        });
+    var append_range = $(
+        "<li>", {
+            text: "Range: " + rand.range,
+            class: "list-group-item-success text-center"
+        });
+    for (var i = 0; i < lunch_appoint_array.length-1; i++) {
+        if (lunch_appoint_array[i].name == rand.name) {
+            return
+        } else {
+            var append_friends = $(
+                "<li>", {
+                    text: "Friends: " + lunch_appoint_array[i].name,
+                    class: "list-group-item-success text-center"
+                });
+
+            $('#info').append(append_friends);
+        }
+    }
+
+
+    console.log(rand.food1);
+    
+    $('#info').append(append_name).append(append_food).append(append_range);
 
 }
+
 function draw() {
     drawRouletteWheel();
 }
+
 function drawRouletteWheel() {
     var canvas = document.getElementById("wheelcanvas");
     if (canvas.getContext) {
@@ -456,12 +483,14 @@ function drawRouletteWheel() {
         ctx.fill();
     }
 }
+
 function spin() {
     spinAngleStart = Math.random() * 10 + 10;
     spinTime = 0;
     spinTimeTotal = Math.random() * 3 + 4 * 1000;
     rotateWheel();
 }
+
 function rotateWheel() {
     spinTime += 30;
     if (spinTime >= spinTimeTotal) {
@@ -485,6 +514,7 @@ function stopRotateWheel() {
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
 }
+
 function easeOut(t, b, c, d) {
     var ts = (t /= d) * t;
     var tc = ts * t;
