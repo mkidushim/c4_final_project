@@ -40,7 +40,7 @@
         var d_request = {
             placeId: "ChIJ9ww6YSoH3IARov4rlUC5DD0"
         };
-      
+
         var contentString = "This is where you are"
         infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(map);
@@ -76,37 +76,32 @@
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i]);
                 search_info.push(results[i].place_id);
-
-
             }
             console.log(search_info);
         }
     }
-    function call_details (restaurent_id){
-      for (var i = 0; i < search_info.length-1; i++){
-        console.log(restaurent_id[i]);
 
-      }
-    }
-    function createMarker(place) {
-            console.log(place);
-            console.log(place.photos)
-            var placeLoc = place.geometry.location;
-            var photos = place.photos;
-            var marker = new google.maps.Marker({
-                map: map,
-                position: place.geometry.location,
-
-                icon: "images/rest.png"
-            });
-
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(place.name);
-                infowindow.open(map, this);
-            });
-
+    function call_details(restaurent_id) {
+        for (var i = 0; i < search_info.length - 1; i++) {
+            console.log(restaurent_id[i]);
         }
-        // google.maps.event.addDomListener(window, 'load', initialize);
+    }
+
+    function createMarker(place) {
+        console.log(place);
+        console.log(place.photos)
+        var placeLoc = place.geometry.location;
+        var photos = place.photos;
+        var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location,
+            icon: "images/rest.png"
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+        });
+    }
     $(document).ready(function() {
         initialize()
     })
