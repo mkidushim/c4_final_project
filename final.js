@@ -225,7 +225,7 @@ function to_landing() {
         dataType: 'html',
         success: function(response) {
             if (response) {
-                // initialize();
+                initialize();
                 var user = $('<h3>', {
                     text: "Welcome " + php_response['first_name'] + " " + php_response['last_name'] + "!",
                     class: 'col-md-5 col-md-offset-1'
@@ -347,64 +347,7 @@ function get_friend_list() {
         }
     });
 }
-
-function add_input() {
-    var input_name = $('<input>', {
-        placeholder: "name",
-        name: 'name',
-        type: 'text',
-        class: 'col-md-2'
-    })
-    var input_rest = $('<input>', {
-        placeholder: "Food Type",
-        name: 'food',
-        type: 'text',
-        class: 'col-md-2'
-    })
-    var input_rest1 = $('<input>', {
-        placeholder: "Food Type",
-        name: 'food',
-        type: 'text',
-        class: 'col-md-2'
-    })
-    var input_rest2 = $('<input>', {
-        placeholder: "Food Type",
-        name: 'food',
-        type: 'text',
-        class: 'col-md-2'
-    })
-    var input_range = $('<input>', {
-        placeholder: "Miles away",
-        name: 'range',
-        type: 'text',
-        class: 'col-md-2'
-    })
-    var form = $('<form>', {
-        class: 'col-md-12',
-        id: 'form_2',
-        action: 'lunch.php',
-        method: 'POST'
-    })
-    var btn = $('<button>', {
-        class: 'col-md-1',
-        id: 'submit',
-        text: 'submit friend'
-    })
-    var btn2 = $('<button>', {
-        class: 'col-md-1',
-        text: 'add input',
-        type: 'button'
-    })
-    $('.main_content').append(form);
-    $('#form_2').append(input_name);
-    $('#form_2').append(input_rest);
-    $('#form_2').append(input_rest1);
-    $('#form_2').append(input_rest2);
-    $('#form_2').append(input_range);
-    $('#form_2').append(btn);
-    $('#form_2').append(btn2);
-    console.log(input_range);
-}
+//Not using this function add_input anymore
 function add_person_object (){
     var forms = {};
     $('form').each(function(i){
@@ -415,7 +358,6 @@ function add_person_object (){
         lunch_appoint_array.push(forms[i])
     });
     console.log(forms)
-    
     return forms;
 }
 function add_person_DOM() {
@@ -466,38 +408,28 @@ function random_select () {
     $('#info').append(winner).append(append_name).append(append_food).append(append_range)
 
 }
-
-
 function draw() {
     drawRouletteWheel();
 }
-
 function drawRouletteWheel() {
     var canvas = document.getElementById("wheelcanvas");
     if (canvas.getContext) {
         var outsideRadius = 200;
         var textRadius = 160;
         var insideRadius = 125;
-
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 500, 500);
-
-
         ctx.strokeStyle = "black";
         ctx.lineWidth = 2;
-
         ctx.font = 'bold 12px sans-serif';
-
         for (var i = 0; i < 12; i++) {
             var angle = startAngle + i * arc;
             ctx.fillStyle = colors[i];
-
             ctx.beginPath();
             ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
             ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
             ctx.stroke();
             ctx.fill();
-
             ctx.save();
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
@@ -510,8 +442,7 @@ function drawRouletteWheel() {
             ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
             ctx.restore();
         }
-
-        //Arrow
+        //Draw Arrow
         ctx.fillStyle = "black";
         ctx.beginPath();
         ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
@@ -525,14 +456,12 @@ function drawRouletteWheel() {
         ctx.fill();
     }
 }
-
 function spin() {
     spinAngleStart = Math.random() * 10 + 10;
     spinTime = 0;
     spinTimeTotal = Math.random() * 3 + 4 * 1000;
     rotateWheel();
 }
-
 function rotateWheel() {
     spinTime += 30;
     if (spinTime >= spinTimeTotal) {
@@ -556,17 +485,12 @@ function stopRotateWheel() {
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
 }
-
 function easeOut(t, b, c, d) {
     var ts = (t /= d) * t;
     var tc = ts * t;
     return b + c * (tc + -3 * ts + 3 * t);
 }
-
-
-
 $(document).ready(function() {
-
     $('form').on('click', '#login', function() {
         ajax_call();
         console.log('button worked')

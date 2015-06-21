@@ -6,11 +6,7 @@ $result = mysqli_query($con, $freind_sugg);
 echo "<table><tr><td>First</td><td>Last</td><td>email</td></tr>";
 while ($row = mysqli_fetch_assoc($result) ) {
 	print_r("<tr><td>".$row['first_name']."</td><td>".$row['last_name']."</td><td>".$row['email']."</td></tr>");
-
-
-
 }
 echo "</table>";
 // print_r($row['first_name']);
-
 ?>
