@@ -35,3 +35,6 @@ table > tbody > tr > td {
 button {
     height: 25px;
 }
+#info {
+    list-style: none;
+}

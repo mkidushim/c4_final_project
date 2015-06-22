@@ -24,7 +24,7 @@ var winner_array = [];
 function send_food_request() {
     var name = $('.name').val();
     var range = $('.range').val();
-    var food = winner_array[0].food;
+    var food = winner_array[0].food1;
     range = range * 1609;
     navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -322,21 +322,26 @@ function nav_lunch() {
             $('body').on('click', '#lunch_b', function() {
                 add_person_DOM();
                 add_person_object();
-
+                
             })
             $('body').on('click', '#add_all', function() {
                 console.log('button works');
-
-
                 random_select();
+                send_food_request();
             })
             $('body').on('click', '#add_map', function() {
                 send_food_request();
+                draw();
+                $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">')
+            })
+            $('body').on('click', '#add_rest_names', function() {
+                draw();
+                $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">')
             })
         },
-        complete: function(response) {
-            draw();
-        }
+        // complete: function(response) {
+        //     draw();
+        // }
     });
 }
 
@@ -393,11 +398,6 @@ function random_select() {
     $('#info > li').remove();
     var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
     winner_array.push(rand);
-    //  var winner = $(
-    //     "<li>",{
-    //     text: "Winner!",
-    //         class: "list-group-item-success text-center"
-    // });
     var append_name = $(
         "<li>", {
             text: "Name: " + rand.name,
@@ -413,10 +413,15 @@ function random_select() {
             text: "Range: " + rand.range,
             class: "list-group-item-success text-center"
         });
-    for (var i = 0; i < lunch_appoint_array.length-1; i++) {
+    for (var i = 0; i < lunch_appoint_array.length; i++) {
+        // if (lunch_appoint_array[i].name == rand.name) {
+        //     return
+        // } else {
         if (lunch_appoint_array[i].name == rand.name) {
-            return
+            console.log(lunch_appoint_array[i])
+
         } else {
+            console.log(lunch_appoint_array[i])
             var append_friends = $(
                 "<li>", {
                     text: "Friends: " + lunch_appoint_array[i].name,
@@ -429,7 +434,7 @@ function random_select() {
 
 
     console.log(rand.food1);
-    
+
     $('#info').append(append_name).append(append_food).append(append_range);
 
 }
@@ -448,7 +453,7 @@ function drawRouletteWheel() {
         ctx.clearRect(0, 0, 500, 500);
         ctx.strokeStyle = "black";
         ctx.lineWidth = 2;
-        ctx.font = 'bold 12px sans-serif';
+        ctx.font = 'bold 9px sans-serif';
         for (var i = 0; i < 12; i++) {
             var angle = startAngle + i * arc;
             ctx.fillStyle = colors[i];
@@ -465,7 +470,7 @@ function drawRouletteWheel() {
             ctx.fillStyle = "#6B6B6B";
             ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
-            var text = restaraunts[i];
+            var text = lunch_array[i];
             ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
             ctx.restore();
         }
@@ -509,8 +514,9 @@ function stopRotateWheel() {
     var arcd = arc * 180 / Math.PI;
     var index = Math.floor((360 - degrees % 360) / arcd);
     ctx.save();
-    ctx.font = '30px sans-serif';
-    var text = restaraunts[index]
+    ctx.font = '20px sans-serif';
+    var text = lunch_array[index]
+     winner_array[0].restaurant = lunch_array[index];
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
 }
