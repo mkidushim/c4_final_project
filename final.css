@@ -1,0 +1,40 @@
+img.col-md-3 {
+    height: 50px;
+}
+.list-group-item {
+    margin-left: 20px;
+}
+.list-group-item {
+    margin-left: 20px;
+}
+#map-canvas {
+    height: 300px;
+}
+
+#map-canvas2 {
+    height: 300px;
+    width: 600px;
+    margin-left: 10px;
+}
+
+nav li {
+    display: inline-block;
+    padding: 20px;
+}
+
+nav li:hover {
+    color: white;
+    background-color: black;
+}
+
+table > tbody > tr > td {
+    padding: 10px;
+    border: 2px solid;
+}
+
+button {
+    height: 25px;
+}
+#info {
+    list-style: none;
+}
