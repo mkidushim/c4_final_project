@@ -20,17 +20,17 @@ var spinTime = 0;
 var spinTimeTotal = 0;
 var ctx;
 var winner_array = [];
-
+var friend_array = [];
 function send_food_request() {
     var name = $('.name').val();
-    var range = $('.range').val();
+    var range = winner_array[0].range;
     var food = winner_array[0].food1;
     range = range * 1609;
     navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
             center: center,
-            zoom: 12,
+            zoom: 10,
 
         });
 
@@ -330,19 +330,42 @@ function nav_lunch() {
                 send_food_request();
             })
             $('body').on('click', '#add_map', function() {
-                send_food_request();
+                
                 draw();
                 $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">')
             })
             $('body').on('click', '#add_rest_names', function() {
-                draw();
-                $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">')
+                save();               
             })
         },
         // complete: function(response) {
         //     draw();
         // }
     });
+}
+
+function save (){
+     $.ajax({
+            url: 'lunch.php',
+            data: {
+                name: winner_array[0].name,
+                restaurant: winner_array[0].restaurant,
+                food: winner_array[0].food1,
+                range: winner_array[0].range,
+                friends: winner_array[0].friend
+            },
+            method: "POST",
+            dataType: 'JSON',
+            success: function(response){
+                if(response){
+                    console.log('Saved: ',response)
+                }
+                else if (!response){
+                    console.log('error: ', response)
+                    
+                }
+            }
+        });
 }
 
 function get_friend_list() {
@@ -421,7 +444,9 @@ function random_select() {
             console.log(lunch_appoint_array[i])
 
         } else {
-            console.log(lunch_appoint_array[i])
+            console.log(lunch_appoint_array[i].name)
+            friend_array.push(lunch_appoint_array[i].name);
+            winner_array[0].friend = friend_array
             var append_friends = $(
                 "<li>", {
                     text: "Friends: " + lunch_appoint_array[i].name,
@@ -446,9 +471,9 @@ function draw() {
 function drawRouletteWheel() {
     var canvas = document.getElementById("wheelcanvas");
     if (canvas.getContext) {
-        var outsideRadius = 200;
-        var textRadius = 160;
-        var insideRadius = 125;
+        var outsideRadius = 180;
+        var textRadius = 140;
+        var insideRadius = 105;
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 500, 500);
         ctx.strokeStyle = "black";
