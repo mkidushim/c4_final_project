@@ -21,6 +21,7 @@ var spinTimeTotal = 0;
 var ctx;
 var winner_array = [];
 var friend_array = [];
+var friend_list = "";
 function send_food_request() {
     var name = $('.name').val();
     var range = winner_array[0].range;
@@ -61,6 +62,10 @@ function send_food_request() {
         google.maps.event.addListener(marker_user, 'click', function() {
             infowindow.setContent(cont_string);
             infowindow.open(map_o, marker_user);
+        });
+        google.maps.event.addListener(map_o, 'tilesloaded', function() {
+        draw();
+        $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
         });
     })
 }
@@ -328,7 +333,8 @@ function nav_lunch() {
                 console.log('button works');
                 random_select();
                 send_food_request();
-            })
+                
+             })
             $('body').on('click', '#add_map', function() {
                 
                 draw();
@@ -351,11 +357,12 @@ function save (){
                 name: winner_array[0].name,
                 restaurant: winner_array[0].restaurant,
                 food: winner_array[0].food1,
-                range: winner_array[0].range,
+                range: parseInt(winner_array[0].range),
                 friends: winner_array[0].friend
             },
             method: "POST",
             dataType: 'JSON',
+            crossDomain: true,
             success: function(response){
                 if(response){
                     console.log('Saved: ',response)
@@ -445,8 +452,9 @@ function random_select() {
 
         } else {
             console.log(lunch_appoint_array[i].name)
+            friend_list += lunch_appoint_array[i].name+" ";
             friend_array.push(lunch_appoint_array[i].name);
-            winner_array[0].friend = friend_array
+            winner_array[0].friend = friend_list
             var append_friends = $(
                 "<li>", {
                     text: "Friends: " + lunch_appoint_array[i].name,
