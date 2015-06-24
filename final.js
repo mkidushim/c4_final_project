@@ -24,7 +24,7 @@ var friend_array = [];
 var friend_list = "";
 
 function send_food_request() {
-    var name = $('.name').val();
+    var name = winner_array[0].name;
     var range = winner_array[0].range;
     var food = winner_array[0].food;
     range = range * 1609;
@@ -113,10 +113,8 @@ function initialize() {
 }
 
 function callback(results, status) {
-    window.results = results;
-    console.log(results)
-    console.log(status)
-    window.place_name = results;
+    console.log('results',results);
+    console.log('status',status)
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
@@ -126,10 +124,10 @@ function callback(results, status) {
 }
 
 function callback_l(results, status) {
-    window.results = results;
+    
     console.log(results)
     console.log(status)
-    window.place_name = results;
+    
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker_l(results[i]);
@@ -271,7 +269,7 @@ function nav_home() {
         dataType: 'html',
         success: function(response) {
             to_landing();
-            $('#info').html('');
+            
             $('nav').on('click', '.home', function() {
                 nav_home();
             })
@@ -313,14 +311,12 @@ function nav_lunch() {
         url: 'lunch.html',
         method: 'POST',
         dataType: 'html',
+        cache: false,
         success: function(response) {
 
             $('.main_content').html(response);
             $('nav').on('click', '.home', function() {
                 nav_home();
-                friend_array = [];
-                lunch_appoint_array= [];
-                lunch_array = [];
             })
 
             $('nav').on('click', '.lunch', function() {
@@ -396,12 +392,16 @@ function get_friend_list() {
     //Not using function add_input anymore
 function add_person_object() {
    var lunch = {};
-      $(':text.lunch').each(function (index, element) {
-            lunch[element.id] = element.value;
 
+    $(':text.lunch').each(function (index, element) {
+            lunch[element.id] = element.value;
+            console.log(index);
+            console.log(element);
         });
         lunch_appoint_array.push(lunch);
         console.log(lunch);
+   
+      
     };
    
     // var forms = {};
