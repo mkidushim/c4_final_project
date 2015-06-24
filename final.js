@@ -22,10 +22,11 @@ var ctx;
 var winner_array = [];
 var friend_array = [];
 var friend_list = "";
+
 function send_food_request() {
     var name = $('.name').val();
     var range = winner_array[0].range;
-    var food = winner_array[0].food1;
+    var food = winner_array[0].food;
     range = range * 1609;
     navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -63,9 +64,9 @@ function send_food_request() {
             infowindow.setContent(cont_string);
             infowindow.open(map_o, marker_user);
         });
-        google.maps.event.addListener(map_o, 'tilesloaded', function() {
+        google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
         draw();
-        $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
+        $('.main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
         });
     })
 }
@@ -226,7 +227,7 @@ function ajax_call() {
             }
         });
     }
-    // commented out google maps during developement already working
+    // commented out google maps api on landing page 
 function to_landing() {
     $.ajax({
         url: 'landing.html',
@@ -234,7 +235,7 @@ function to_landing() {
         dataType: 'html',
         success: function(response) {
             if (response) {
-                initialize();
+                // initialize();
                 var user = $('<h3>', {
                     text: "Welcome " + php_response['first_name'] + " " + php_response['last_name'] + "!",
                     class: 'col-md-5 col-md-offset-1'
@@ -270,7 +271,7 @@ function nav_home() {
         dataType: 'html',
         success: function(response) {
             to_landing();
-
+            $('#info').html('');
             $('nav').on('click', '.home', function() {
                 nav_home();
             })
@@ -317,7 +318,11 @@ function nav_lunch() {
             $('.main_content').html(response);
             $('nav').on('click', '.home', function() {
                 nav_home();
+                friend_array = [];
+                lunch_appoint_array= [];
+                lunch_array = [];
             })
+
             $('nav').on('click', '.lunch', function() {
                 nav_lunch();
             })
@@ -338,7 +343,7 @@ function nav_lunch() {
             $('body').on('click', '#add_map', function() {
                 
                 draw();
-                $('body').append('<input type="button" value="spin" onclick="spin();" style="float: left;">')
+                $('#main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
             })
             $('body').on('click', '#add_rest_names', function() {
                 save();               
@@ -356,7 +361,7 @@ function save (){
             data: {
                 name: winner_array[0].name,
                 restaurant: winner_array[0].restaurant,
-                food: winner_array[0].food1,
+                food: winner_array[0].food,
                 range: parseInt(winner_array[0].range),
                 friends: winner_array[0].friend
             },
@@ -390,22 +395,33 @@ function get_friend_list() {
     }
     //Not using function add_input anymore
 function add_person_object() {
-    var forms = {};
-    $('form').each(function(i) {
-        forms[i] = {};
-        $(this).children('input').each(function() {
-            forms[i][$(this).attr('name')] = $(this).val();
+   var lunch = {};
+      $(':text.lunch').each(function (index, element) {
+            lunch[element.id] = element.value;
+
         });
-        lunch_appoint_array.push(forms[i])
-    });
-    console.log(forms)
-    return forms;
-}
+        lunch_appoint_array.push(lunch);
+        console.log(lunch);
+    };
+   
+    // var forms = {};
+
+    // $('#lunch').each(function(i) {
+    //     forms[i] = {};
+    //     $(this).children('input').each(function() {
+    //         forms[i][$(this).attr('name')] = $(this).val();
+    //     });
+    //     lunch_appoint_array.push(forms[i])
+    //     console.log(forms[i])
+    // });
+    
+    // return forms;
+
 
 function add_person_DOM() {
-    var name = $('.name').val();
-    var food = $('.food').val();
-    var range = $('.range').val();
+    var name = $('#name').val();
+    var food = $('#food').val();
+    var range = $('#range').val();
     var append_name = $(
         "<li>", {
             text: "Name: " + name,
@@ -435,7 +451,7 @@ function random_select() {
         });
     var append_food = $(
         "<li>", {
-            text: "Food: " + rand.food1,
+            text: "Food: " + rand.food,
             class: "list-group-item-success text-center"
         });
     var append_range = $(
@@ -453,7 +469,6 @@ function random_select() {
         } else {
             console.log(lunch_appoint_array[i].name)
             friend_list += lunch_appoint_array[i].name+" ";
-            friend_array.push(lunch_appoint_array[i].name);
             winner_array[0].friend = friend_list
             var append_friends = $(
                 "<li>", {
@@ -466,7 +481,7 @@ function random_select() {
     }
 
 
-    console.log(rand.food1);
+    console.log('winner',rand);
 
     $('#info').append(append_name).append(append_food).append(append_range);
 
