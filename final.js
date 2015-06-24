@@ -4,13 +4,13 @@ var service;
 var lunch_array = [];
 var place_id_holder;
 var lunch_appoint_array = [];
+var winner_array = [];
+var friend_array = [];
+var friend_list = "";
+var lunch_object;
 var colors = ["#B8D430", "#3AB745", "#029990", "#3501CB",
     "#2E2C75", "#673A7E", "#CC0071", "#F80120",
     "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"
-];
-var restaraunts = ["Wendy's", "McDonalds", "Chick-fil-a", "Five Guys",
-    "Gold Star", "La Mexicana", "Chipotle", "Tazza Mia",
-    "Panera", "Just Crepes", "Arby's", "Indian"
 ];
 var startAngle = 0;
 var arc = Math.PI / 6;
@@ -19,9 +19,6 @@ var spinArcStart = 10;
 var spinTime = 0;
 var spinTimeTotal = 0;
 var ctx;
-var winner_array = [];
-var friend_array = [];
-var friend_list = "";
 
 function send_food_request() {
     var name = winner_array[0].name;
@@ -64,9 +61,9 @@ function send_food_request() {
             infowindow.setContent(cont_string);
             infowindow.open(map_o, marker_user);
         });
-        google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
+        google.maps.event.addListenerOnce(map_o, 'idle', function() {
         draw();
-        $('.main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
+         $('#wheelcanvas').before('<input type="button" value="spin" class="col-md-1 col-md-offset-10" onclick="spin();" style="float: left;">');
         });
     })
 }
@@ -231,6 +228,7 @@ function to_landing() {
         url: 'landing.html',
         method: 'POST',
         dataType: 'html',
+        cache: false,
         success: function(response) {
             if (response) {
                 // initialize();
@@ -267,6 +265,7 @@ function nav_home() {
         url: 'landing.html',
         method: 'POST',
         dataType: 'html',
+        cache: false,
         success: function(response) {
             to_landing();
             
@@ -289,6 +288,7 @@ function nav_friends() {
         url: 'friends.html',
         method: 'POST',
         dataType: 'html',
+        cache: false,
         success: function(response) {
             $('.main_content').html(response);
 
@@ -316,7 +316,10 @@ function nav_lunch() {
 
             $('.main_content').html(response);
             $('nav').on('click', '.home', function() {
+               
                 nav_home();
+                lunch_appoint_array = [];
+                winner_array = [];
             })
 
             $('nav').on('click', '.lunch', function() {
@@ -325,14 +328,14 @@ function nav_lunch() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
-            $('body').on('click', '#lunch_b', function() {
+            $('body').on('click', '.lunch_b', function() {
                 add_person_DOM();
                 add_person_object();
                 
             })
             $('body').on('click', '#add_all', function() {
                 console.log('button works');
-                random_select();
+                random_select();       
                 send_food_request();
                 
              })
@@ -392,14 +395,18 @@ function get_friend_list() {
     //Not using function add_input anymore
 function add_person_object() {
    var lunch = {};
-
-    $(':text.lunch').each(function (index, element) {
-            lunch[element.id] = element.value;
+   lunch_object = {};
+    $('input').each(function (index, element) {
+            if(index < 4){
+            lunch_object[element.id] = element.value;
             console.log(index);
             console.log(element);
+            }
+
         });
-        lunch_appoint_array.push(lunch);
-        console.log(lunch);
+        lunch_appoint_array.push(lunch_object);
+        
+        console.log(lunch_object);
    
       
     };
@@ -579,18 +586,18 @@ $(document).ready(function() {
         ajax_call();
         console.log('button worked')
     })
-    $('nav').on('click', '.home', function() {
-        console.log('button')
-        nav_home();
-    })
-    $('nav').on('click', '.lunch', function() {
-        nav_lunch();
-    })
-    $('nav').on('click', '.friends', function() {
-        nav_friends();
-    })
-    $('body').on('click', '#btn_friend', function() {
-        get_friend_list();
-    })
+    // $('nav').on('click', '.home', function() {
+    //     console.log('button')
+    //     nav_home();
+    // })
+    // $('nav').on('click', '.lunch', function() {
+    //     nav_lunch();
+    // })
+    // $('nav').on('click', '.friends', function() {
+    //     nav_friends();
+    // })
+    // $('body').on('click', '#btn_friend', function() {
+    //     get_friend_list();
+    // })
 
 })
