@@ -63,7 +63,7 @@ function send_food_request() {
         });
         google.maps.event.addListenerOnce(map_o, 'idle', function() {
         draw();
-         $('#wheelcanvas').before('<input type="button" value="spin" class="col-md-1 col-md-offset-10" onclick="spin();" style="float: left;">');
+         $('#wheelcanvas').before('<input type="button" value="spin" class="col-md-1" onclick="spin();" style="float: left;">');
         });
     })
 }

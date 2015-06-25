@@ -10,7 +10,11 @@ $output = [];
   			$all = mysqli_fetch_assoc($result);
   				$_SESSION['user_id']= $all['user_id'];
   				$output['success']= true;
-}
+			}
+		else{
+			$output['errors']= "username or password invalid";
+			
+		}
 $output_string = json_encode($all);
 print_r($output_string);
 ?>
