@@ -41,3 +41,8 @@ button {
 #info {
     list-style: none;
 }
+
+div.ui-dialog.ui-widget {
+    position: absolute;
+    left: 530px
+}
