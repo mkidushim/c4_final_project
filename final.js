@@ -212,6 +212,7 @@ function ajax_call() {
             if (response.success == true) {
                 console.log('login response is ', response)
                 login_check();
+                // to_landing();
                 
 
             } else if (response.success == false) {
@@ -245,7 +246,7 @@ function login_check() {
             success: function(response) {
 
                 if (response.success) {
-                    to_landing();
+                     to_landing();
                     console.log(response);
                 } else if (response.errors) {
 
@@ -362,21 +363,6 @@ function nav_lunch() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
-
-            $('body').on('click', '#add_all', function() {
-                console.log('button works');
-                random_select();
-                send_food_request();
-
-            })
-            $('body').on('click', '#add_map', function() {
-
-                draw();
-                $('#main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
-            })
-            $('body').on('click', '#add_rest_names', function() {
-                save();
-            })
         },
         // complete: function(response) {
         //     draw();
@@ -407,7 +393,7 @@ function save() {
                     width: 400,
                     title: "Status Update",
                     open: function(){
-                        $(this).html("Saved: "+response)
+                        $(this).html(response)
                     },
                     dialogClass: 'ui-dialog-osx',
                 });
@@ -447,16 +433,17 @@ function get_friend_list() {
     }
     //Not using function add_input anymore
 function add_person_object() {
-      
-    $(':text.lunch').each(function(index, element) {
+     lunch_object = {};
+   $(':text.lunch').each(function(index, element) {
         if (index < 4) {
-            lunch_object = {};
+           
             lunch_object[element.id] = element.value;
             console.log(index);
-            console.log(element);
+            console.log(element.value)
         }
 
     });
+    
     lunch_appoint_array.push(lunch_object);
 
     console.log("lunch object", lunch_object);
@@ -477,12 +464,13 @@ function add_person_object() {
 
 // return forms;
 
-
 function add_person_DOM() {
     console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();
     var range = $('#range').val();
+    
+    console.log(lunch.name)
     var append_name = $(
         "<li>", {
             text: "Name: " + name,
@@ -498,7 +486,8 @@ function add_person_DOM() {
             text: "Range: " + range,
             class: "list-group-item"
         });
-    $('#info').append(append_name).append(append_food_response).append(append_range)
+    $('#info').append(append_name).append(append_food_response).append(append_range);
+    add_person_object();
 }
 
 function random_select() {
@@ -640,11 +629,26 @@ $(document).ready(function() {
         ajax_call();
         console.log('button worked')
     });
+    // login_check();
     $('body').on('click', '#lunch_b', function() {
         add_person_DOM();
-        add_person_object();
+        
 
     });
+    $('body').on('click', '#add_all', function() {
+        console.log('button works');
+        random_select();
+        send_food_request();
+
+    })
+    $('body').on('click', '#add_map', function() {
+
+        draw();
+        $('#main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
+    })
+    $('body').on('click', '#add_rest_names', function() {
+        save();
+    })
     // $('nav').on('click', '.home', function() {
     //     console.log('button')
     //     nav_home();
