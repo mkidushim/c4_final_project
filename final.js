@@ -362,11 +362,7 @@ function nav_lunch() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
-            $('body').on('click', '.lunch_b', function() {
-                add_person_DOM();
-                add_person_object();
 
-            })
             $('body').on('click', '#add_all', function() {
                 console.log('button works');
                 random_select();
@@ -451,10 +447,10 @@ function get_friend_list() {
     }
     //Not using function add_input anymore
 function add_person_object() {
-    var lunch = {};
-    lunch_object = {};
+      
     $(':text.lunch').each(function(index, element) {
         if (index < 4) {
+            lunch_object = {};
             lunch_object[element.id] = element.value;
             console.log(index);
             console.log(element);
@@ -463,7 +459,7 @@ function add_person_object() {
     });
     lunch_appoint_array.push(lunch_object);
 
-    console.log(lunch_object);
+    console.log("lunch object", lunch_object);
 
 
 };
@@ -483,6 +479,7 @@ function add_person_object() {
 
 
 function add_person_DOM() {
+    console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();
     var range = $('#range').val();
@@ -642,8 +639,12 @@ $(document).ready(function() {
     $('form').on('click', '#login', function() {
         ajax_call();
         console.log('button worked')
-    })
+    });
+    $('body').on('click', '#lunch_b', function() {
+        add_person_DOM();
+        add_person_object();
 
+    });
     // $('nav').on('click', '.home', function() {
     //     console.log('button')
     //     nav_home();
