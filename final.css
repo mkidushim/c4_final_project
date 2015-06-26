@@ -1,20 +1,22 @@
 img.col-md-3 {
     height: 50px;
 }
+
 .list-group-item {
     margin-left: 20px;
 }
+
 .list-group-item {
     margin-left: 20px;
 }
+
 #map-canvas {
     height: 300px;
 }
 
 #map-canvas2 {
-    height: 300px;
-    width: 600px;
-    margin-left: 10px;
+    height: 445px;
+    width: 45%;
 }
 
 nav li {
@@ -35,6 +37,12 @@ table > tbody > tr > td {
 button {
     height: 25px;
 }
+
 #info {
     list-style: none;
+}
+
+div.ui-dialog.ui-widget {
+    position: absolute;
+    left: 530px
 }

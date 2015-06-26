@@ -9,8 +9,16 @@ $output = [];
   		if (mysqli_num_rows($result) > 0){
   			$all = mysqli_fetch_assoc($result);
   				$_SESSION['user_id']= $all['user_id'];
-  				$output['success']= true;
-}
-$output_string = json_encode($all);
-print_r($output_string);
+  				$all['success']= true;
+  				$output_string = json_encode($all);
+				
+			}
+		else{
+			$output['success'] = false;
+			$output['errors']= "username or password invalid";
+			$output_string = json_encode($output);
+			
+		}
+
+			print_r($output_string);
 ?>

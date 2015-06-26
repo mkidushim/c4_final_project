@@ -11,10 +11,11 @@ $query = "INSERT INTO `history` (user_id, friends, range_miles, food, restaurant
  			      VALUES 			($userid, '$friends', $range,  '$food', '$rest', '$user')";
 $out = mysqli_query($con, $query);
 if($out){
-	$output = json_encode($user);
+	$output = json_encode("User: ".$user."| Restaurant:".$rest."| Friends:".$friends);
 	print_r($output);
 }else if (!$out){
 	$output = json_encode($_POST);
 	print_r($output);
+	
 }
 ?>
