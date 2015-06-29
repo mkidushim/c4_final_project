@@ -8,6 +8,7 @@ var winner_array = [];
 var friend_array = [];
 var friend_list = "";
 var lunch_object;
+var user_info;
 var colors = ["#B8D430", "#3AB745", "#029990", "#3501CB",
     "#2E2C75", "#673A7E", "#CC0071", "#F80120",
     "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"
@@ -208,12 +209,12 @@ function ajax_call() {
         dataType: 'JSON',
         success: function(response) {
 
-            window.php_response = response;
+
             if (response.success == true) {
                 console.log('login response is ', response)
                 login_check();
                 // to_landing();
-                
+
 
             } else if (response.success == false) {
                 $("#dialog-message").dialog({
@@ -223,7 +224,7 @@ function ajax_call() {
                     position: ['center', 'top'],
                     width: 400,
                     title: "Errors",
-                    open: function(){
+                    open: function() {
                         $(this).html(response.errors)
                     },
                     dialogClass: 'ui-dialog-osx',
@@ -238,25 +239,25 @@ function ajax_call() {
 }
 
 function login_check() {
+        console.log('login_check working')
         $.ajax({
             url: 'logged_in.php',
             method: 'POST',
             dataType: 'JSON',
             cache: false,
             success: function(response) {
-
                 if (response.success) {
-                     to_landing();
+                    to_landing();
+                    console.log(response);
+                    user_info = response.userinfo;
                     console.log(response);
                 } else if (response.errors) {
-
                     console.log(response.errors)
                 }
             }
         });
     }
     // commented out google maps api on landing page 
-
 function to_landing() {
     $.ajax({
         url: 'landing.html',
@@ -264,34 +265,28 @@ function to_landing() {
         dataType: 'html',
         cache: false,
         success: function(response) {
-            if (response) {
+            initialize();
+            var user = $('<h4>', {
+                text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
+                class: 'text-center'
+            })
+            $('.main_content').html('');
+            $('body').on('click', '#locate', function() {
+                get_location();
+            })
+            $('.main_content').append(user).append(response);
 
-                initialize();
-                var user = $('<h3>', {
-                    text: "Welcome " + php_response['first_name'] + " " + php_response['last_name'] + "!",
-                    class: 'col-md-5 col-md-offset-1'
-                })
-
-                $('body').on('click', '#locate', function() {
-                    get_location();
-                })
-                $('.main_content').html(user).append(response);
-
-                $('nav').on('click', 'home', function() {
-                    login_check();
-                })
-                $('nav').on('click', '.lunch', function() {
-                    nav_lunch();
-                })
-                $('nav').on('click', '.friends', function() {
-                    nav_friends();
-                })
-            } else {
-                console.log('error no page');
-
-            }
-
+            $('nav').on('click', 'home', function() {
+                login_check();
+            })
+            $('nav').on('click', '.lunch', function() {
+                nav_lunch();
+            })
+            $('nav').on('click', '.friends', function() {
+                nav_friends();
+            })
         }
+
     });
 }
 
@@ -328,7 +323,7 @@ function nav_friends() {
             $('.main_content').html(response);
 
             $('nav').on('click', '.home', function() {
-                login_check();
+                // login_check();
             })
             $('nav').on('click', '.lunch', function() {
                 nav_lunch();
@@ -370,6 +365,20 @@ function nav_lunch() {
     });
 }
 
+function logout() {
+    $.ajax({
+        url: 'logout.php',
+        method: "POST",
+        crossDomain: true,
+        success: function(response) {
+            if (response) {
+                $('.main_content').html('');
+                console.log('logout successful')
+            }
+        }
+    });
+}
+
 function save() {
     $.ajax({
         url: 'lunch.php',
@@ -392,7 +401,7 @@ function save() {
                     position: ['center', 'top'],
                     width: 400,
                     title: "Status Update",
-                    open: function(){
+                    open: function() {
                         $(this).html(response)
                     },
                     dialogClass: 'ui-dialog-osx',
@@ -406,7 +415,7 @@ function save() {
                     position: ['center', 'top'],
                     width: 400,
                     title: "Error",
-                    open: function(){
+                    open: function() {
                         $(this).html(response)
                     },
                     dialogClass: 'ui-dialog-osx',
@@ -433,17 +442,17 @@ function get_friend_list() {
     }
     //Not using function add_input anymore
 function add_person_object() {
-     lunch_object = {};
-   $(':text.lunch').each(function(index, element) {
+    lunch_object = {};
+    $(':text.lunch').each(function(index, element) {
         if (index < 4) {
-           
+
             lunch_object[element.id] = element.value;
             console.log(index);
             console.log(element.value)
         }
 
     });
-    
+
     lunch_appoint_array.push(lunch_object);
 
     console.log("lunch object", lunch_object);
@@ -469,7 +478,7 @@ function add_person_DOM() {
     var name = $('#name').val();
     var food = $('#food').val();
     var range = $('#range').val();
-    
+
     console.log(lunch.name)
     var append_name = $(
         "<li>", {
@@ -625,14 +634,15 @@ function easeOut(t, b, c, d) {
     return b + c * (tc + -3 * ts + 3 * t);
 }
 $(document).ready(function() {
+
     $('form').on('click', '#login', function() {
         ajax_call();
         console.log('button worked')
     });
-    // login_check();
+    login_check();
     $('body').on('click', '#lunch_b', function() {
         add_person_DOM();
-        
+
 
     });
     $('body').on('click', '#add_all', function() {
@@ -649,18 +659,22 @@ $(document).ready(function() {
     $('body').on('click', '#add_rest_names', function() {
         save();
     })
-    // $('nav').on('click', '.home', function() {
-    //     console.log('button')
-    //     nav_home();
-    // })
-    // $('nav').on('click', '.lunch', function() {
-    //     nav_lunch();
-    // })
-    // $('nav').on('click', '.friends', function() {
-    //     nav_friends();
-    // })
-    // $('body').on('click', '#btn_friend', function() {
-    //     get_friend_list();
-    // })
+    $('body').on('click', '.logout', function() {
+            console.log('logout btn')
+            logout();
+        })
+        // $('nav').on('click', '.home', function() {
+        //     console.log('button')
+        //     nav_home();
+        // })
+        // $('nav').on('click', '.lunch', function() {
+        //     nav_lunch();
+        // })
+        // $('nav').on('click', '.friends', function() {
+        //     nav_friends();
+        // })
+        // $('body').on('click', '#btn_friend', function() {
+        //     get_friend_list();
+        // })
 
 })

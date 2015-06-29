@@ -1,8 +1,13 @@
 <?php
 session_start();
-if(isset($_SESSION['user_id'])){
+require('mysql_connect.php');
+$userid = addslashes($_SESSION['user_id']);
+if(isset($userid)){
 	$output['success']= True;
-
+	$query = "SELECT * FROM users WHERE user_id = $userid";
+	$result = mysqli_query($con, $query);
+	$output['userinfo'] = mysqli_fetch_assoc($result);
+	
 }
 
 else {
