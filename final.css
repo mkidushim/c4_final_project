@@ -21,11 +21,19 @@ img.col-md-3 {
 
 nav li {
     display: inline-block;
-    padding: 20px;
+    padding: 0px 20px;
     border-radius: 10px;
 }
 
 nav li:hover {
+    color: white;
+    background-color: black;
+}
+p.logout {
+    text-align: center;
+    border-radius: 10px;
+}
+p.logout:hover {
     color: white;
     background-color: black;
 }

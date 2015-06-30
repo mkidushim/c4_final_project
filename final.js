@@ -76,7 +76,7 @@ function initialize() {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map_o = new google.maps.Map(document.getElementById('map-canvas'), {
             center: center,
-            zoom: 12,
+            zoom: 13,
 
         });
 
@@ -212,8 +212,8 @@ function ajax_call() {
 
             if (response.success == true) {
                 console.log('login response is ', response)
+                
                 login_check();
-                // to_landing();
 
 
             } else if (response.success == false) {
@@ -247,7 +247,9 @@ function login_check() {
             cache: false,
             success: function(response) {
                 if (response.success) {
+                    
                     to_landing();
+
                     console.log(response);
                     user_info = response.userinfo;
                     console.log(response);
@@ -265,16 +267,16 @@ function to_landing() {
         dataType: 'html',
         cache: false,
         success: function(response) {
-            initialize();
+            //initialize();
             var user = $('<h4>', {
                 text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
-                class: 'text-center'
+                class: 'col-md-5'
             })
-            $('.main_content').html('');
+            //$('.main_content').html('');
             $('body').on('click', '#locate', function() {
                 get_location();
             })
-            $('.main_content').append(user).append(response);
+            $('.main_content').html(user).append(response);
 
             $('nav').on('click', '.home', function() {
                 login_check();
@@ -285,6 +287,7 @@ function to_landing() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
+            initialize();
         }
 
     });
@@ -323,8 +326,8 @@ function nav_friends() {
             $('.main_content').html(response);
 
             $('nav').on('click', '.home', function() {
-                // login_check();
-                to_landing();
+                login_check();
+                //to_landing();
             })
             $('nav').on('click', '.lunch', function() {
                 nav_lunch();
@@ -365,14 +368,28 @@ function nav_lunch() {
         // }
     });
 }
-
+function logout_ajax (){
+    $.ajax({
+        url: 'login.html',
+        method: "POST",
+        crossDomain: true,
+        success: function(response) {
+            $('.main_content').html(response);
+            $('form').on('click', '#login', function() {
+        ajax_call();
+        console.log('button worked')
+    });
+        }
+    })
+}
 function logout() {
     $.ajax({
         url: 'logout.php',
         method: "POST",
         crossDomain: true,
         success: function(response) {
-            console.log('logout successful', response)
+            console.log('logout successful')
+            logout_ajax();
             // $.ajax({
             //     url: 'logout.html',
             //     method: "POST",
@@ -383,6 +400,7 @@ function logout() {
             //     }
 
             // });
+
         }
     });
 }
@@ -513,7 +531,7 @@ function random_select() {
     winner_array.push(rand);
     var append_name = $(
         "<li>", {
-            text: "Name: " + rand.name,
+            text: "Winner: " + rand.name,
             class: "list-group-item-success text-center"
         });
     var append_food = $(
@@ -634,6 +652,7 @@ function stopRotateWheel() {
     winner_array[0].restaurant = lunch_array[index];
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
+    save();
 }
 
 function easeOut(t, b, c, d) {
