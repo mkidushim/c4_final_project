@@ -276,7 +276,7 @@ function to_landing() {
             })
             $('.main_content').append(user).append(response);
 
-            $('nav').on('click', 'home', function() {
+            $('nav').on('click', '.home', function() {
                 login_check();
             })
             $('nav').on('click', '.lunch', function() {
@@ -324,6 +324,7 @@ function nav_friends() {
 
             $('nav').on('click', '.home', function() {
                 // login_check();
+                to_landing();
             })
             $('nav').on('click', '.lunch', function() {
                 nav_lunch();
@@ -371,10 +372,17 @@ function logout() {
         method: "POST",
         crossDomain: true,
         success: function(response) {
-            if (response) {
-                $('.main_content').html('');
-                console.log('logout successful')
-            }
+            console.log('logout successful', response)
+            $.ajax({
+                url: 'logout.html',
+                method: "POST",
+                crossDomain: true,
+                success: function(data) {
+                    $('.main_content').html(data);
+                    console.log('logout successful', data)
+                }
+
+            });
         }
     });
 }
