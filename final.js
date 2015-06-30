@@ -661,7 +661,7 @@ function easeOut(t, b, c, d) {
     return b + c * (tc + -3 * ts + 3 * t);
 }
 $(document).ready(function() {
-
+    // logout_ajax();
     $('form').on('click', '#login', function() {
         ajax_call();
         console.log('button worked')
