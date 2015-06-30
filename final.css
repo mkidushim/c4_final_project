@@ -32,10 +32,12 @@ nav li:hover {
 p.logout {
     text-align: center;
     border-radius: 10px;
-}
-p.logout:hover {
+    font-weight: bold;
     color: white;
     background-color: black;
+}
+p.logout:hover {
+    color: orange;
 }
 
 table > tbody > tr > td {
