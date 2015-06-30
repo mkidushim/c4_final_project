@@ -373,16 +373,16 @@ function logout() {
         crossDomain: true,
         success: function(response) {
             console.log('logout successful', response)
-            $.ajax({
-                url: 'logout.html',
-                method: "POST",
-                crossDomain: true,
-                success: function(data) {
-                    $('.main_content').html(data);
-                    console.log('logout successful', data)
-                }
+            // $.ajax({
+            //     url: 'logout.html',
+            //     method: "POST",
+            //     crossDomain: true,
+            //     success: function(data) {
+            //         $('.main_content').html(data);
+            //         console.log('logout successful', data)
+            //     }
 
-            });
+            // });
         }
     });
 }
