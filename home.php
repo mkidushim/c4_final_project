@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require('mysql_connect.php');
+require('mysql_connect_aws.php');
 $username = mysql_real_escape_string($_POST['username']);
 $password = mysql_real_escape_string(sha1($_POST['password']));
 $query= "SELECT * FROM `users` WHERE username = '$username' AND password = '$password'";

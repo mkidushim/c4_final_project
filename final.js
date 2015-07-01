@@ -171,33 +171,6 @@ function createMarker_l(place) {
     });
 }
 
-// function get_location() {
-//     if (!navigator.geolocation) {
-//         output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-//         return;
-//     }
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         var mapOptions = {
-//             zoom: 15,
-//             center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-//             mapTypeId: google.maps.MapTypeId.ROADMAP
-//         }
-//         var map_new = new google.maps.Map(document.getElementById('map-canvas'),
-//             mapOptions);
-//         marker_user = new google.maps.Marker({
-//             map: map_new,
-//             position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-//             title: "You are Here!"
-
-//         });
-//         google.maps.event.addListener(marker_user, 'click', function() {
-//             infowindow.setContent(marker_user.title);
-//             infowindow.open(map_new, this);
-//         });
-
-//     });
-// }
-
 function ajax_call() {
     $.ajax({
         url: 'home.php',
@@ -208,14 +181,9 @@ function ajax_call() {
         method: 'POST',
         dataType: 'JSON',
         success: function(response) {
-
-
             if (response.success == true) {
                 console.log('login response is ', response)
-                
                 login_check();
-
-
             } else if (response.success == false) {
                 $("#dialog-message").dialog({
                     modal: true,
@@ -229,11 +197,8 @@ function ajax_call() {
                     },
                     dialogClass: 'ui-dialog-osx',
                 });
-                // $('body').html('errors:' + response.errors)
                 console.log(response.errors)
-
             }
-
         }
     });
 }
@@ -247,7 +212,7 @@ function login_check() {
             cache: false,
             success: function(response) {
                 if (response.success) {
-                    
+
                     to_landing();
 
                     console.log(response);
@@ -267,12 +232,12 @@ function to_landing() {
         dataType: 'html',
         cache: false,
         success: function(response) {
-            //initialize();
+
             var user = $('<h4>', {
-                text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
-                class: 'col-md-5'
-            })
-            //$('.main_content').html('');
+                    text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
+                    class: 'col-md-5'
+                })
+                //$('.main_content').html('');
             $('body').on('click', '#locate', function() {
                 get_location();
             })
@@ -288,33 +253,25 @@ function to_landing() {
                 nav_friends();
             })
             initialize();
+            recent_lunches();
         }
 
     });
 }
 
-// function nav_home() {
-//     $.ajax({
-//         url: 'landing.html',
-//         method: 'POST',
-//         dataType: 'html',
-//         cache: false,
-//         success: function(response) {
-
-
-//             $('nav').on('click', '.home', function() {
-//                 nav_home();
-//             })
-//             $('nav').on('click', '.lunch', function() {
-//                 nav_lunch();
-//             })
-//             $('nav').on('click', '.friends', function() {
-//                 nav_friends();
-//             })
-
-//         }
-//     });
-// }
+function recent_lunches() {
+    $.ajax({
+        url: 'recent.php',
+        method: 'POST',
+        dataType: 'JSON',
+        cache: false,
+        crossDomain: true,
+        success: function(response) {
+            console.log(response)
+            
+        }
+    });
+}
 
 function nav_friends() {
     $.ajax({
@@ -368,7 +325,8 @@ function nav_lunch() {
         // }
     });
 }
-function logout_ajax (){
+
+function logout_ajax() {
     $.ajax({
         url: 'login.html',
         method: "POST",
@@ -376,12 +334,13 @@ function logout_ajax (){
         success: function(response) {
             $('.main_content').html(response);
             $('form').on('click', '#login', function() {
-        ajax_call();
-        console.log('button worked')
-    });
+                ajax_call();
+                console.log('button worked')
+            });
         }
     })
 }
+
 function logout() {
     $.ajax({
         url: 'logout.php',
