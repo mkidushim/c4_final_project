@@ -1,5 +1,5 @@
 <?php
-require('mysql_connect_aws.php');
+require('mysql_connect.php');
 $lunch_sugg = "SELECT * FROM history ORDER BY post_id";
 $result = mysqli_query($con, $lunch_sugg);
  $row = mysqli_fetch_assoc($result);

@@ -1,0 +1,3 @@
+<?php
+$con = mysqli_connect("myserver","myuser","mypassword","data_base");
+?>
