@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('mysql_connect.php');
+require('mysql_connect_aws.php');
 $friends= addslashes($_POST['friends']);
 $user = addslashes($_POST['name']);
 $food = addslashes($_POST['food']);
