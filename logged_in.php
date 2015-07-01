@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('mysql_connect_aws.php');
+require('mysql_connect.php');
 $userid = addslashes($_SESSION['user_id']);
 if(isset($userid)){
 	$output['success']= True;
