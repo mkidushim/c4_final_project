@@ -181,10 +181,10 @@ function ajax_call() {
         method: 'POST',
         dataType: 'JSON',
         success: function(response) {
-            if (response.success == true) {
-                console.log('login response is ', response)
+            if (response) {
+                console.log('User information:  ', response)
                 login_check();
-            } else if (response.success == false) {
+            } else if (!response) {
                 $("#dialog-message").dialog({
                     modal: true,
                     draggable: false,
@@ -215,11 +215,11 @@ function login_check() {
 
                     to_landing();
 
-                    console.log(response);
+                    console.log("login check working: ",response);
                     user_info = response.userinfo;
                     console.log(response);
                 } else if (response.errors) {
-                    console.log(response.errors)
+                    console.log("login check errors: ",response.errors)
                 }
             }
         });
