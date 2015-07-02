@@ -1,5 +1,5 @@
 <?php
-require('mysql_connect_aws.php');
+require('mysql_connect.php');
 $freind_sugg = "SELECT * FROM users ORDER BY user_id";
 $result = mysqli_query($con, $freind_sugg);
 // $row = mysqli_fetch_assoc($result);

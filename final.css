@@ -30,6 +30,7 @@ nav li:hover {
     background-color: black;
 }
 p.logout {
+    margin-top: 10px;
     text-align: center;
     border-radius: 10px;
     font-weight: bold;
