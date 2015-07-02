@@ -235,7 +235,7 @@ function to_landing() {
 
             var user = $('<h4>', {
                     text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
-                    class: 'col-md-5'
+                    class: 'col-md-5 col-md-offset-2'
                 })
                 //$('.main_content').html('');
             $('body').on('click', '#locate', function() {

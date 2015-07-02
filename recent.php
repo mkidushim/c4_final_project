@@ -7,7 +7,7 @@ $result = mysqli_query($con, $lunch_sugg);
 $all = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
-$all['$row'] = $row;
+$all[$row] = $row;
 }
 $output = json_encode($all);
 print_r($output);
