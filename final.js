@@ -123,10 +123,6 @@ function callback(results, status) {
 }
 
 function callback_l(results, status) {
-
-    console.log(results)
-    console.log(status)
-
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker_l(results[i]);
@@ -137,13 +133,11 @@ function callback_l(results, status) {
 
 function createMarker(place) {
     console.log(place);
-
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
         map: map_o,
         position: place.geometry.location,
         icon: "images/rest.png",
-
     });
     var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating + " </p>"
     google.maps.event.addListener(marker, 'click', function() {
@@ -181,10 +175,11 @@ function ajax_call() {
         method: 'POST',
         dataType: 'JSON',
         success: function(response) {
-            if (response) {
+            if (response.success == true) {
                 console.log('User information:  ', response)
-                login_check();
-            } else if (!response) {
+                to_landing();
+                user_info = response;
+            } else if (response.success == false) {
                 $("#dialog-message").dialog({
                     modal: true,
                     draggable: false,
@@ -204,7 +199,6 @@ function ajax_call() {
 }
 
 function login_check() {
-        console.log('login_check working')
         $.ajax({
             url: 'logged_in.php',
             method: 'POST',
@@ -212,14 +206,11 @@ function login_check() {
             cache: false,
             success: function(response) {
                 if (response.success) {
-
                     to_landing();
-
-                    console.log("login check working: ",response);
-                    user_info = response.userinfo;
-                    console.log(response);
+                    console.log("login check working: ", response);
+                    //user_info = response.userinfo;
                 } else if (response.errors) {
-                    console.log("login check errors: ",response.errors)
+                    console.log("login check errors: ", response.errors)
                 }
             }
         });
@@ -268,7 +259,7 @@ function recent_lunches() {
         crossDomain: true,
         success: function(response) {
             console.log(response)
-            
+
         }
     });
 }
@@ -332,6 +323,7 @@ function logout_ajax() {
         method: "POST",
         crossDomain: true,
         success: function(response) {
+
             $('.main_content').html(response);
             $('form').on('click', '#login', function() {
                 ajax_call();
@@ -349,17 +341,6 @@ function logout() {
         success: function(response) {
             console.log('logout successful')
             logout_ajax();
-            // $.ajax({
-            //     url: 'logout.html',
-            //     method: "POST",
-            //     crossDomain: true,
-            //     success: function(data) {
-            //         $('.main_content').html(data);
-            //         console.log('logout successful', data)
-            //     }
-
-            // });
-
         }
     });
 }
@@ -445,19 +426,6 @@ function add_person_object() {
 
 };
 
-// var forms = {};
-
-// $('#lunch').each(function(i) {
-//     forms[i] = {};
-//     $(this).children('input').each(function() {
-//         forms[i][$(this).attr('name')] = $(this).val();
-//     });
-//     lunch_appoint_array.push(forms[i])
-//     console.log(forms[i])
-// });
-
-// return forms;
-
 function add_person_DOM() {
     console.log("add_person_DOM called");
     var name = $('#name').val();
@@ -504,9 +472,6 @@ function random_select() {
             class: "list-group-item-success text-center"
         });
     for (var i = 0; i < lunch_appoint_array.length; i++) {
-        // if (lunch_appoint_array[i].name == rand.name) {
-        //     return
-        // } else {
         if (lunch_appoint_array[i].name == rand.name) {
             console.log(lunch_appoint_array[i])
 
