@@ -225,18 +225,10 @@ function to_landing() {
         success: function(response) {
 
             var user = $('<h4>', {
-                    text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
-                    class: 'col-md-5 col-md-offset-2'
-                })
-                //$('.main_content').html('');
-            $('body').on('click', '#locate', function() {
-                get_location();
-            })
+                text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
+                class: 'col-md-5 col-md-offset-2'
+            });
             $('.main_content').html(user).append(response);
-
-            $('nav').on('click', '.home', function() {
-                login_check();
-            })
             $('nav').on('click', '.lunch', function() {
                 nav_lunch();
             })
@@ -310,7 +302,7 @@ function nav_lunch() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
-        },
+        }
         // complete: function(response) {
         //     draw();
         // }
@@ -392,29 +384,27 @@ function save() {
         }
     });
 }
+//not using get friends for now
+// function get_friend_list() {
+//         $.ajax({
+//             url: 'friends.php',
+//             method: 'POST',
+//             dataType: 'html',
+//             success: function(response) {
 
-function get_friend_list() {
-        $.ajax({
-            url: 'friends.php',
-            method: 'POST',
-            dataType: 'html',
-            success: function(response) {
-
-                $('.friend_list_sugg').html(response);
+//                 $('.friend_list_sugg').html(response);
 
 
-            }
-        });
-    }
-    //Not using function add_input anymore
+//             }
+//         });
+//     }
 function add_person_object() {
     lunch_object = {};
     $(':text.lunch').each(function(index, element) {
         if (index < 4) {
 
             lunch_object[element.id] = element.value;
-            console.log(index);
-            console.log(element.value)
+            console.log(element.id+" : "+element.value)
         }
 
     });
@@ -586,6 +576,18 @@ function easeOut(t, b, c, d) {
 }
 $(document).ready(function() {
     // logout_ajax();
+    $('nav').on('click', '.home', function() {
+
+                login_check();
+                lunch_appoint_array = [];
+                winner_array = [];
+            })
+    $('nav').on('click', '.lunch', function() {
+        nav_lunch();
+    })
+    $('nav').on('click', '.friends', function() {
+        nav_friends();
+    })
     $('form').on('click', '#login', function() {
         ajax_call();
         console.log('button worked')
