@@ -208,7 +208,7 @@ function login_check() {
                 if (response.success) {
                     to_landing();
                     console.log("login check working: ", response);
-                    //user_info = response.userinfo;
+                    user_info = response.userinfo;
                 } else if (response.errors) {
                     console.log("login check errors: ", response.errors)
                 }
@@ -234,6 +234,10 @@ function to_landing() {
             })
             $('nav').on('click', '.friends', function() {
                 nav_friends();
+            })
+            $('body').on('click', '#logout', function() {
+                console.log('logout btn')
+                logout();
             })
             initialize();
             recent_lunches();
@@ -275,6 +279,10 @@ function nav_friends() {
             $('nav').on('click', '.friends', function() {
                 nav_friends();
             })
+            $('body').on('click', '#logout', function() {
+                console.log('logout btn')
+                logout();
+            })
 
         }
     });
@@ -288,24 +296,28 @@ function nav_lunch() {
         cache: false,
         success: function(response) {
 
-            $('.main_content').html(response);
-            $('nav').on('click', '.home', function() {
+                $('.main_content').html(response);
+                $('nav').on('click', '.home', function() {
 
-                login_check();
-                lunch_appoint_array = [];
-                winner_array = [];
-            })
+                    login_check();
+                    lunch_appoint_array = [];
+                    winner_array = [];
+                })
 
-            $('nav').on('click', '.lunch', function() {
-                nav_lunch();
-            })
-            $('nav').on('click', '.friends', function() {
-                nav_friends();
-            })
-        }
-        // complete: function(response) {
-        //     draw();
-        // }
+                $('nav').on('click', '.lunch', function() {
+                    nav_lunch();
+                })
+                $('nav').on('click', '.friends', function() {
+                    nav_friends();
+                })
+                $('body').on('click', '#logout', function() {
+                    console.log('logout btn')
+                    logout();
+                })
+            }
+            // complete: function(response) {
+            //     draw();
+            // }
     });
 }
 
@@ -338,59 +350,59 @@ function logout() {
 }
 
 function save() {
-    $.ajax({
-        url: 'lunch.php',
-        data: {
-            name: winner_array[0].name,
-            restaurant: winner_array[0].restaurant,
-            food: winner_array[0].food,
-            range: parseInt(winner_array[0].range),
-            friends: winner_array[0].friend
-        },
-        method: "POST",
-        dataType: 'JSON',
-        crossDomain: true,
-        success: function(response) {
-            if (response) {
-                $("#dialog-message").dialog({
-                    modal: true,
-                    draggable: false,
-                    resizable: false,
-                    position: ['center', 'top'],
-                    width: 400,
-                    title: "Status Update",
-                    open: function() {
-                        $(this).html(response)
-                    },
-                    dialogClass: 'ui-dialog-osx',
-                });
-                console.log('Save: ', response)
-            } else if (!response) {
-                $("#dialog-message").dialog({
-                    modal: true,
-                    draggable: false,
-                    resizable: false,
-                    position: ['center', 'top'],
-                    width: 400,
-                    title: "Error",
-                    open: function() {
-                        $(this).html(response)
-                    },
-                    dialogClass: 'ui-dialog-osx',
-                });
-                console.log('save error: ', response)
+        $.ajax({
+            url: 'lunch.php',
+            data: {
+                name: winner_array[0].name,
+                restaurant: winner_array[0].restaurant,
+                food: winner_array[0].food,
+                range: parseInt(winner_array[0].range),
+                friends: winner_array[0].friend
+            },
+            method: "POST",
+            dataType: 'JSON',
+            crossDomain: true,
+            success: function(response) {
+                if (response) {
+                    $("#dialog-message").dialog({
+                        modal: true,
+                        draggable: false,
+                        resizable: false,
+                        position: ['center', 'top'],
+                        width: 400,
+                        title: "Status Update",
+                        open: function() {
+                            $(this).html(response)
+                        },
+                        dialogClass: 'ui-dialog-osx',
+                    });
+                    console.log('Save: ', response)
+                } else if (!response) {
+                    $("#dialog-message").dialog({
+                        modal: true,
+                        draggable: false,
+                        resizable: false,
+                        position: ['center', 'top'],
+                        width: 400,
+                        title: "Error",
+                        open: function() {
+                            $(this).html(response)
+                        },
+                        dialogClass: 'ui-dialog-osx',
+                    });
+                    console.log('save error: ', response)
 
+                }
             }
-        }
-    });
-}
-//not using get friends for now
-// function get_friend_list() {
-//         $.ajax({
-//             url: 'friends.php',
-//             method: 'POST',
-//             dataType: 'html',
-//             success: function(response) {
+        });
+    }
+    //not using get friends for now
+    // function get_friend_list() {
+    //         $.ajax({
+    //             url: 'friends.php',
+    //             method: 'POST',
+    //             dataType: 'html',
+    //             success: function(response) {
 
 //                 $('.friend_list_sugg').html(response);
 
@@ -404,7 +416,7 @@ function add_person_object() {
         if (index < 4) {
 
             lunch_object[element.id] = element.value;
-            console.log(element.id+" : "+element.value)
+            console.log(element.id + " : " + element.value)
         }
 
     });
@@ -578,10 +590,10 @@ $(document).ready(function() {
     // logout_ajax();
     $('nav').on('click', '.home', function() {
 
-                login_check();
-                lunch_appoint_array = [];
-                winner_array = [];
-            })
+        login_check();
+        lunch_appoint_array = [];
+        winner_array = [];
+    })
     $('nav').on('click', '.lunch', function() {
         nav_lunch();
     })
@@ -612,7 +624,7 @@ $(document).ready(function() {
     $('body').on('click', '#add_rest_names', function() {
         save();
     })
-    $('body').on('click', '.logout', function() {
+    $('body').on('click', '#logout', function() {
             console.log('logout btn')
             logout();
         })
