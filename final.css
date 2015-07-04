@@ -23,22 +23,28 @@ nav li {
     display: inline-block;
     padding: 0px 20px;
     border-radius: 10px;
-}
-
-nav li:hover {
     color: white;
     background-color: black;
+    font-weight: bold;
 }
+nav li:hover {
+    color: red;
+
+}
+
+
 p.logout {
     margin-top: 10px;
     text-align: center;
     border-radius: 10px;
     font-weight: bold;
+    
+}
+
+p.logout:hover {
+    
     color: white;
     background-color: black;
-}
-p.logout:hover {
-    color: orange;
 }
 
 table > tbody > tr > td {
