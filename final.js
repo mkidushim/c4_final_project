@@ -626,7 +626,7 @@ $(document).ready(function() {
     })
     $('body').on('click', '#logout', function() {
             console.log('logout btn')
-            logout();
+            // logout();
         })
         // $('nav').on('click', '.home', function() {
         //     console.log('button')
