@@ -547,7 +547,40 @@ function drawRouletteWheel() {
         ctx.fill();
     }
 }
+function new_user (){
+     $.ajax({
+            url: 'account_create.html',
+            method: "POST",
+            dataType: 'html',
+            crossDomain: true,
+            success: function(response) {
+                // $('body').on('click', '#validate',function(){
+                //     validation();
+                // })
+                $('.main_content').html(response);
+            }
+        });
+}
+function validation (){
+    $.ajax({
+            url: 'validate.php',
+            method: "POST",
+            data: {
+                username: $('#N_user_name').val(),
+                email: $('#N_user_email').val(),
+                firstname: $('#N_user_firstname').val(),
+                lastname: $('#N_user_lastname').val(),
+                password: $('#N_password1').val(),
 
+            },
+            dataType: 'JSON',
+            crossDomain: true,
+            success: function(response) {
+
+                console.log(response);
+            }
+        });
+}
 function spin() {
     spinAngleStart = Math.random() * 10 + 10;
     spinTime = 0;
@@ -588,6 +621,14 @@ function easeOut(t, b, c, d) {
 }
 $(document).ready(function() {
     // logout_ajax();
+    $('body').on('click', '#validate',function(){
+                    validation();
+                    console.log('validate')
+    })
+    $('body').on('click','#new_user', function(){
+        console.log('new user');
+        new_user();
+    })
     $('nav').on('click', '.home', function() {
 
         login_check();
