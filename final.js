@@ -568,16 +568,22 @@ function validation (){
             data: {
                 username: $('#N_user_name').val(),
                 email: $('#N_user_email').val(),
-                firstname: $('#N_user_firstname').val(),
-                lastname: $('#N_user_lastname').val(),
+                firstname: $('#N_first_name').val(),
+                lastname: $('#N_last_name').val(),
                 password: $('#N_password1').val(),
 
             },
             dataType: 'JSON',
             crossDomain: true,
             success: function(response) {
-
-                console.log(response);
+                if (response.successs == true){
+                    console.log('validation: ', response);
+                }else if(response.errors ==true){
+                    var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
+                    $('body').append(div);
+                    console.log('validation failed:', response)
+                }
+                
             }
         });
 }
@@ -622,6 +628,7 @@ function easeOut(t, b, c, d) {
 $(document).ready(function() {
     // logout_ajax();
     $('body').on('click', '#validate',function(){
+
                     validation();
                     console.log('validate')
     })
