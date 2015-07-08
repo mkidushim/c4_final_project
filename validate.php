@@ -3,7 +3,7 @@ require('mysql_connect.php');
 $firstname = addslashes($_POST['firstname']);
 $lastname = addslashes($_POST['lastname']);
 $email = addslashes($_POST['email']);
-$password = addslashes($_POST['password']);
+$password = addslashes(sha1($_POST['password']));
 $user = addslashes($_POST['username']);
 $check = "SELECT * FROM users WHERE username = '$user'";
 $user_check = mysqli_query($con, $check);
@@ -19,7 +19,7 @@ $result = mysqli_query($con, $sql);
 if ($result) {
 	$output['success']= true;
 	$output['info']= $_POST;
-    $end = json_encode($user_check);
+    $end = json_encode($output);
     print_r($end);
 }
 

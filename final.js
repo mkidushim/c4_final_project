@@ -576,9 +576,12 @@ function validation (){
             dataType: 'JSON',
             crossDomain: true,
             success: function(response) {
-                if (response.successs == true){
+                if (response.success == true){
+                    var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly procceed to login page or hit refresh");
+                    $('body').append(div);
                     console.log('validation: ', response);
                 }else if(response.errors ==true){
+                    
                     var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
                     $('body').append(div);
                     console.log('validation failed:', response)
@@ -627,8 +630,12 @@ function easeOut(t, b, c, d) {
 }
 $(document).ready(function() {
     // logout_ajax();
+    $('body').on('click', '#login_page',function(){
+                    $('.alert.alert-success').remove();
+                    logout_ajax();
+    })
     $('body').on('click', '#validate',function(){
-
+                    $('.alert.alert-danger').remove();
                     validation();
                     console.log('validate')
     })
