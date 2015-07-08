@@ -562,12 +562,13 @@ function new_user (){
         });
 }
 function validation (){
+    var user_email = $('#N_user_email').val();
     $.ajax({
             url: 'validate.php',
             method: "POST",
             data: {
                 username: $('#N_user_name').val(),
-                email: $('#N_user_email').val(),
+                email: user_email,
                 firstname: $('#N_first_name').val(),
                 lastname: $('#N_last_name').val(),
                 password: $('#N_password1').val(),
@@ -631,7 +632,7 @@ function easeOut(t, b, c, d) {
 $(document).ready(function() {
     // logout_ajax();
     $('body').on('click', '#login_page',function(){
-                    $('.alert.alert-success').remove();
+                    $('.alert.alert-danger').remove();
                     logout_ajax();
     })
     $('body').on('click', '#validate',function(){
