@@ -633,6 +633,7 @@ $(document).ready(function() {
     // logout_ajax();
     $('body').on('click', '#login_page',function(){
                     $('.alert.alert-danger').remove();
+                    $('.alert.alert-success').remove();
                     logout_ajax();
     })
     $('body').on('click', '#validate',function(){
