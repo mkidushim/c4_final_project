@@ -287,7 +287,33 @@ function nav_friends() {
         }
     });
 }
+function nav_edit() {
+    $.ajax({
+        url: 'account.php',
+        method: 'POST',
+        dataType: 'html',
+        cache: false,
+        success: function(response) {
+            $('.main_content').html(response);
 
+            $('nav').on('click', '.home', function() {
+                login_check();
+                //to_landing();
+            })
+            $('nav').on('click', '.lunch', function() {
+                nav_lunch();
+            })
+            $('nav').on('click', '.friends', function() {
+                nav_friends();
+            })
+            $('body').on('click', '#logout', function() {
+                console.log('logout btn')
+                logout();
+            })
+
+        }
+    });
+}
 function nav_lunch() {
     $.ajax({
         url: 'lunch.html',
@@ -631,6 +657,9 @@ function easeOut(t, b, c, d) {
 }
 $(document).ready(function() {
     // logout_ajax();
+    $('body').on('click','#edit', function(){
+        nav_edit();
+    })
     $('body').on('click', '#login_page',function(){
                     $('.alert.alert-danger').remove();
                     $('.alert.alert-success').remove();

@@ -35,7 +35,7 @@ nav li:hover {
 .main_content{
     padding-bottom: 20px;
 }
-p.logout {
+.logout {
     list-style: none;
     margin-top: 10px;
     text-align: center;
@@ -44,7 +44,7 @@ p.logout {
     
 }
 
-p.logout:hover {
+.logout:hover {
     
     color: white;
     background-color: black;
