@@ -197,6 +197,27 @@ function ajax_call() {
         }
     });
 }
+function edit_click (){
+
+$.ajax({
+            url: 'edit.php',
+            method: 'POST',
+            data: {
+                firstname: $('.name').val(),
+                lastname: $('.last').val(),
+                email: $('.email').val(),
+                username: $('.user').val(),
+            },
+            crossDomain: true,
+            dataType: 'JSON',
+            cache: false,
+            success: function(response) {
+                console.log("hello",response);
+            }
+            
+            })
+
+}
 
 function login_check() {
         $.ajax({
