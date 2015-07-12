@@ -205,12 +205,12 @@ function login_check() {
             dataType: 'JSON',
             cache: false,
             success: function(response) {
-                if (response.success) {
+                if (response.success == true) {
                     to_landing();
                     console.log("login check working: ", response);
                     user_info = response.userinfo;
-                } else if (response.errors) {
-                    console.log("login check errors: ", response.errors)
+                } else if (response.errors == true) {
+                    console.log("login check errors: ", response)
                 }
             }
         });
@@ -656,6 +656,7 @@ function easeOut(t, b, c, d) {
     return b + c * (tc + -3 * ts + 3 * t);
 }
 $(document).ready(function() {
+    
     // logout_ajax();
     $('body').on('click','#edit', function(){
         nav_edit();
@@ -691,6 +692,8 @@ $(document).ready(function() {
         console.log('button worked')
     });
     login_check();
+   
+    
     $('body').on('click', '#lunch_b', function() {
         add_person_DOM();
 
