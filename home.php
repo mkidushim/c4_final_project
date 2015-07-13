@@ -9,7 +9,7 @@ $output = [];
   		if (mysqli_num_rows($result) > 0){
   			$all = mysqli_fetch_assoc($result);
   				$_SESSION['user_id']= $all['user_id'];
-  				$_SESSION['loggedin'] = true;
+  				$_SESSION['username'] = $all['username'];
   				$all['success']= true;
   				$output_string = json_encode($all);
 				

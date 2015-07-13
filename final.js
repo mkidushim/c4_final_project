@@ -212,7 +212,46 @@ $.ajax({
             dataType: 'JSON',
             cache: false,
             success: function(response) {
-                console.log("hello",response);
+                if (response.user_fail == true){
+                    $('#dialog-message').dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    position: ['center', 'top'],
+                    width: 400,
+                    title: "Errors",
+                    open: function() {
+                        this.html('User Name Already Taken')
+                        }
+                    })
+                }
+                else if (response.success == true){
+                    $('#dialog-message').dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    position: ['center', 'top'],
+                    width: 400,
+                    title: "Errors",
+                    open: function() {
+                        this.html('User Update Failed')
+                        }
+                    })
+                }
+                else if (response.success == false){
+                    $('#dialog-message').dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    position: ['center', 'top'],
+                    width: 400,
+                    title: "Errors",
+                    open: function() {
+                        this.html('User Info Update successful')
+                        }
+                    })
+                }
+                
             }
             
             })
