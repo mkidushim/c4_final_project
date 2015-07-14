@@ -21,7 +21,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 	$email = $row['email'];
 	$user = $row['username'];
 	$user_id= $row['user_id'];
-	echo "<p class='col-md-12'>Username: ".$user."</p><br><p class='col-md-12'> ID Number:". $user_id."</p><br><p class='col-md-12'>Name: ".$first_n.$last_n."</p><br/><p class='col-md-12'>".$email."</p>";
+	echo "<p class='col-md-12'>Username: ".$user."</p><br><p class='col-md-12'> ID Number: ". $user_id."</p><br><p class='col-md-12'>First Name: ".$first_n."</p><br><p class='col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-md-12'>E-mail: ".$email."</p>";
 	echo "<form> <input class='user col-md-7 col-md-offset-2' value='".$user."'></input><br><input class='name col-md-7 col-md-offset-2' value='".$first_n."'><input class='last col-md-7 col-md-offset-2' value='".$last_n."'></input><br/><input class='email col-md-7 col-md-offset-2' value='".$email."'></input>";
 }
 

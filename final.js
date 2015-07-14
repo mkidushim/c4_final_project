@@ -213,7 +213,7 @@ $.ajax({
             cache: false,
             success: function(response) {
                 console.log(response);
-                if (response.filled_out == true){
+                if (response.user_fail == true){
                     $('#dialog-message').dialog({
                     modal: true,
                     draggable: false,
@@ -223,6 +223,19 @@ $.ajax({
                     title: "Errors",
                     open: function() {
                         $(this).html('User Name Already Taken')
+                        }
+                    })
+                }
+                else if (response.filled_out == false){
+                    $('#dialog-message').dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    position: ['center', 'top'],
+                    width: 400,
+                    title: "Errors",
+                    open: function() {
+                        $(this).html('User info empty')
                         }
                     })
                 }

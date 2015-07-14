@@ -15,12 +15,12 @@ if (mysqli_num_rows($user_check) > 0 ) {
 	$final = json_encode($output);
 	
 }
-if(empty($lastname) or empty($email) or empty($firstname)){
+else if(empty($lastname) or empty($email) or empty($firstname)){
 	$output['filled_out'] = false;
 	$final = json_encode($output);
 
 }
-if (mysqli_num_rows($user_check) == 0) {
+else if (mysqli_num_rows($user_check) == 0) {
 $sql = "UPDATE `users` SET first_name ='$firstname', last_name = '$lastname', email = '$email', username = '$user' WHERE user_id = $user_id";
 $result = mysqli_query($con, $sql);
 if(empty($lastname) or empty($email) or empty($firstname)){
