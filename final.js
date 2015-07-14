@@ -212,7 +212,8 @@ $.ajax({
             dataType: 'JSON',
             cache: false,
             success: function(response) {
-                if (response.user_fail == true){
+                console.log(response);
+                if (response.filled_out == true){
                     $('#dialog-message').dialog({
                     modal: true,
                     draggable: false,
@@ -221,7 +222,7 @@ $.ajax({
                     width: 400,
                     title: "Errors",
                     open: function() {
-                        this.html('User Name Already Taken')
+                        $(this).html('User Name Already Taken')
                         }
                     })
                 }
@@ -234,7 +235,7 @@ $.ajax({
                     width: 400,
                     title: "Errors",
                     open: function() {
-                        this.html('User Update Failed')
+                        $(this).html('User Info Update successful')
                         }
                     })
                 }
@@ -247,7 +248,7 @@ $.ajax({
                     width: 400,
                     title: "Errors",
                     open: function() {
-                        this.html('User Info Update successful')
+                        $(this).html('User Info Update Failed')
                         }
                     })
                 }
