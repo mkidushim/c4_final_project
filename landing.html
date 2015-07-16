@@ -1,11 +1,15 @@
-<p onclick="logout()" id="logout" class="logout col-md-1 col-md-offset-1">Logout</p>
-<p id="edit" class="logout col-md-1 col-md-offset-1">Account</p>
-<nav class="col-xs-11 col-xs-offset-1 col-md-3 col-md-offset-9">
-    <li class="home col-xs-3">Home</li>
-    <!--<li class="friends">Friends</li>-->
-    <li class="lunch col-xs-6 col-xs-offset-3"> Go to Lunch</li>
-    
-</nav>
+<p onclick="login_check()" class='logout col-xs-3 col-md-1 col-md-offset-1'>Home</p>
+<p onclick="nav_lunch()" class='logout col-xs-3 col-md-1 col-md-offset-1'>Lunch</p>
+<p id="edit" onclick="nav_edit()" class="logout col-xs-3 col-md-1 col-md-offset-1">Account</p>
+
+<p id="logout" onclick="logout()" class="logout col-xs-3 col-md-1 col-md-offset-1">Logout</p>
+
+
+
+   <!-- <li class="home col-xs-3">Home</li>
+    <li class="friends">Friends</li>
+        <li class="lunch col-xs-3">Lunch</li>-->
+
 <div class="col-xs-12 col-md-12">
     <ol class="recent lunches list-group text-center">Recent Lunches
         <li class="list-group-item">Name | Friends | Restaurant | Type of Food | Range</li>

@@ -19,7 +19,7 @@ img.col-md-3 {
     width: 45%;
 }
 
-nav li {
+nav li, p.home, p.lunch {
     display: inline-block;
     padding: 0px 20px;
     border-radius: 10px;
