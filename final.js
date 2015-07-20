@@ -14,7 +14,7 @@ var colors = ["#B8D430", "#3AB745", "#029990", "#3501CB",
     "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"
 ];
 var startAngle = 0;
-var arc = Math.PI / 6;
+var arc = Math.PI / 3;
 var spinTimeout = null;
 var spinArcStart = 10;
 var spinTime = 0;
@@ -64,7 +64,7 @@ function send_food_request() {
         });
         google.maps.event.addListenerOnce(map_o, 'idle', function() {
             draw();
-            $('#wheelcanvas').before('<input type="button" value="spin" class="col-md-1" onclick="spin();" style="float: left;">');
+            $('#wheelcanvas').before('<input type="button" value="spin again" class="col-md-3" onclick="spin();" style="float: left;">');
             spin();
         });
     })
@@ -84,7 +84,7 @@ function initialize() {
             location: center,
             radius: 10000,
             types: ['cafe', 'meal_takeaway', 'meal_delivery', 'food', 'restaurant'],
-            keyword: "restaurants",
+            query: "lunch",
             sortby: "distance"
         };
         var cont_string =
@@ -292,7 +292,7 @@ function login_check() {
     // commented out google maps api on landing page 
 function to_landing() {
     $.ajax({
-        url: 'landing.html',
+        url: 'index2.0_templ.html',
         method: 'POST',
         dataType: 'html',
         cache: false,
@@ -302,14 +302,14 @@ function to_landing() {
                 text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
                 class: 'col-md-5 col-md-offset-2'
             });
-            $('.main_content').html(user).append(response);
-            $('nav').on('click', '.lunch', function() {
+            $('body').html(response);
+            $('body').on('touchstart click', '.lunch', function() {
                 nav_lunch();
             })
-            $('nav').on('click', '.friends', function() {
+            $('body').on('touchstart click', '.friends', function() {
                 nav_friends();
             })
-            $('body').on('click', '#logout', function() {
+            $('body').on('touchstart click', '#logout', function() {
                 console.log('logout btn')
                 logout();
             })
@@ -363,12 +363,12 @@ function nav_friends() {
 }
 function nav_edit() {
     $.ajax({
-        url: 'account.php',
+        url: 'account2.0.html',
         method: 'POST',
         dataType: 'html',
         cache: false,
         success: function(response) {
-            $('.main_content').html(response);
+            $('body').html(response);
 
             // $('nav').on('click', '.home', function() {
             //     login_check();
@@ -390,25 +390,25 @@ function nav_edit() {
 }
 function nav_lunch() {
     $.ajax({
-        url: 'lunch.html',
+        url: 'lunch2.0.html',
         method: 'POST',
         dataType: 'html',
         cache: false,
         success: function(response) {
 
-                $('.main_content').html(response);
-                $('nav').on('click', '.home', function() {
+                $('body').html(response);
+                $('body').on('touchstart click', '.home', function() {
 
                     login_check();
                     lunch_appoint_array = [];
                     winner_array = [];
                 })
 
-                $('nav').on('click', '.lunch', function() {
+                $('body').on('click', '.lunch', function() {
                     nav_lunch();
                 })
-                $('nav').on('click', '.friends', function() {
-                    nav_friends();
+                $('body').on('click', '.account', function() {
+                    nav_edit();
                 })
                 $('body').on('click', '#logout', function() {
                     console.log('logout btn')
@@ -425,10 +425,11 @@ function logout_ajax() {
     $.ajax({
         url: 'login.html',
         method: "POST",
+        type: "html",
         crossDomain: true,
         success: function(response) {
 
-            $('.main_content').html(response);
+            $('body').html(response);
             $('form').on('click', '#login', function() {
                 ajax_call();
                 console.log('button worked')
@@ -468,7 +469,6 @@ function save() {
                         modal: true,
                         draggable: false,
                         resizable: false,
-                        position: ['center', 'top'],
                         width: 400,
                         title: "Status Update",
                         open: function() {
@@ -482,7 +482,6 @@ function save() {
                         modal: true,
                         draggable: false,
                         resizable: false,
-                        position: ['center', 'top'],
                         width: 400,
                         title: "Error",
                         open: function() {
@@ -512,7 +511,7 @@ function save() {
 //     }
 function add_person_object() {
     lunch_object = {};
-    $(':text.lunch').each(function(index, element) {
+    $(':text').each(function(index, element) {
         if (index < 4) {
 
             lunch_object[element.id] = element.value;
@@ -538,19 +537,20 @@ function add_person_DOM() {
     var append_name = $(
         "<li>", {
             text: "Name: " + name,
-            class: "list-group-item"
+            class: "list-group-item list-group-item-info"
         });
     var append_food_response = $(
         "<li>", {
             text: "Food: " + food,
-            class: "list-group-item"
+            class: "list-group-item list-group-item-info"
         });
     var append_range = $(
         "<li>", {
             text: "Range: " + range,
-            class: "list-group-item"
+            class: "list-group-item list-group-item-info"
         });
-    $('#info').append(append_name).append(append_food_response).append(append_range);
+    var line = $("<br/>")
+    $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
     add_person_object();
 }
 
@@ -561,17 +561,17 @@ function random_select() {
     var append_name = $(
         "<li>", {
             text: "Winner: " + rand.name,
-            class: "list-group-item-success text-center"
+            class: "list-group-item list-group-item-success text-center"
         });
     var append_food = $(
         "<li>", {
             text: "Food: " + rand.food,
-            class: "list-group-item-success text-center"
+            class: "list-group-item list-group-item-success text-center"
         });
     var append_range = $(
         "<li>", {
             text: "Range: " + rand.range,
-            class: "list-group-item-success text-center"
+            class: "list-group-item list-group-item-success text-center"
         });
     for (var i = 0; i < lunch_appoint_array.length; i++) {
         if (lunch_appoint_array[i].name == rand.name) {
@@ -581,16 +581,17 @@ function random_select() {
             console.log(lunch_appoint_array[i].name)
             friend_list += lunch_appoint_array[i].name + " ";
             winner_array[0].friend = friend_list
-            var append_friends = $(
+            
+        }
+
+    }
+  var append_friends = $(
                 "<li>", {
-                    text: "Friends: " + lunch_appoint_array[i].name,
-                    class: "list-group-item-success text-center"
+                    text: "Friends: " + friend_list,
+                    class: "list-group-item list-group-item-success text-center"
                 });
 
             $('#info').append(append_friends);
-        }
-    }
-
 
     console.log('winner', rand);
 
@@ -607,13 +608,13 @@ function drawRouletteWheel() {
     if (canvas.getContext) {
         var outsideRadius = 180;
         var textRadius = 140;
-        var insideRadius = 105;
+        var insideRadius = 115;
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 500, 500);
         ctx.strokeStyle = "black";
         ctx.lineWidth = 2;
-        ctx.font = 'bold 9px sans-serif';
-        for (var i = 0; i < 12; i++) {
+        ctx.font = 'bold 10px segoe UI';
+        for (var i = 0; i < 6; i++) {
             var angle = startAngle + i * arc;
             ctx.fillStyle = colors[i];
             ctx.beginPath();
@@ -626,7 +627,7 @@ function drawRouletteWheel() {
             ctx.shadowOffsetY = 0;
             ctx.shadowBlur = 0;
             // ctx.shadowColor = "black";
-            ctx.fillStyle = "#6B6B6B";
+            ctx.fillStyle = "white";
             ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
             var text = lunch_array[i];
@@ -716,7 +717,7 @@ function stopRotateWheel() {
     var arcd = arc * 180 / Math.PI;
     var index = Math.floor((360 - degrees % 360) / arcd);
     ctx.save();
-    ctx.font = '20px sans-serif';
+    ctx.font = '16px segoe UI';
     var text = lunch_array[index]
     winner_array[0].restaurant = lunch_array[index];
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
@@ -749,17 +750,17 @@ $(document).ready(function() {
         console.log('new user');
         new_user();
     })
-    $('nav').on('click', '.home', function() {
+    $('body').on('touchstart click', '.home', function() {
 
         login_check();
         lunch_appoint_array = [];
         winner_array = [];
     })
-    $('nav').on('click', '.lunch', function() {
+    $('body').on('touchstart click', '.lunch', function() {
         nav_lunch();
     })
-    $('nav').on('click', '.friends', function() {
-        nav_friends();
+    $('body').on('touchstart click', '.account', function() {
+        nav_edit();
     })
     $('form').on('click', '#login', function() {
         ajax_call();
@@ -787,9 +788,9 @@ $(document).ready(function() {
     $('body').on('click', '#add_rest_names', function() {
         save();
     })
-    $('body').on('click', '#logout', function() {
+    $('body').on('click', '.logout', function() {
             console.log('logout btn')
-            // logout();
+            logout();
         })
         // $('nav').on('click', '.home', function() {
         //     console.log('button')
