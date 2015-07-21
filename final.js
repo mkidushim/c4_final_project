@@ -363,7 +363,7 @@ function nav_friends() {
 }
 function nav_edit() {
     $.ajax({
-        url: 'account2.0.html',
+        url: 'account2.0.php',
         method: 'POST',
         dataType: 'html',
         cache: false,
@@ -606,9 +606,9 @@ function draw() {
 function drawRouletteWheel() {
     var canvas = document.getElementById("wheelcanvas");
     if (canvas.getContext) {
-        var outsideRadius = 110;
-        var textRadius = 80;
-        var insideRadius = 60;
+        var outsideRadius = 120;
+        var textRadius = 130;
+        var insideRadius = 80;
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 500, 500);
         ctx.strokeStyle = "black";
@@ -627,7 +627,7 @@ function drawRouletteWheel() {
             ctx.shadowOffsetY = 0;
             ctx.shadowBlur = 0;
             // ctx.shadowColor = "black";
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "black";
             ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
             var text = lunch_array[i];
@@ -717,7 +717,7 @@ function stopRotateWheel() {
     var arcd = arc * 180 / Math.PI;
     var index = Math.floor((360 - degrees % 360) / arcd);
     ctx.save();
-    ctx.font = '16px segoe UI';
+    ctx.font = '14px segoe UI';
     var text = lunch_array[index]
     winner_array[0].restaurant = lunch_array[index];
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);

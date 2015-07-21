@@ -8,7 +8,7 @@ body {
 }
 #wheelcanvas {
 position: relative;
-right: 50px;
+left: 100px;
 }
 .nav:hover {
     cursor: pointer;
