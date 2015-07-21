@@ -6,6 +6,13 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
+#wheelcanvas {
+position: relative;
+right: 50px;
+}
+.nav:hover {
+    cursor: pointer;
+}
 #map-canvas, #map-canvas2{
     height: 450px;
 }

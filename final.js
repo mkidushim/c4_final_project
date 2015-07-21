@@ -606,9 +606,9 @@ function draw() {
 function drawRouletteWheel() {
     var canvas = document.getElementById("wheelcanvas");
     if (canvas.getContext) {
-        var outsideRadius = 180;
-        var textRadius = 140;
-        var insideRadius = 115;
+        var outsideRadius = 110;
+        var textRadius = 80;
+        var insideRadius = 60;
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 500, 500);
         ctx.strokeStyle = "black";
