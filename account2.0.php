@@ -34,7 +34,7 @@ $result = mysqli_query($con, $query);
                         <a class="account">Account</a>
                     </li>
                     <li>
-                        <a class="logout">Contact</a>
+                        <a class="logout">Logout</a>
                     </li>
                 </ul>
             </div>
