@@ -45,10 +45,10 @@ $result = mysqli_query($con, $query);
     <div class="container">
         <div class="row">
             <div class="box">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <hr>
-                    <h2 class="text-center">
-                        <strong>Account Info</strong>
+                    <h2 class="intro-text text-center">Account Info
+                        <strong></strong>
                     </h2>
                     <hr>
                     <div class="text-center">
@@ -60,12 +60,12 @@ $result = mysqli_query($con, $query);
                         $email = $row['email'];
                         $user = $row['username'];
                         $user_id= $row['user_id'];
-                        echo "<p>Username: ".$user."</p><br><p> ID Number: ". $user_id."</p><br><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
-                        echo "<div class='col-lg-12 text-center'><h2 class='intro-text text-center'>Edit Account Info</h2><hr><form> <input class='user col-md-4 col-md-offset-4' value='".$user."'></input><br><input class='name col-md-4 col-md-offset-4' value='".$first_n."'><input class='last col-md-4 col-md-offset-4' value='".$last_n."'></input><br/><input class='email col-md-4 col-md-offset-4' value='".$email."'></input>";
+                        echo "<p>Username: ".$user."</p><p> ID Number: ". $user_id."</p><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
+                        echo "<div class='col-lg-6 text-center'><hr><h2 class='intro-text text-center'>Edit Account Info</h2><hr><form> <input class='user col-md-5 col-md-offset-4' value='".$user."'></input><br><input class='name col-md-5 col-md-offset-4' value='".$first_n."'><input class='last col-md-5 col-md-offset-4' value='".$last_n."'></input><br/><input class='email col-md-5 col-md-offset-4' value='".$email."'></input>";
                     }
 
                     ?>
-                            <button class="col-md-1 col-md-offset-7" type="button" onclick="edit_click()">submit</button>
+                            <button class="col-md-3 col-md-offset-5" type="button" onclick="edit_click()">submit</button>
                             </form>
                     
                 
