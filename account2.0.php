@@ -61,18 +61,12 @@ $result = mysqli_query($con, $query);
                         $user = $row['username'];
                         $user_id= $row['user_id'];
                         echo "<p>Username: ".$user."</p><p> ID Number: ". $user_id."</p><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
-                        echo "<div class='col-lg-6 text-center'><hr><h2 class='intro-text text-center'>Edit Account Info</h2><hr><form> <input class='user col-md-5 col-md-offset-4' value='".$user."'></input><br><input class='name col-md-5 col-md-offset-4' value='".$first_n."'><input class='last col-md-5 col-md-offset-4' value='".$last_n."'></input><br/><input class='email col-md-5 col-md-offset-4' value='".$email."'></input>";
+                        echo "<div class='col-lg-6 text-center'><hr><h2 class='intro-text text-center'>Edit Account Info</h2><hr><form><input class='name col-md-5 col-md-offset-4' value='".$first_n."'><input class='last col-md-5 col-md-offset-4' value='".$last_n."'></input><br/><input class='email col-md-5 col-md-offset-4' value='".$email."'></input>";
                     }
 
                     ?>
                             <button class="col-md-3 col-md-offset-5" type="button" onclick="edit_click()">submit</button>
                             </form>
-                    
-                
-                
-                    
-                        
-                    
                 </div>
             </div>
         </div>
@@ -87,6 +81,8 @@ $result = mysqli_query($con, $query);
             </div>
         </div>
     </footer>
-    <!-- jQuery -->
+   <div id='dialog-message' class="col-xs-6 col-sm-10 col-md-5 col-lg-5"></div>
     <!-- Bootstrap Core JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>

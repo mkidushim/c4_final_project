@@ -20,6 +20,7 @@ var spinArcStart = 10;
 var spinTime = 0;
 var spinTimeTotal = 0;
 var ctx;
+var first_add = true;
 
 function send_food_request() {
     var name = winner_array[0].name;
@@ -197,50 +198,37 @@ function ajax_call() {
         }
     });
 }
-function edit_click (){
 
-$.ajax({
-            url: 'edit.php',
-            method: 'POST',
-            data: {
-                firstname: $('.name').val(),
-                lastname: $('.last').val(),
-                email: $('.email').val(),
-                username: $('.user').val(),
-            },
-            crossDomain: true,
-            dataType: 'JSON',
-            cache: false,
-            success: function(response) {
-                console.log(response);
-                if (response.user_fail == true){
-                    $('#dialog-message').dialog({
+function edit_click() {
+
+    $.ajax({
+        url: 'edit.php',
+        method: 'POST',
+        data: {
+            firstname: $('.name').val(),
+            lastname: $('.last').val(),
+            email: $('.email').val(),
+
+        },
+        crossDomain: true,
+        dataType: 'JSON',
+        cache: false,
+        success: function(response) {
+            console.log(response);
+            if (response.filled_out == false) {
+                $('#dialog-message').dialog({
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    position: ['center', 'top'],
-                    width: 400,
-                    title: "Errors",
-                    open: function() {
-                        $(this).html('User Name Already Taken')
-                        }
-                    })
-                }
-                else if (response.filled_out == false){
-                    $('#dialog-message').dialog({
-                    modal: true,
-                    draggable: false,
-                    resizable: false,
-                    position: ['center', 'top'],
+                    
                     width: 400,
                     title: "Errors",
                     open: function() {
                         $(this).html('User info empty')
-                        }
-                    })
-                }
-                else if (response.success == true){
-                    $('#dialog-message').dialog({
+                    }
+                })
+            } else if (response.success == true) {
+                $('#dialog-message').dialog({
                     modal: true,
                     draggable: false,
                     resizable: false,
@@ -249,11 +237,11 @@ $.ajax({
                     title: "Errors",
                     open: function() {
                         $(this).html('User Info Update successful')
-                        }
-                    })
-                }
-                else if (response.success == false){
-                    $('#dialog-message').dialog({
+                    },
+                    dialogClass: 'ui-dialog-osx',
+                })
+            } else if (response.success == false) {
+                $('#dialog-message').dialog({
                     modal: true,
                     draggable: false,
                     resizable: false,
@@ -262,34 +250,35 @@ $.ajax({
                     title: "Errors",
                     open: function() {
                         $(this).html('User Info Update Failed')
-                        }
-                    })
-                }
-                
+                    },
+                    dialogClass: 'ui-dialog-osx'
+                })
             }
-            
-            })
+
+        }
+
+    })
 
 }
 
 function login_check() {
-        $.ajax({
-            url: 'logged_in.php',
-            method: 'POST',
-            dataType: 'JSON',
-            cache: false,
-            success: function(response) {
-                if (response.success == true) {
-                    to_landing();
-                    console.log("login check working: ", response);
-                    user_info = response.userinfo;
-                } else if (response.errors == true) {
-                    console.log("login check errors: ", response)
-                }
+    $.ajax({
+        url: 'logged_in.php',
+        method: 'POST',
+        dataType: 'JSON',
+        cache: false,
+        success: function(response) {
+            if (response.success == true) {
+                to_landing();
+                console.log("login check working: ", response);
+                user_info = response.userinfo;
+            } else if (response.errors == true) {
+                console.log("login check errors: ", response)
             }
-        });
-    }
-    // commented out google maps api on landing page 
+        }
+    });
+}
+// commented out google maps api on landing page 
 function to_landing() {
     $.ajax({
         url: 'index2.0_templ.html',
@@ -361,6 +350,7 @@ function nav_friends() {
         }
     });
 }
+
 function nav_edit() {
     $.ajax({
         url: 'account2.0.php',
@@ -388,6 +378,7 @@ function nav_edit() {
         }
     });
 }
+
 function nav_lunch() {
     $.ajax({
         url: 'lunch2.0.html',
@@ -451,57 +442,57 @@ function logout() {
 }
 
 function save() {
-        $.ajax({
-            url: 'lunch.php',
-            data: {
-                name: winner_array[0].name,
-                restaurant: winner_array[0].restaurant,
-                food: winner_array[0].food,
-                range: parseInt(winner_array[0].range),
-                friends: winner_array[0].friend
-            },
-            method: "POST",
-            dataType: 'JSON',
-            crossDomain: true,
-            success: function(response) {
-                if (response) {
-                    $("#dialog-message").dialog({
-                        modal: true,
-                        draggable: false,
-                        resizable: false,
-                        width: 400,
-                        title: "Status Update",
-                        open: function() {
-                            $(this).html(response)
-                        },
-                        dialogClass: 'ui-dialog-osx',
-                    });
-                    console.log('Save: ', response)
-                } else if (!response) {
-                    $("#dialog-message").dialog({
-                        modal: true,
-                        draggable: false,
-                        resizable: false,
-                        width: 400,
-                        title: "Error",
-                        open: function() {
-                            $(this).html(response)
-                        },
-                        dialogClass: 'ui-dialog-osx',
-                    });
-                    console.log('save error: ', response)
+    $.ajax({
+        url: 'lunch.php',
+        data: {
+            name: winner_array[0].name,
+            restaurant: winner_array[0].restaurant,
+            food: winner_array[0].food,
+            range: parseInt(winner_array[0].range),
+            friends: winner_array[0].friend
+        },
+        method: "POST",
+        dataType: 'JSON',
+        crossDomain: true,
+        success: function(response) {
+            if (response) {
+                $("#dialog-message").dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    width: 400,
+                    title: "Status Update",
+                    open: function() {
+                        $(this).html(response)
+                    },
+                    dialogClass: 'ui-dialog-osx',
+                });
+                console.log('Save: ', response)
+            } else if (!response) {
+                $("#dialog-message").dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    width: 400,
+                    title: "Error",
+                    open: function() {
+                        $(this).html(response)
+                    },
+                    dialogClass: 'ui-dialog-osx',
+                });
+                console.log('save error: ', response)
 
-                }
             }
-        });
-    }
-    //not using get friends for now
-    // function get_friend_list() {
-    //         $.ajax({
-    //             url: 'friends.php',
-    //             method: 'POST',
-    //             dataType: 'html',
-    //             success: function(response) {
+        }
+    });
+}
+//not using get friends for now
+// function get_friend_list() {
+//         $.ajax({
+//             url: 'friends.php',
+//             method: 'POST',
+//             dataType: 'html',
+//             success: function(response) {
 
 //                 $('.friend_list_sugg').html(response);
 
@@ -581,17 +572,17 @@ function random_select() {
             console.log(lunch_appoint_array[i].name)
             friend_list += lunch_appoint_array[i].name + " ";
             winner_array[0].friend = friend_list
-            
+
         }
 
     }
-  var append_friends = $(
-                "<li>", {
-                    text: "Friends: " + friend_list,
-                    class: "list-group-item list-group-item-success text-center"
-                });
+    var append_friends = $(
+        "<li>", {
+            text: "Friends: " + friend_list,
+            class: "list-group-item list-group-item-success text-center"
+        });
 
-            $('#info').append(append_friends);
+    $('#info').append(append_friends);
 
     console.log('winner', rand);
 
@@ -648,50 +639,53 @@ function drawRouletteWheel() {
         ctx.fill();
     }
 }
-function new_user (){
-     $.ajax({
-            url: 'account_create.html',
-            method: "POST",
-            dataType: 'html',
-            crossDomain: true,
-            success: function(response) {
-                // $('body').on('click', '#validate',function(){
-                //     validation();
-                // })
-                $('.main_content').html(response);
-            }
-        });
+
+function new_user() {
+    $.ajax({
+        url: 'account_create.html',
+        method: "POST",
+        dataType: 'html',
+        crossDomain: true,
+        success: function(response) {
+            // $('body').on('click', '#validate',function(){
+            //     validation();
+            // })
+            $('.main_content').html(response);
+        }
+    });
 }
-function validation (){
+
+function validation() {
     var user_email = $('#N_user_email').val();
     $.ajax({
-            url: 'validate.php',
-            method: "POST",
-            data: {
-                username: $('#N_user_name').val(),
-                email: user_email,
-                firstname: $('#N_first_name').val(),
-                lastname: $('#N_last_name').val(),
-                password: $('#N_password1').val(),
+        url: 'validate.php',
+        method: "POST",
+        data: {
+            username: $('#N_user_name').val(),
+            email: user_email,
+            firstname: $('#N_first_name').val(),
+            lastname: $('#N_last_name').val(),
+            password: $('#N_password1').val(),
 
-            },
-            dataType: 'JSON',
-            crossDomain: true,
-            success: function(response) {
-                if (response.success == true){
-                    var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly procceed to login page or hit refresh");
-                    $('body').append(div);
-                    console.log('validation: ', response);
-                }else if(response.errors ==true){
-                    
-                    var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
-                    $('body').append(div);
-                    console.log('validation failed:', response)
-                }
-                
+        },
+        dataType: 'JSON',
+        crossDomain: true,
+        success: function(response) {
+            if (response.success == true) {
+                var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly procceed to login page or hit refresh");
+                $('body').append(div);
+                console.log('validation: ', response);
+            } else if (response.errors == true) {
+
+                var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
+                $('body').append(div);
+                console.log('validation failed:', response)
             }
-        });
+
+        }
+    });
 }
+
 function spin() {
     spinAngleStart = Math.random() * 10 + 10;
     spinTime = 0;
@@ -731,22 +725,22 @@ function easeOut(t, b, c, d) {
     return b + c * (tc + -3 * ts + 3 * t);
 }
 $(document).ready(function() {
-    
+
     // logout_ajax();
     // $('body').on('click','#edit', function(){
     //     nav_edit();
     // })
-    $('body').on('click', '#login_page',function(){
-                    $('.alert.alert-danger').remove();
-                    $('.alert.alert-success').remove();
-                    logout_ajax();
+    $('body').on('click', '#login_page', function() {
+        $('.alert.alert-danger').remove();
+        $('.alert.alert-success').remove();
+        logout_ajax();
     })
-    $('body').on('click', '#validate',function(){
-                    $('.alert.alert-danger').remove();
-                    validation();
-                    console.log('validate')
+    $('body').on('click', '#validate', function() {
+        $('.alert.alert-danger').remove();
+        validation();
+        console.log('validate')
     })
-    $('body').on('click','#new_user', function(){
+    $('body').on('click', '#new_user', function() {
         console.log('new user');
         new_user();
     })
@@ -767,11 +761,14 @@ $(document).ready(function() {
         console.log('button worked')
     });
     login_check();
-   
-    
+
+
     $('body').on('click', '#lunch_b', function() {
         add_person_DOM();
-
+        if (first_add) {
+            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-2" type="button">Random</button>')
+            first_add = false;
+        }
 
     });
     $('body').on('click', '#add_all', function() {
