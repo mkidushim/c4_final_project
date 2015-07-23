@@ -220,11 +220,10 @@ function edit_click() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    
                     width: 400,
                     title: "Errors",
                     open: function() {
-                        $(this).html('User info empty')
+                        $(this).html(response.info)
                     }
                 })
             } else if (response.success == true) {
@@ -232,7 +231,6 @@ function edit_click() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    position: ['center', 'top'],
                     width: 400,
                     title: "Errors",
                     open: function() {
@@ -245,7 +243,6 @@ function edit_click() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    position: ['center', 'top'],
                     width: 400,
                     title: "Errors",
                     open: function() {
