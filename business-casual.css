@@ -10,6 +10,10 @@ body {
 position: relative;
 left: 100px;
 }
+#lunch input {
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 .nav:hover {
     cursor: pointer;
 }
