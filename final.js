@@ -47,8 +47,8 @@ function send_food_request() {
             '<div id="siteNotice">' +
             '</div>' +
             '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
-            '<div id="bodyContent">' +
-            '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+            '<div id="bodyContent">' //+
+            //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string
         });
