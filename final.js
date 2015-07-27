@@ -63,6 +63,7 @@ function send_food_request() {
             position: center,
             title: "You are Here!",
             icon: 'images/star.png',
+            maxWidth: 150
         });
         google.maps.event.addListener(marker_user, 'click', function() {
             infowindow.setContent(cont_string);
