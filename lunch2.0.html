@@ -80,12 +80,13 @@
             </div>
             <div class="col-md-8 col-md-offset-3">
                 <form id="lunch" class="">
-                    <input id="name" class="col-xs-9 col-xs-offset-2 col-md-6 col-md-offset-2" type="text" name="name" placeholder="Name">
-                    <input id="food" class="col-xs-9 col-xs-offset-2 col-md-6 col-md-offset-2" type="text" name="food1" placeholder="Food Type">
-                    <input id="range" class="col-xs-9 col-xs-offset-2 col-md-2 col-md-offset-3" type="text" name="range" placeholder="Miles Away">
-                  
-                    <button type="button" id="lunch_b" class="lunch_b col-xs-5 col-xs-offset-2 col-md-3 col-md-offset-5">Add friend</button>
-                   <!-- <button id="add_all" class="col-xs-4 col-md-2" type="button">Random</button>
+                    <input id="name" class="text-center col-xs-9 col-xs-offset-2 col-md-5 col-md-offset-2" type="text" name="name" placeholder="Name">
+                    <input id="food" class="text-center col-xs-9 col-xs-offset-2 col-md-5 col-md-offset-2" type="text" name="food1" placeholder="Food Type">
+                    <input id="range" class="text-center col-xs-9 col-xs-offset-2 col-md-3 col-md-offset-3" type="text" name="range" placeholder="Miles Away">
+                    <div id='buttons' class="col-md-12">
+                        <button type="button" id="lunch_b" class="lunch_b col-xs-5 col-xs-offset-2 col-md-3 col-md-offset-1">Add friend</button>
+                    </div>
+                    <!-- <button id="add_all" class="col-xs-4 col-md-2" type="button">Random</button>
                     <button id="add_rest_names" class="col-md-1" type="button">Save</button>-->
                 </form>
             </div>
@@ -96,19 +97,17 @@
             <div class="col-md-6">
                 <div id="map-canvas2"></div>
                 <div id="results" class="panel">
-                  <h2>Results</h2>
-                  <ul id="places"></ul>
+                    <h2>Results</h2>
+                    <ul id="places"></ul>
                 </div>
             </div>
             <p class="visible-xs text-center">Spinner only visible on desktop version.</p>
-             <canvas id="wheelcanvas" class="hidden-xs" width="400" height="400"></canvas>
+            <canvas id="wheelcanvas" class="hidden-xs" width="400" height="400"></canvas>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
-
 <!-- /.container -->
-
 <footer>
     <div class="container">
         <div class="row">
