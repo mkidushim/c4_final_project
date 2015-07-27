@@ -52,7 +52,8 @@ function send_food_request() {
             '<div id="bodyContent">' //+
             //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
-            content: cont_string
+            content: cont_string,
+            maxWidth: 150
         });
         var service = new google.maps.places.PlacesService(map_o);
         service.textSearch(request, callback_l);
