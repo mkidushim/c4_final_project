@@ -21,8 +21,9 @@ var spinTime = 0;
 var spinTimeTotal = 0;
 var ctx;
 var first_add = true;
-
+var placesList;
 function send_food_request() {
+   
     var name = winner_array[0].name;
     var range = winner_array[0].range;
     var food = winner_array[0].food;
@@ -42,6 +43,7 @@ function send_food_request() {
             query: food,
 
         };
+        placesList = document.getElementById('places');
         var cont_string =
             '<div id="content">' +
             '<div id="siteNotice">' +
@@ -54,10 +56,12 @@ function send_food_request() {
         });
         var service = new google.maps.places.PlacesService(map_o);
         service.textSearch(request, callback_l);
+        
         marker_user = new google.maps.Marker({
             map: map_o,
             position: center,
             title: "You are Here!",
+            icon: 'images/star.png',
         });
         google.maps.event.addListener(marker_user, 'click', function() {
             infowindow.setContent(cont_string);
@@ -67,6 +71,7 @@ function send_food_request() {
             draw();
             $('#wheelcanvas').before('<input type="button" value="spin again" class="col-md-3" onclick="spin();" style="float: left;">');
             spin();
+            $('#results').show();
         });
     })
 }
@@ -123,12 +128,23 @@ function callback(results, status) {
     }
 }
 
-function callback_l(results, status) {
+function callback_l(results, status, pagination) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
+        for (var i = 0; i < 11; i++) {
             createMarker_l(results[i]);
 
         }
+        if (pagination.hasNextPage) {
+      var moreButton = document.getElementById('more');
+
+      moreButton.disabled = true;
+
+      google.maps.event.addDomListenerOnce(moreButton, 'click',
+          function() {
+        moreButton.disabled = true;
+        pagination.nextPage();
+      });
+    }
     }
 }
 
@@ -157,6 +173,7 @@ function createMarker_l(place) {
         icon: "images/rest.png",
 
     });
+    placesList.innerHTML += "<li>" + place.name + "</li>";
     console.log(place.place_id);
     place_id_holder = place.place_id;
     var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating;
