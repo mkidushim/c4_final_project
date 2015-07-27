@@ -48,12 +48,12 @@ function send_food_request() {
             '<div id="content">' +
             '<div id="siteNotice">' +
             '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
-            '<div id="bodyContent">' //+
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' ;
+            //'<div id="bodyContent">' +
             //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string,
-            maxWidth: 150
+            maxWidth: 120
         });
         var service = new google.maps.places.PlacesService(map_o);
         service.textSearch(request, callback_l);
@@ -63,7 +63,6 @@ function send_food_request() {
             position: center,
             title: "You are Here!",
             icon: 'images/star.png',
-            maxWidth: 150
         });
         google.maps.event.addListener(marker_user, 'click', function() {
             infowindow.setContent(cont_string);
@@ -782,7 +781,7 @@ $(document).ready(function() {
     $('body').on('click', '#lunch_b', function() {
         add_person_DOM();
         if (first_add) {
-            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-2" type="button">Random</button>')
+            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-3 col-md-offset-1" type="button">Random</button>')
             first_add = false;
         }
 

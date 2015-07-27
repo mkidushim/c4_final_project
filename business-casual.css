@@ -207,7 +207,7 @@ footer p {
 display: none;
 font-family: Arial, Helvetica, sans-serif;
 position: absolute;
-right: 5px;
+right: 15px;
 top: 50%;
 margin-top: -195px;
 height: 380px;
@@ -239,7 +239,8 @@ white-space: nowrap;
 overflow: hidden;
 }
 #results > li:nth-child(odd) {
-background-color: gray;
+background-color: #fcfcfc;
+
 }
 #more {
 width: 100%;
