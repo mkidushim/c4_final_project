@@ -19,7 +19,7 @@ $result = mysqli_query($con, $query);
                     <span class="icon-bar"></span>
                 </button>
                 <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <a class="home navbar-brand">Business Casual</a>
+                <a class="home navbar-brand">Get Lunch</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

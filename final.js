@@ -22,8 +22,9 @@ var spinTimeTotal = 0;
 var ctx;
 var first_add = true;
 var placesList;
+
 function send_food_request() {
-   
+
     var name = winner_array[0].name;
     var range = winner_array[0].range;
     var food = winner_array[0].food;
@@ -48,16 +49,16 @@ function send_food_request() {
             '<div id="content">' +
             '<div id="siteNotice">' +
             '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' ;
-            //'<div id="bodyContent">' +
-            //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>';
+        //'<div id="bodyContent">' +
+        //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string,
             maxWidth: 120
         });
         var service = new google.maps.places.PlacesService(map_o);
         service.textSearch(request, callback_l);
-        
+
         marker_user = new google.maps.Marker({
             map: map_o,
             position: center,
@@ -136,16 +137,16 @@ function callback_l(results, status, pagination) {
 
         }
         if (pagination.hasNextPage) {
-      var moreButton = document.getElementById('more');
+            var moreButton = document.getElementById('more');
 
-      moreButton.disabled = true;
+            moreButton.disabled = true;
 
-      google.maps.event.addDomListenerOnce(moreButton, 'click',
-          function() {
-        moreButton.disabled = true;
-        pagination.nextPage();
-      });
-    }
+            google.maps.event.addDomListenerOnce(moreButton, 'click',
+                function() {
+                    moreButton.disabled = true;
+                    pagination.nextPage();
+                });
+        }
     }
 }
 
@@ -420,6 +421,7 @@ function nav_lunch() {
                     console.log('logout btn')
                     logout();
                 })
+                
             }
             // complete: function(response) {
             //     draw();
@@ -534,6 +536,8 @@ function add_person_object() {
 };
 
 function add_person_DOM() {
+
+    
     console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();
@@ -558,6 +562,10 @@ function add_person_DOM() {
     var line = $("<br/>")
     $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
     add_person_object();
+    if (first_add) {
+        $('#lunch_b').after('<button id="add_all" class="col-xs-9 col-xs-offset-2 col-md-3 col-md-offset-1" type="button">Random</button>')
+        first_add = false;
+    }
 }
 
 function random_select() {
@@ -778,15 +786,15 @@ $(document).ready(function() {
     login_check();
 
 
-    $('body').on('click', '#lunch_b', function() {
-        add_person_DOM();
-        if (first_add) {
-            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-3 col-md-offset-1" type="button">Random</button>')
-            first_add = false;
-        }
+    // $('#buttons').on('touchstart click', '#lunch_b', function() {
+    //     add_person_DOM();
+    //     if (first_add) {
+    //         $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-3 col-md-offset-1" type="button">Random</button>')
+    //         first_add = false;
+    //     }
 
-    });
-    $('body').on('click', '#add_all', function() {
+    // });
+    $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         random_select();
         send_food_request();
@@ -800,7 +808,7 @@ $(document).ready(function() {
     $('body').on('click', '#add_rest_names', function() {
         save();
     })
-    $('body').on('click', '.logout', function() {
+    $('body').on('touchstart click', '.logout', function() {
             console.log('logout btn')
             logout();
         })
