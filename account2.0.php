@@ -65,7 +65,7 @@ $result = mysqli_query($con, $query);
                     }
 
                     ?>
-                            <button class="col-md-3 col-md-offset-5" type="button" onclick="edit_click()">submit</button>
+                            <button class="edit col-md-3 col-md-offset-4" type="button" onclick="edit_click()">submit</button>
                             </form>
                 </div>
             </div>

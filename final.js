@@ -136,17 +136,6 @@ function callback_l(results, status, pagination) {
             createMarker_l(results[i]);
 
         }
-        if (pagination.hasNextPage) {
-            var moreButton = document.getElementById('more');
-
-            moreButton.disabled = true;
-
-            google.maps.event.addDomListenerOnce(moreButton, 'click',
-                function() {
-                    moreButton.disabled = true;
-                    pagination.nextPage();
-                });
-        }
     }
 }
 
@@ -421,7 +410,7 @@ function nav_lunch() {
                     console.log('logout btn')
                     logout();
                 })
-                
+
             }
             // complete: function(response) {
             //     draw();
@@ -537,7 +526,7 @@ function add_person_object() {
 
 function add_person_DOM() {
 
-    
+
     console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();
