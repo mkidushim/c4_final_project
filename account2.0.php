@@ -5,10 +5,9 @@ $id = $_SESSION['user_id'];
 $query = "SELECT * FROM `users` WHERE user_id = '$id'";
 $result = mysqli_query($con, $query);
 ?>
-    <div class="brand">Get Lunch</div>
-    <div class="address-bar"></div>
     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
+      <a class="home navbar-brand hidden-xs">Get Lunch</a>
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -24,9 +23,6 @@ $result = mysqli_query($con, $query);
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a class="home">Home</a>
-                    </li>
                     <li>
                         <a class="lunch">Lunch</a>
                     </li>
@@ -45,10 +41,12 @@ $result = mysqli_query($con, $query);
     <div class="container">
         <div class="row">
             <div class="box">
-                <div class="col-lg-6">
-                    <hr>
-                    <h2 class="intro-text text-center">Account Info
-                        <strong></strong>
+            <div class='col-lg-6 col-lg-offset-3 text-center'>
+            <hr>
+                    <h2 class="intro-text text-center">
+                        <strong><?php
+                        echo $_SESSION['first_name'].' '.$_SESSION['last_name'];
+                        ?></strong> Account Info
                     </h2>
                     <hr>
                     <div class="text-center">
@@ -60,12 +58,12 @@ $result = mysqli_query($con, $query);
                         $email = $row['email'];
                         $user = $row['username'];
                         $user_id= $row['user_id'];
-                        echo "<p>Username: ".$user."</p><p> ID Number: ". $user_id."</p><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
-                        echo "<div class='col-lg-6 text-center'><hr><h2 class='intro-text text-center'>Edit Account Info</h2><hr><form><input class='name col-md-5 col-md-offset-4' value='".$first_n."'><input class='last col-md-5 col-md-offset-4' value='".$last_n."'></input><br/><input class='email col-md-5 col-md-offset-4' value='".$email."'></input>";
+                        echo "<p>Username: ".$user."</p><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
+                        echo "<div class='col-lg-6 col-lg-offset-3 text-center'><hr><h2 class='intro-text text-center'>Edit Account Info</h2><hr><form><input class='name col-md-6 col-md-offset-3 text-center' value='".$first_n."'><input class='last col-md-6 col-md-offset-3 text-center' value='".$last_n."'></input><br/><input class='email col-md-6 col-md-offset-3 text-center' value='".$email."'></input>";
                     }
 
                     ?>
-                            <button class="edit col-md-3 col-md-offset-4" type="button" onclick="edit_click()">submit</button>
+                            <button class="edit col-md-3 col-md-offset-6" type="button" onclick="edit_click()">submit</button>
                             </form>
                 </div>
             </div>
@@ -76,7 +74,7 @@ $result = mysqli_query($con, $query);
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Get Luch 2015</p>
+                    <p>Copyright © Get Lunch 2015</p>
                 </div>
             </div>
         </div>

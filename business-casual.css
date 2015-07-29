@@ -23,7 +23,7 @@ body {
 
 .name,
 .last,
-.email {
+.email, #username, #password {
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -36,7 +36,7 @@ button.edit {
 }
 
 #validate,
-#login_page {
+#login_page, #login, #new_user {
     background-color: white;
 }
 
@@ -45,7 +45,7 @@ button.edit {
     margin-bottom: 10px;
 }
 
-.nav:hover {
+.nav:hover, .home:hover {
     cursor: pointer;
 }
 

@@ -10,6 +10,8 @@ $output = [];
   			$all = mysqli_fetch_assoc($result);
   				$_SESSION['user_id']= $all['user_id'];
   				$_SESSION['username'] = $all['username'];
+  				$_SESSION['first_name'] = $all['first_name'];
+  				$_SESSION['last_name'] = $all['last_name'];
   				$all['success']= true;
   				$output_string = json_encode($all);
 				

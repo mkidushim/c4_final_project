@@ -24,11 +24,11 @@ var first_add = true;
 var placesList;
 
 function send_food_request() {
-
-    var name = winner_array[0].name;
-    var range = winner_array[0].range;
-    var food = winner_array[0].food;
-    range = range * 1609;
+//taking out dynamic values inputing static to test
+    // var name = winner_array[0].name;
+    // var range = winner_array[0].range;
+    // var food = winner_array[0].food;
+    // range = range * 1609;
     navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
@@ -39,9 +39,9 @@ function send_food_request() {
 
         var request = {
             location: center,
-            radius: range,
+            radius: 3000,
             types: ('cafe' | 'meal_takeaway' | 'meal_delivery' | 'food' | 'restaurant'),
-            query: food,
+            query: "pizza",
 
         };
         placesList = document.getElementById('places');
@@ -78,57 +78,57 @@ function send_food_request() {
     })
 }
 
-function initialize() {
+// function initialize() {
 
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        map_o = new google.maps.Map(document.getElementById('map-canvas'), {
-            center: center,
-            zoom: 13,
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+//         map_o = new google.maps.Map(document.getElementById('map-canvas'), {
+//             center: center,
+//             zoom: 13,
 
-        });
+//         });
 
-        var request = {
-            location: center,
-            radius: 10000,
-            types: ['cafe', 'meal_takeaway', 'meal_delivery', 'food', 'restaurant'],
-            query: "lunch",
-            sortby: "distance"
-        };
-        var cont_string =
-            '<div id="content">' +
-            '<div id="siteNotice">' +
-            '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
-            '<div id="bodyContent">' +
-            '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
-        infowindow = new google.maps.InfoWindow({
-            content: cont_string
-        });
-        var service = new google.maps.places.PlacesService(map_o);
-        service.nearbySearch(request, callback);
-        marker_user = new google.maps.Marker({
-            map: map_o,
-            position: center,
-            title: "You are Here!",
-        });
-        google.maps.event.addListener(marker_user, 'click', function() {
-            infowindow.setContent(cont_string);
-            infowindow.open(map_o, marker_user);
-        });
-    })
-}
+//         var request = {
+//             location: center,
+//             radius: 10000,
+//             types: ['cafe', 'meal_takeaway', 'meal_delivery', 'food', 'restaurant'],
+//             query: "lunch",
+//             sortby: "distance"
+//         };
+//         var cont_string =
+//             '<div id="content">' +
+//             '<div id="siteNotice">' +
+//             '</div>' +
+//             '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
+//             '<div id="bodyContent">' +
+//             '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+//         infowindow = new google.maps.InfoWindow({
+//             content: cont_string
+//         });
+//         var service = new google.maps.places.PlacesService(map_o);
+//         service.nearbySearch(request, callback);
+//         marker_user = new google.maps.Marker({
+//             map: map_o,
+//             position: center,
+//             title: "You are Here!",
+//         });
+//         google.maps.event.addListener(marker_user, 'click', function() {
+//             infowindow.setContent(cont_string);
+//             infowindow.open(map_o, marker_user);
+//         });
+//     })
+// }
 
-function callback(results, status) {
-    console.log('results', results);
-    console.log('status', status)
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
+// function callback(results, status) {
+//     console.log('results', results);
+//     console.log('status', status)
+//     if (status == google.maps.places.PlacesServiceStatus.OK) {
+//         for (var i = 0; i < results.length; i++) {
+//             createMarker(results[i]);
 
-        }
-    }
-}
+//         }
+//     }
+// }
 
 function callback_l(results, status, pagination) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -139,20 +139,20 @@ function callback_l(results, status, pagination) {
     }
 }
 
-function createMarker(place) {
-    console.log(place);
-    var placeLoc = place.geometry.location;
-    var marker = new google.maps.Marker({
-        map: map_o,
-        position: place.geometry.location,
-        icon: "images/rest.png",
-    });
-    var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating + " </p>"
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(marker_content);
-        infowindow.open(map_o, marker);
-    });
-}
+// function createMarker(place) {
+//     console.log(place);
+//     var placeLoc = place.geometry.location;
+//     var marker = new google.maps.Marker({
+//         map: map_o,
+//         position: place.geometry.location,
+//         icon: "images/rest.png",
+//     });
+//     var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating + " </p>"
+//     google.maps.event.addListener(marker, 'click', function() {
+//         infowindow.setContent(marker_content);
+//         infowindow.open(map_o, marker);
+//     });
+// }
 
 function createMarker_l(place) {
     console.log(place);
@@ -286,29 +286,12 @@ function login_check() {
 // commented out google maps api on landing page 
 function to_landing() {
     $.ajax({
-        url: 'index2.0_templ.html',
+        url: 'lunch2.0.html',
         method: 'POST',
         dataType: 'html',
         cache: false,
         success: function(response) {
-
-            var user = $('<h4>', {
-                text: "Welcome " + user_info.first_name + " " + user_info.last_name + "!",
-                class: 'col-md-5 col-md-offset-2'
-            });
             $('body').html(response);
-            $('body').on('touchstart click', '.lunch', function() {
-                nav_lunch();
-            })
-            $('body').on('touchstart click', '.friends', function() {
-                nav_friends();
-            })
-            $('body').on('touchstart click', '#logout', function() {
-                console.log('logout btn')
-                logout();
-            })
-            initialize();
-            recent_lunches();
         }
 
     });
@@ -336,22 +319,6 @@ function nav_friends() {
         cache: false,
         success: function(response) {
             $('.main_content').html(response);
-
-            $('nav').on('click', '.home', function() {
-                login_check();
-                //to_landing();
-            })
-            $('nav').on('click', '.lunch', function() {
-                nav_lunch();
-            })
-            $('nav').on('click', '.friends', function() {
-                nav_friends();
-            })
-            $('body').on('click', '#logout', function() {
-                console.log('logout btn')
-                logout();
-            })
-
         }
     });
 }
@@ -364,22 +331,6 @@ function nav_edit() {
         cache: false,
         success: function(response) {
             $('body').html(response);
-
-            // $('nav').on('click', '.home', function() {
-            //     login_check();
-            //     //to_landing();
-            // })
-            // $('nav').on('click', '.lunch', function() {
-            //     nav_lunch();
-            // })
-            // $('nav').on('click', '.friends', function() {
-            //     nav_friends();
-            // })
-            // $('body').on('click', '#logout', function() {
-            //     console.log('logout btn')
-            //     logout();
-            // })
-
         }
     });
 }
@@ -391,30 +342,8 @@ function nav_lunch() {
         dataType: 'html',
         cache: false,
         success: function(response) {
-
                 $('body').html(response);
-                $('body').on('touchstart click', '.home', function() {
-
-                    login_check();
-                    lunch_appoint_array = [];
-                    winner_array = [];
-                })
-
-                $('body').on('click', '.lunch', function() {
-                    nav_lunch();
-                })
-                $('body').on('click', '.account', function() {
-                    nav_edit();
-                })
-                $('body').on('click', '#logout', function() {
-                    console.log('logout btn')
-                    logout();
-                })
-
             }
-            // complete: function(response) {
-            //     draw();
-            // }
     });
 }
 
@@ -425,7 +354,6 @@ function logout_ajax() {
         type: "html",
         crossDomain: true,
         success: function(response) {
-
             $('body').html(response);
             $('form').on('click', '#login', function() {
                 ajax_call();
@@ -508,7 +436,7 @@ function save() {
 //     }
 function add_person_object() {
     lunch_object = {};
-    $(':text').each(function(index, element) {
+    $('#lunch > input').each(function(index, element) {
         if (index < 4) {
 
             lunch_object[element.id] = element.value;
@@ -527,13 +455,13 @@ function add_person_object() {
 function add_person_DOM() {
 
     if (first_add) {
-            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-3 col-md-offset-1" type="button">Random</button>')
+            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-6 col-md-offset-2" type="button">Random</button>')
             first_add = false;
     }
     console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();
-    var range = $('#range').val();
+    var range = parseInt($('#range').val());
 
     console.log(lunch.name)
     var append_name = $(
@@ -554,10 +482,7 @@ function add_person_DOM() {
     var line = $("<br/>")
     $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
     add_person_object();
-    if (first_add) {
-        $('#lunch_b').after('<button id="add_all" class="col-xs-9 col-xs-offset-2 col-md-3 col-md-offset-1" type="button">Random</button>')
-        first_add = false;
-    }
+    
 }
 
 function random_select() {
@@ -786,6 +711,7 @@ $(document).ready(function() {
     //     }
 
     // });
+    send_food_request();
     $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         random_select();
