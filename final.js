@@ -526,7 +526,10 @@ function add_person_object() {
 
 function add_person_DOM() {
 
-
+    if (first_add) {
+            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-3 col-md-offset-1" type="button">Random</button>')
+            first_add = false;
+    }
     console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();

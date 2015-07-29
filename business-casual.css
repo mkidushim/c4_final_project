@@ -7,6 +7,16 @@ body {
     -o-background-size: cover;
 }
 
+.create {
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px;
+    margin-bottom: 10px;
+}
+
+.white {
+    color: white;
+}
+
 #wheelcanvas {
     position: relative;
 }
@@ -23,6 +33,11 @@ button.edit {
     box-shadow: 1px 1px 10px 1px;
     background-color: inherit;
     margin-top: 10px;
+}
+
+#validate,
+#login_page {
+    background-color: white;
 }
 
 #lunch input {
