@@ -99,14 +99,14 @@ function initialize() {
             '<div id="content">' +
             '<div id="siteNotice">' +
             '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
-            '<div id="bodyContent">' +
-            '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' ;
+            // '<div id="bodyContent">' +
+            // '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string
         });
-        var service = new google.maps.places.PlacesService(map_o);
-        service.nearbySearch(request, callback);
+        // var service = new google.maps.places.PlacesService(map_o);
+        // service.nearbySearch(request, callback);
         marker_user = new google.maps.Marker({
             map: map_o,
             position: center,
@@ -392,6 +392,12 @@ function save() {
         crossDomain: true,
         success: function(response) {
             if (response) {
+
+                var string= $('<li>',{
+                  text:  "Restaurant: "+ winner_array[0].restaurant, 
+                  class: "list-group-item list-group-item-success text-center"  
+                })
+                $('#info').append(string);
                 $("#dialog-message").dialog({
                     modal: true,
                     draggable: false,
@@ -457,7 +463,7 @@ function add_person_object() {
 function add_person_DOM() {
 
     if (first_add) {
-            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-6 col-md-offset-2" type="button">Random</button>')
+            $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-4 col-md-offset-3" type="button">Random</button>')
             first_add = false;
     }
     console.log("add_person_DOM called");
