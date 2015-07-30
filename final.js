@@ -25,10 +25,10 @@ var placesList;
 
 function send_food_request() {
 //taking out dynamic values inputing static to test
-    // var name = winner_array[0].name;
-    // var range = winner_array[0].range;
-    // var food = winner_array[0].food;
-    // range = range * 1609;
+    var name = winner_array[0].name;
+    var range = winner_array[0].range;
+    var food = winner_array[0].food;
+    range = range * 1609;
     navigator.geolocation.getCurrentPosition(function(position) {
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
@@ -78,57 +78,59 @@ function send_food_request() {
     })
 }
 
-// function initialize() {
+function initialize() {
 
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-//         map_o = new google.maps.Map(document.getElementById('map-canvas'), {
-//             center: center,
-//             zoom: 13,
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        map_o = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: center,
+            zoom: 13,
 
-//         });
+        });
 
-//         var request = {
-//             location: center,
-//             radius: 10000,
-//             types: ['cafe', 'meal_takeaway', 'meal_delivery', 'food', 'restaurant'],
-//             query: "lunch",
-//             sortby: "distance"
-//         };
-//         var cont_string =
-//             '<div id="content">' +
-//             '<div id="siteNotice">' +
-//             '</div>' +
-//             '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
-//             '<div id="bodyContent">' +
-//             '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
-//         infowindow = new google.maps.InfoWindow({
-//             content: cont_string
-//         });
-//         var service = new google.maps.places.PlacesService(map_o);
-//         service.nearbySearch(request, callback);
-//         marker_user = new google.maps.Marker({
-//             map: map_o,
-//             position: center,
-//             title: "You are Here!",
-//         });
-//         google.maps.event.addListener(marker_user, 'click', function() {
-//             infowindow.setContent(cont_string);
-//             infowindow.open(map_o, marker_user);
-//         });
-//     })
-// }
+        var request = {
+            location: center,
+            radius: 10000,
+            types: ['cafe', 'meal_takeaway', 'meal_delivery', 'food', 'restaurant'],
+            query: "lunch",
+            sortby: "distance"
+        };
+        var cont_string =
+            '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' +
+            '<div id="bodyContent">' +
+            '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+        infowindow = new google.maps.InfoWindow({
+            content: cont_string
+        });
+        var service = new google.maps.places.PlacesService(map_o);
+        service.nearbySearch(request, callback);
+        marker_user = new google.maps.Marker({
+            map: map_o,
+            position: center,
+            title: "You are Here!",
+            icon: 'images/star.png',
+            maxWidth: 100,
+        });
+        google.maps.event.addListener(marker_user, 'click', function() {
+            infowindow.setContent(cont_string);
+            infowindow.open(map_o, marker_user);
+        });
+    })
+}
 
-// function callback(results, status) {
-//     console.log('results', results);
-//     console.log('status', status)
-//     if (status == google.maps.places.PlacesServiceStatus.OK) {
-//         for (var i = 0; i < results.length; i++) {
-//             createMarker(results[i]);
+function callback(results, status) {
+    console.log('results', results);
+    console.log('status', status)
+    // if (status == google.maps.places.PlacesServiceStatus.OK) {
+    //     for (var i = 0; i < results.length; i++) {
+    //         createMarker(results[i]);
 
-//         }
-//     }
-// }
+    //     }
+    // }
+}
 
 function callback_l(results, status, pagination) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -711,11 +713,14 @@ $(document).ready(function() {
     //     }
 
     // });
-    send_food_request();
+    initialize();
     $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
+        $('#map-canvas').remove();
+        $('#results').before($("<div id='map-canvas2'></div>"))
         random_select();
         send_food_request();
+
 
     })
     $('body').on('click', '#add_map', function() {
