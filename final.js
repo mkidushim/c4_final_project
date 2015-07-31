@@ -39,9 +39,9 @@ function send_food_request() {
 
         var request = {
             location: center,
-            radius: 3000,
+            radius: range,
             types: ('cafe' | 'meal_takeaway' | 'meal_delivery' | 'food' | 'restaurant'),
-            query: "pizza",
+            query: food,
 
         };
         placesList = document.getElementById('places');
