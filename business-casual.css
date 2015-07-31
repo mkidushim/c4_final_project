@@ -19,6 +19,7 @@ body {
 
 #wheelcanvas {
     position: relative;
+    right: 120px;
 }
 
 .name,
@@ -49,12 +50,12 @@ button.edit {
     cursor: pointer;
 }
 
-#map-canvas {
-    height: 350px;
+#map-canvas, #map-canvas2 {
+    height: 325px;
 }
-#map-canvas2 {
+/*#map-canvas2 {
     height: 450px;
-}
+}*/
 
 .list-group-item-success {
     list-style-type: none;
@@ -238,8 +239,8 @@ footer p {
     position: absolute;
     right: 15px;
     top: 50%;
-    margin-top: -195px;
-    height: 380px;
+    margin-top: -135px;
+    height: 280px;
     width: 200px;
     padding: 5px;
     z-index: 5;
@@ -256,7 +257,7 @@ footer p {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    height: 321px;
+    height: 235px;
     width: 200px;
     overflow-y: scroll;
 }

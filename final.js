@@ -664,7 +664,7 @@ function stopRotateWheel() {
     winner_array[0].restaurant = lunch_array[index];
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
-    save();
+    // save();
 }
 
 function easeOut(t, b, c, d) {
