@@ -167,9 +167,9 @@ function createMarker_l(place) {
 
     });
     placesList.innerHTML += "<li>" + place.name + "</li>";
-    console.log(place.place_id);
+    console.log(place.formatted_address);
     place_id_holder = place.place_id;
-    var marker_content = "<h4>" + place.name + "</h4><p> Rating: " + place.rating;
+    var marker_content = "<h4>" + place.name + "</h4><p> Address: " + place.formatted_address;
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(marker_content);
         infowindow.open(map_o, marker);
@@ -533,9 +533,9 @@ function random_select() {
     $('#info').append(append_friends);
 
     console.log('winner', rand);
-
+    var save_btn = $("<button onclick='save()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
     $('#info').append(append_name).append(append_food).append(append_range);
-
+    $('#list').after(save_btn);
 }
 
 function draw() {
