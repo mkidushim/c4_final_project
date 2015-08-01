@@ -24,7 +24,7 @@ var first_add = true;
 var placesList;
 
 function send_food_request() {
-//taking out dynamic values inputing static to test
+    //taking out dynamic values inputing static to test
     var name = winner_array[0].name;
     var range = winner_array[0].range;
     var food = winner_array[0].food;
@@ -77,8 +77,9 @@ function send_food_request() {
         });
     })
 }
+
 function send_food_request_m() {
-//taking out dynamic values inputing static to test
+    //taking out dynamic values inputing static to test
     var name = winner_array[0].name_m;
     var range = winner_array[0].range_m;
     var food = winner_array[0].food_m;
@@ -123,14 +124,14 @@ function send_food_request_m() {
             infowindow.setContent(cont_string);
             infowindow.open(map_o, marker_user);
         });
-        google.maps.event.addListenerOnce(map_o, 'idle', function() {
-            winner_array[0].restaurant= lunch_array[Math.floor(Math.random() * lunch_array.length)];
+        google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
+            winner_array[0].restaurant = lunch_array[Math.floor(Math.random() * lunch_array.length)];
             var rest = $(
-        "<li>", {
-            text: "Restaurant: " + winner_array[0].restaurant,
-            class: "list-group-item list-group-item-success text-center"
-        });
-            $('#info_m > li').append(rest);
+                "<li>", {
+                    text: "Restaurant: " + winner_array[0].restaurant,
+                    class: "list-group-item list-group-item-success text-center"
+                });
+            $('#info_m').append(rest);
             // draw();
             // $('#wheelcanvas').before('<input type="button" value="spin again" class="col-md-3" onclick="spin();" style="float: left;">');
             // spin();
@@ -160,9 +161,9 @@ function initialize() {
             '<div id="content">' +
             '<div id="siteNotice">' +
             '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>' ;
-            // '<div id="bodyContent">' +
-            // '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>';
+        // '<div id="bodyContent">' +
+        // '<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
         infowindow = new google.maps.InfoWindow({
             content: cont_string
         });
@@ -185,9 +186,9 @@ function initialize() {
 function callback(results, status) {
     console.log('results', results);
     console.log('status', status)
-    // if (status == google.maps.places.PlacesServiceStatus.OK) {
-    //     for (var i = 0; i < results.length; i++) {
-    //         createMarker(results[i]);
+        // if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //     for (var i = 0; i < results.length; i++) {
+        //         createMarker(results[i]);
 
     //     }
     // }
@@ -405,8 +406,8 @@ function nav_lunch() {
         dataType: 'html',
         cache: false,
         success: function(response) {
-                $('body').html(response);
-            }
+            $('body').html(response);
+        }
     });
 }
 
@@ -454,9 +455,9 @@ function save() {
         success: function(response) {
             if (response) {
 
-                var string= $('<li>',{
-                  text:  "Restaurant: "+ winner_array[0].restaurant, 
-                  class: "list-group-item list-group-item-success text-center"  
+                var string = $('<li>', {
+                    text: "Restaurant: " + winner_array[0].restaurant,
+                    class: "list-group-item list-group-item-success text-center"
                 })
                 $('#info').append(string);
                 $("#dialog-message").dialog({
@@ -489,6 +490,7 @@ function save() {
         }
     });
 }
+
 function save_m() {
     $.ajax({
         url: 'lunch.php',
@@ -505,9 +507,9 @@ function save_m() {
         success: function(response) {
             if (response) {
 
-                var string= $('<li>',{
-                  text:  "Restaurant: "+ winner_array[0].restaurant, 
-                  class: "list-group-item list-group-item-success text-center"  
+                var string = $('<li>', {
+                    text: "Restaurant: " + winner_array[0].restaurant,
+                    class: "list-group-item list-group-item-success text-center"
                 })
                 $('#info_m').append(string);
                 $("#dialog-message").dialog({
@@ -540,6 +542,7 @@ function save_m() {
         }
     });
 }
+
 function add_person_object_m() {
     lunch_object = {};
     $('#lunch_mobile > input').each(function(index, element) {
@@ -557,6 +560,7 @@ function add_person_object_m() {
 
 
 };
+
 function add_person_object() {
     lunch_object = {};
     $('#lunch > input').each(function(index, element) {
@@ -574,11 +578,12 @@ function add_person_object() {
 
 
 };
+
 function add_person_DOM_m() {
 
     if (first_add) {
-            $('#lunch_bm').after('<button id="add_all_m" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
-            first_add = false;
+        $('#lunch_bm').after('<button id="add_all_m" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
+        first_add = false;
     }
     console.log("add_person_DOM called");
     var name = $('#name_m').val();
@@ -604,13 +609,14 @@ function add_person_DOM_m() {
     var line = $("<br/>")
     $('#info_m').append(append_name).append(append_food_response).append(append_range).append(line);
     add_person_object_m();
-    
+
 }
+
 function add_person_DOM() {
 
     if (first_add) {
-            $('#lunch_b').after('<button id="add_all" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
-            first_add = false;
+        $('#lunch_b').after('<button id="add_all" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
+        first_add = false;
     }
     console.log("add_person_DOM called");
     var name = $('#name').val();
@@ -636,7 +642,7 @@ function add_person_DOM() {
     var line = $("<br/>")
     $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
     add_person_object();
-    
+
 }
 
 function random_select() {
@@ -683,6 +689,7 @@ function random_select() {
     $('#info').append(append_name).append(append_food).append(append_range);
     $('#list').after(save_btn);
 }
+
 function random_select_m() {
     $('#info_m > li').remove();
     var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
@@ -728,6 +735,7 @@ function random_select_m() {
     $('#info_m').append(append_name).append(append_food).append(append_range);
     $('#list_m').after(save_btn);
 }
+
 function draw() {
     drawRouletteWheel();
 }
@@ -909,9 +917,9 @@ $(document).ready(function() {
     //     }
 
     // });
-   
-    initialize(); 
-        $('body').on('touchstart click', '#add_all', function() {
+
+    initialize();
+    $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         $('#map-canvas').remove();
         $('#results').before($("<div id='map-canvas2'></div>"))
@@ -920,7 +928,7 @@ $(document).ready(function() {
 
 
     })
-    $('body').on('touchstart click', '#add_all_m', function() {
+    $('body').on('click', '#add_all_m', function() {
         console.log('button works');
         // $('#map-canvas_m').remove();
         // $('#results').before($("<div id='map-canvas2_m'></div>"))
