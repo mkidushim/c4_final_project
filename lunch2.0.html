@@ -33,7 +33,7 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="box col-xs-12">
+        <div class="box hidden-xs hidden-sm">
             <h2 class="col-xs-10 col-xs-offset-1 text-center">Get Lunch</h2>
             <div class="col-xs-12 col-md-6">
                 <div class="col-xs-12 col-md-12">
@@ -69,9 +69,43 @@
                 </ul>
             </div>
         </div>
+        <div class="box col-xs-12 hidden-md hidden-lg">
+            <h2 class="col-xs-10 col-xs-offset-1 text-center">Get Lunch</h2>
+            <div class="col-xs-12 col-md-6">
+                <hr>
+                <h2 class="intro-text text-center">
+                     Type in the name, food and range for everyone you want to go to lunch with then hit random. When the action stops and you are satisfied with your choice please hit save.
+                </h2>
+                <hr>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <form id="lunch_mobile" class="col-xs-10 col-xs-offset-2">
+                    <input id="name_m" class="text-center col-xs-9 col-md-6 col-md-offset-2" type="text" name="name" placeholder="Name">
+                    <input id="food_m" class="text-center col-xs-9 col-md-6 col-md-offset-2" type="text" name="food1" placeholder="Food Type">
+                    <input id="range_m" class="text-center col-xs-9 col-md-6 col-md-offset-2" type="number" min="5" max="50" value="5" name="range" placeholder="Miles Away">
+                    <button type="button" onclick="add_person_DOM_m();" id="lunch_bm" class="lunch_bm edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3">Add friend</button>
+                    <!-- <button id="add_all" class="col-xs-4 col-md-2" type="button">Random</button>
+                    <button id="add_rest_names" class="col-md-1" type="button">Save</button>-->
+                </form>
+            </div>
+            <div id="list_m" class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0">
+                <ul id="info_m" class="list-group">
+                </ul>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-md-12">
+                    <div id="map-canvas2_m"></div>
+                    <div id="results" class="panel hidden-xs">
+                        <h2>Results</h2>
+                        <ul id="places"></ul>
+                    </div>
+                </div>
+                <canvas id="wheelcanvas" class="hidden-xs" width="400" height="400"></canvas>
+                <div class="clearfix"></div>
+            </div>
+        </div>
     </div>
 </div>
-
 <!-- /.container -->
 <footer>
     <div class="container">

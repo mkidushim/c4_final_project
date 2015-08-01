@@ -50,7 +50,7 @@ button.edit {
     cursor: pointer;
 }
 
-#map-canvas, #map-canvas2 {
+#map-canvas, #map-canvas2, #map-canvas2_m  {
     height: 325px;
 }
 /*#map-canvas2 {

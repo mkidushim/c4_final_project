@@ -77,6 +77,67 @@ function send_food_request() {
         });
     })
 }
+function send_food_request_m() {
+//taking out dynamic values inputing static to test
+    var name = winner_array[0].name_m;
+    var range = winner_array[0].range_m;
+    var food = winner_array[0].food_m;
+    range = range * 1609;
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        map_o = new google.maps.Map(document.getElementById('map-canvas2_m'), {
+            center: center,
+            zoom: 10,
+
+        });
+
+        var request = {
+            location: center,
+            radius: range,
+            types: ('cafe' | 'meal_takeaway' | 'meal_delivery' | 'food' | 'restaurant'),
+            query: food,
+
+        };
+        placesList = document.getElementById('places');
+        var cont_string =
+            '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>';
+        //'<div id="bodyContent">' +
+        //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+        infowindow = new google.maps.InfoWindow({
+            content: cont_string,
+            maxWidth: 120
+        });
+        var service = new google.maps.places.PlacesService(map_o);
+        service.textSearch(request, callback_l);
+
+        marker_user = new google.maps.Marker({
+            map: map_o,
+            position: center,
+            title: "You are Here!",
+            icon: 'images/star.png',
+        });
+        google.maps.event.addListener(marker_user, 'click', function() {
+            infowindow.setContent(cont_string);
+            infowindow.open(map_o, marker_user);
+        });
+        google.maps.event.addListenerOnce(map_o, 'idle', function() {
+            winner_array[0].restaurant= lunch_array[Math.floor(Math.random() * lunch_array.length)];
+            var rest = $(
+        "<li>", {
+            text: "Restaurant: " + winner_array[0].restaurant,
+            class: "list-group-item list-group-item-success text-center"
+        });
+            $('#info_m > li').append(rest);
+            // draw();
+            // $('#wheelcanvas').before('<input type="button" value="spin again" class="col-md-3" onclick="spin();" style="float: left;">');
+            // spin();
+            // $('#results').show();
+        });
+    })
+}
 
 function initialize() {
 
@@ -428,20 +489,74 @@ function save() {
         }
     });
 }
-//not using get friends for now
-// function get_friend_list() {
-//         $.ajax({
-//             url: 'friends.php',
-//             method: 'POST',
-//             dataType: 'html',
-//             success: function(response) {
+function save_m() {
+    $.ajax({
+        url: 'lunch.php',
+        data: {
+            name: winner_array[0].name_m,
+            restaurant: winner_array[0].restaurant,
+            food: winner_array[0].food_m,
+            range: parseInt(winner_array[0].range_m),
+            friends: winner_array[0].friend
+        },
+        method: "POST",
+        dataType: 'JSON',
+        crossDomain: true,
+        success: function(response) {
+            if (response) {
 
-//                 $('.friend_list_sugg').html(response);
+                var string= $('<li>',{
+                  text:  "Restaurant: "+ winner_array[0].restaurant, 
+                  class: "list-group-item list-group-item-success text-center"  
+                })
+                $('#info_m').append(string);
+                $("#dialog-message").dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    width: 400,
+                    title: "Status Update",
+                    open: function() {
+                        $(this).html(response)
+                    },
+                    dialogClass: 'ui-dialog-osx',
+                });
+                console.log('Save: ', response)
+            } else if (!response) {
+                $("#dialog-message").dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    width: 400,
+                    title: "Error",
+                    open: function() {
+                        $(this).html(response)
+                    },
+                    dialogClass: 'ui-dialog-osx',
+                });
+                console.log('save error: ', response)
+
+            }
+        }
+    });
+}
+function add_person_object_m() {
+    lunch_object = {};
+    $('#lunch_mobile > input').each(function(index, element) {
+        if (index < 4) {
+
+            lunch_object[element.id] = element.value;
+            console.log(element.id + " : " + element.value)
+        }
+
+    });
+
+    lunch_appoint_array.push(lunch_object);
+
+    console.log("lunch object", lunch_object);
 
 
-//             }
-//         });
-//     }
+};
 function add_person_object() {
     lunch_object = {};
     $('#lunch > input').each(function(index, element) {
@@ -459,11 +574,42 @@ function add_person_object() {
 
 
 };
+function add_person_DOM_m() {
 
+    if (first_add) {
+            $('#lunch_bm').after('<button id="add_all_m" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
+            first_add = false;
+    }
+    console.log("add_person_DOM called");
+    var name = $('#name_m').val();
+    var food = $('#food_m').val();
+    var range = parseInt($('#range_m').val());
+
+    console.log(lunch.name)
+    var append_name = $(
+        "<li>", {
+            text: "Name: " + name,
+            class: "list-group-item list-group-item-info"
+        });
+    var append_food_response = $(
+        "<li>", {
+            text: "Food: " + food,
+            class: "list-group-item list-group-item-info"
+        });
+    var append_range = $(
+        "<li>", {
+            text: "Range: " + range,
+            class: "list-group-item list-group-item-info"
+        });
+    var line = $("<br/>")
+    $('#info_m').append(append_name).append(append_food_response).append(append_range).append(line);
+    add_person_object_m();
+    
+}
 function add_person_DOM() {
 
     if (first_add) {
-            $('#lunch_b').after('<button id="add_all" class="edit col-xs-4 col-md-4 col-md-offset-3" type="button">Random</button>')
+            $('#lunch_b').after('<button id="add_all" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
             first_add = false;
     }
     console.log("add_person_DOM called");
@@ -537,7 +683,51 @@ function random_select() {
     $('#info').append(append_name).append(append_food).append(append_range);
     $('#list').after(save_btn);
 }
+function random_select_m() {
+    $('#info_m > li').remove();
+    var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
 
+    winner_array.push(rand);
+    var append_name = $(
+        "<li>", {
+            text: "Winner: " + rand.name_m,
+            class: "list-group-item list-group-item-success text-center"
+        });
+    var append_food = $(
+        "<li>", {
+            text: "Food: " + rand.food_m,
+            class: "list-group-item list-group-item-success text-center"
+        });
+    var append_range = $(
+        "<li>", {
+            text: "Range: " + rand.range_m,
+            class: "list-group-item list-group-item-success text-center"
+        });
+    for (var i = 0; i < lunch_appoint_array.length; i++) {
+        if (lunch_appoint_array[i].name_m === rand.name_m) {
+            console.log(lunch_appoint_array[i])
+
+        } else {
+            console.log(lunch_appoint_array[i].name_m)
+            friend_list += lunch_appoint_array[i].name_m + " ";
+            winner_array[0].friend = friend_list
+
+        }
+
+    }
+    var append_friends = $(
+        "<li>", {
+            text: "Friends: " + friend_list,
+            class: "list-group-item list-group-item-success text-center"
+        });
+
+    $('#info_m').append(append_friends);
+
+    console.log('winner', rand);
+    var save_btn = $("<button onclick='save_m()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
+    $('#info_m').append(append_name).append(append_food).append(append_range);
+    $('#list_m').after(save_btn);
+}
 function draw() {
     drawRouletteWheel();
 }
@@ -719,13 +909,23 @@ $(document).ready(function() {
     //     }
 
     // });
-    initialize();
-    $('body').on('touchstart click', '#add_all', function() {
+   
+    initialize(); 
+        $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         $('#map-canvas').remove();
         $('#results').before($("<div id='map-canvas2'></div>"))
         random_select();
         send_food_request();
+
+
+    })
+    $('body').on('touchstart click', '#add_all_m', function() {
+        console.log('button works');
+        // $('#map-canvas_m').remove();
+        // $('#results').before($("<div id='map-canvas2_m'></div>"))
+        random_select_m();
+        send_food_request_m();
 
 
     })
