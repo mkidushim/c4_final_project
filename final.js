@@ -126,16 +126,29 @@ function send_food_request_m() {
             infowindow.open(map_o, marker_user);
         });
         google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
-            winner_array[0].restaurant = lunch_array[Math.floor(Math.random() * lunch_array.length)];
-            var rest = $(
-                "<li>", {
-                    text: "Restaurant: " + winner_array[0].restaurant,
-                    class: "list-group-item list-group-item-success text-center"
-                });
-            $('#info_m').append(rest);
-            // draw();
-            // $('#wheelcanvas').before('<input type="button" value="spin again" class="col-md-3" onclick="spin();" style="float: left;">');
-            // spin();
+            // google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
+            //      var rest = $(
+            //     "<li>", {
+            //         text: "Restaurant: " + winner_array[0].restaurant,
+            //         class: "list-group-item list-group-item-success text-center"
+            //     });
+            // $('#info_m').append(rest);
+            // draw_m();
+            // $('#wheelcanvas_m').before('<button type="button" class="col-md-3" onclick="spin_m();" style="float: left;">spin</button>');
+            // spin_m();
+            // });
+            // winner_array[0].restaurant = lunch_array[Math.floor(Math.random() * lunch_array.length)];
+
+
+            draw_m();
+            $('#wheelcanvas_m').before('<button type="button" class="col-md-3" onclick="spin_m();" style="float: left;">spin</button>');
+            spin_m();
+            // var rest = $(
+            //     "<li>", {
+            //         text: "Restaurant: " + winner_array[0].restaurant,
+            //         class: "list-group-item list-group-item-success text-center"
+            //     });
+            // $('#info_m').append(rest);
             // $('#results').show();
         });
     })
@@ -736,19 +749,69 @@ function random_select_m() {
     console.log('winner', rand);
     var save_btn = $("<button onclick='save_m()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
     $('#info_m').append(append_name).append(append_food).append(append_range);
-    if(save_on == true){
+    if (save_on == true) {
         $('#list_m').after(save_btn);
-        save_on= false;
+        save_on = false;
     }
-    
+
 }
 
 function draw() {
     drawRouletteWheel();
 }
 
+function draw_m() {
+    drawRouletteWheel_m();
+}
+
 function drawRouletteWheel() {
     var canvas = document.getElementById("wheelcanvas");
+    if (canvas.getContext) {
+        var outsideRadius = 120;
+        var textRadius = 130;
+        var insideRadius = 80;
+        ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, 500, 500);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.font = 'bold 10px segoe UI';
+        for (var i = 0; i < 6; i++) {
+            var angle = startAngle + i * arc;
+            ctx.fillStyle = colors[i];
+            ctx.beginPath();
+            ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
+            ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+            ctx.stroke();
+            ctx.fill();
+            ctx.save();
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.shadowBlur = 0;
+            // ctx.shadowColor = "black";
+            ctx.fillStyle = "black";
+            ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
+            ctx.rotate(angle + arc / 2 + Math.PI / 2);
+            var text = lunch_array[i];
+            ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+            ctx.restore();
+        }
+        //Draw Arrow
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
+        ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
+        ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
+        ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
+        ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
+        ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
+        ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
+        ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
+        ctx.fill();
+    }
+}
+
+function drawRouletteWheel_m() {
+    var canvas = document.getElementById("wheelcanvas_m");
     if (canvas.getContext) {
         var outsideRadius = 120;
         var textRadius = 130;
@@ -869,10 +932,61 @@ function stopRotateWheel() {
     winner_array[0].restaurant = lunch_array[index];
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
+    var rest = $(
+                "<li>", {
+                    text: "Restaurant: " + winner_array[0].restaurant,
+                    class: "list-group-item list-group-item-success text-center"
+                });
+            $('#info').append(rest);
     // save();
 }
 
 function easeOut(t, b, c, d) {
+    var ts = (t /= d) * t;
+    var tc = ts * t;
+    return b + c * (tc + -3 * ts + 3 * t);
+}
+
+function spin_m() {
+    spinAngleStart = Math.random() * 10 + 10;
+    spinTime = 0;
+    spinTimeTotal = Math.random() * 3 + 4 * 1000;
+    rotateWheel_m();
+}
+
+function rotateWheel_m() {
+    spinTime += 30;
+    if (spinTime >= spinTimeTotal) {
+        stopRotateWheel_m();
+        return;
+    }
+    var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+    startAngle += (spinAngle * Math.PI / 180);
+    drawRouletteWheel_m();
+    spinTimeout = setTimeout('rotateWheel_m()', 30);
+}
+
+function stopRotateWheel_m() {
+    clearTimeout(spinTimeout);
+    var degrees = startAngle * 180 / Math.PI + 90;
+    var arcd = arc * 180 / Math.PI;
+    var index = Math.floor((360 - degrees % 360) / arcd);
+    ctx.save();
+    ctx.font = '14px segoe UI';
+    var text = lunch_array[index]
+    winner_array[0].restaurant = lunch_array[index];
+    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+    ctx.restore();
+    var rest = $(
+                "<li>", {
+                    text: "Restaurant: " + winner_array[0].restaurant,
+                    class: "list-group-item list-group-item-success text-center"
+                });
+            $('#info_m').append(rest);
+    // save();
+}
+
+function easeOut_m(t, b, c, d) {
     var ts = (t /= d) * t;
     var tc = ts * t;
     return b + c * (tc + -3 * ts + 3 * t);

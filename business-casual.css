@@ -21,7 +21,7 @@ body {
     color: black;
 }
 
-#wheelcanvas {
+#wheelcanvas,#wheelcanvas_m {
     position: relative;
     right: 120px;
 }
