@@ -357,6 +357,7 @@ function to_landing() {
         cache: false,
         success: function(response) {
             $('body').html(response);
+            initialize();
         }
 
     });

@@ -17,6 +17,10 @@ body {
     color: white;
 }
 
+.black {
+    color: black;
+}
+
 #wheelcanvas {
     position: relative;
     right: 120px;
@@ -24,7 +28,9 @@ body {
 
 .name,
 .last,
-.email, #username, #password {
+.email,
+#username,
+#password {
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -37,7 +43,9 @@ button.edit {
 }
 
 #validate,
-#login_page, #login, #new_user {
+#login_page,
+#login,
+#new_user {
     background-color: white;
 }
 
@@ -46,13 +54,18 @@ button.edit {
     margin-bottom: 10px;
 }
 
-.nav:hover, .home:hover {
+.nav:hover,
+.home:hover {
     cursor: pointer;
 }
 
-#map-canvas, #map-canvas2, #map-canvas2_m  {
+#map-canvas,
+#map-canvas2,
+#map-canvas2_m {
     height: 325px;
 }
+
+
 /*#map-canvas2 {
     height: 450px;
 }*/
