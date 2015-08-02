@@ -21,6 +21,7 @@ var spinTime = 0;
 var spinTimeTotal = 0;
 var ctx;
 var first_add = true;
+var save_on = true;
 var placesList;
 
 function send_food_request() {
@@ -71,7 +72,7 @@ function send_food_request() {
         });
         google.maps.event.addListenerOnce(map_o, 'idle', function() {
             draw();
-            $('#wheelcanvas').before('<input type="button" value="spin again" class="col-md-3" onclick="spin();" style="float: left;">');
+            $('#wheelcanvas').before('<button type="button" class="edit col-md-3" onclick="spin();" style="float: left;">Spin</button');
             spin();
             $('#results').show();
         });
@@ -407,6 +408,7 @@ function nav_lunch() {
         cache: false,
         success: function(response) {
             $('body').html(response);
+            // initialize();
         }
     });
 }
@@ -733,7 +735,11 @@ function random_select_m() {
     console.log('winner', rand);
     var save_btn = $("<button onclick='save_m()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
     $('#info_m').append(append_name).append(append_food).append(append_range);
-    $('#list_m').after(save_btn);
+    if(save_on == true){
+        $('#list_m').after(save_btn);
+        save_on= false;
+    }
+    
 }
 
 function draw() {
