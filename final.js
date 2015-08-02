@@ -141,7 +141,7 @@ function send_food_request_m() {
 
 
             draw_m();
-            $('#wheelcanvas_m').before('<button type="button" class="col-md-3" onclick="spin_m();" style="float: left;">spin</button>');
+            $('#wheelcanvas_m').before('<button type="button" class="col-xs-3" onclick="spin_m();" style="float: left;">spin</button>');
             spin_m();
             // var rest = $(
             //     "<li>", {
