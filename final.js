@@ -408,7 +408,7 @@ function nav_lunch() {
         cache: false,
         success: function(response) {
             $('body').html(response);
-            // initialize();
+            initialize();
         }
     });
 }
