@@ -23,7 +23,7 @@ var ctx;
 var first_add = true;
 var save_on = true;
 var placesList;
-
+var rest_on = false;
 function send_food_request() {
     //taking out dynamic values inputing static to test
     var name = winner_array[0].name;
@@ -125,7 +125,7 @@ function send_food_request_m() {
             infowindow.setContent(cont_string);
             infowindow.open(map_o, marker_user);
         });
-        google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
+        google.maps.event.addListenerOnce(map_o, 'idle', function() {
             // google.maps.event.addListenerOnce(map_o, 'tilesloaded', function() {
             //      var rest = $(
             //     "<li>", {
@@ -141,7 +141,7 @@ function send_food_request_m() {
 
 
             draw_m();
-            $('#wheelcanvas_m').before('<button type="button" class="col-xs-3" onclick="spin_m();" style="float: left;">spin</button>');
+            $('#wheelcanvas_m').before('<button type="button" class="edit col-xs-3" onclick="spin_m();" style="float: left;">spin</button>');
             spin_m();
             // var rest = $(
             //     "<li>", {
@@ -471,11 +471,11 @@ function save() {
         success: function(response) {
             if (response) {
 
-                var string = $('<li>', {
-                    text: "Restaurant: " + winner_array[0].restaurant,
-                    class: "list-group-item list-group-item-success text-center"
-                })
-                $('#info').append(string);
+                // var string = $('<li>', {
+                //     text: "Restaurant: " + winner_array[0].restaurant,
+                //     class: "list-group-item list-group-item-success text-center"
+                // })
+                // $('#info').append(string);
                 $("#dialog-message").dialog({
                     modal: true,
                     draggable: false,
@@ -523,11 +523,11 @@ function save_m() {
         success: function(response) {
             if (response) {
 
-                var string = $('<li>', {
-                    text: "Restaurant: " + winner_array[0].restaurant,
-                    class: "list-group-item list-group-item-success text-center"
-                })
-                $('#info_m').append(string);
+                // var string = $('<li>', {
+                //     text: "Restaurant: " + winner_array[0].restaurant,
+                //     class: "list-group-item list-group-item-success text-center"
+                // })
+                // $('#info_m').append(string);
                 $("#dialog-message").dialog({
                     modal: true,
                     draggable: false,
@@ -703,7 +703,11 @@ function random_select() {
     console.log('winner', rand);
     var save_btn = $("<button onclick='save()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
     $('#info').append(append_name).append(append_food).append(append_range);
-    $('#list').after(save_btn);
+    if(save_on == true){
+        $('#list').after(save_btn);
+        save_on= false;
+    }
+    
 }
 
 function random_select_m() {
@@ -747,10 +751,10 @@ function random_select_m() {
     $('#info_m').append(append_friends);
 
     console.log('winner', rand);
-    var save_btn = $("<button onclick='save_m()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
+    var save_btn = $("<button onclick='save_m()' class='col-xs-5 col-xs-offset-3 edit'>Save</button>")
     $('#info_m').append(append_name).append(append_food).append(append_range);
     if (save_on == true) {
-        $('#list_m').after(save_btn);
+        $('.clearfix').after(save_btn);
         save_on = false;
     }
 
@@ -933,11 +937,15 @@ function stopRotateWheel() {
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
     var rest = $(
-                "<li>", {
-                    text: "Restaurant: " + winner_array[0].restaurant,
-                    class: "list-group-item list-group-item-success text-center"
-                });
-            $('#info').append(rest);
+        "<li>", {
+            text: "Restaurant: " + winner_array[0].restaurant,
+            class: "list-group-item list-group-item-success text-center"
+        });
+    if (rest_on = false) {
+        $('#info').append(rest);
+        rest_on = true;
+    }
+
     // save();
 }
 
@@ -978,11 +986,14 @@ function stopRotateWheel_m() {
     ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
     ctx.restore();
     var rest = $(
-                "<li>", {
-                    text: "Restaurant: " + winner_array[0].restaurant,
-                    class: "list-group-item list-group-item-success text-center"
-                });
-            $('#info_m').append(rest);
+        "<li>", {
+            text: "Restaurant: " + winner_array[0].restaurant,
+            class: "list-group-item list-group-item-success text-center"
+        });
+    if (rest_on = false) {
+        $('#info_m').append(rest);
+        rest_on = true;
+    }
     // save();
 }
 
