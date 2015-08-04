@@ -6,6 +6,10 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
+..ui-dialog.ui-widget.ui-widget-content{
+    width: 400px;
+    max-width: 400px;
+}
 
 .create {
     border-radius: 5px;

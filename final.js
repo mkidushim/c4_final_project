@@ -24,59 +24,64 @@ var first_add = true;
 var save_on = true;
 var placesList;
 var rest_on = false;
+
 function send_food_request() {
     //taking out dynamic values inputing static to test
     var name = winner_array[0].name;
     var range = winner_array[0].range;
     var food = winner_array[0].food;
     range = range * 1609;
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
-            center: center,
-            zoom: 10,
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            map_o = new google.maps.Map(document.getElementById('map-canvas2'), {
+                center: center,
+                zoom: 10,
 
-        });
+            });
 
-        var request = {
-            location: center,
-            radius: range,
-            types: ('cafe' | 'meal_takeaway' | 'meal_delivery' | 'food' | 'restaurant'),
-            query: food,
+            var request = {
+                location: center,
+                radius: range,
+                types: ('cafe' | 'meal_takeaway' | 'meal_delivery' | 'food' | 'restaurant'),
+                query: food,
 
-        };
-        placesList = document.getElementById('places');
-        var cont_string =
-            '<div id="content">' +
-            '<div id="siteNotice">' +
-            '</div>' +
-            '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>';
-        //'<div id="bodyContent">' +
-        //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
-        infowindow = new google.maps.InfoWindow({
-            content: cont_string,
-            maxWidth: 120
-        });
-        var service = new google.maps.places.PlacesService(map_o);
-        service.textSearch(request, callback_l);
+            };
+            placesList = document.getElementById('places');
+            var cont_string =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h4 id="firstHeading" class="firstHeading">You are Here!</h4>';
+            //'<div id="bodyContent">' +
+            //'<p>Longitude: ' + Math.round(position.coords.longitude) + 'Latitude: ' + Math.round(position.coords.latitude) + '</p>';
+            infowindow = new google.maps.InfoWindow({
+                content: cont_string,
+                maxWidth: 120
+            });
+            var service = new google.maps.places.PlacesService(map_o);
+            service.textSearch(request, callback_l);
 
-        marker_user = new google.maps.Marker({
-            map: map_o,
-            position: center,
-            title: "You are Here!",
-            icon: 'images/star.png',
-        });
-        google.maps.event.addListener(marker_user, 'click', function() {
-            infowindow.setContent(cont_string);
-            infowindow.open(map_o, marker_user);
-        });
-        google.maps.event.addListenerOnce(map_o, 'idle', function() {
-            draw();
-            $('#wheelcanvas').before('<button type="button" class="edit col-md-3" onclick="spin();" style="float: left;">Spin</button');
-            spin();
-            $('#results').show();
-        });
-    })
+            marker_user = new google.maps.Marker({
+                map: map_o,
+                position: center,
+                title: "You are Here!",
+                icon: 'images/star.png',
+            });
+            google.maps.event.addListener(marker_user, 'click', function() {
+                infowindow.setContent(cont_string);
+                infowindow.open(map_o, marker_user);
+            });
+            google.maps.event.addListenerOnce(map_o, 'idle', function() {
+                draw();
+                $('#wheelcanvas').before('<button type="button" class="edit col-md-3" onclick="spin();" style="float: left;">Spin</button');
+                spin();
+                $('#results').show();
+            });
+        })
+    } else {
+        console.log('geolocation is not supported or is turned off in your browser')
+    }
 }
 
 function send_food_request_m() {
@@ -272,7 +277,7 @@ function ajax_call() {
                     draggable: false,
                     resizable: false,
                     position: ['center', 'top'],
-                    width: 400,
+                    width: 250,
                     title: "Errors",
                     open: function() {
                         $(this).html(response.errors)
@@ -317,7 +322,7 @@ function edit_click() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    width: 400,
+                    width: 250,
                     title: "Errors",
                     open: function() {
                         $(this).html('User Info Update successful')
@@ -329,7 +334,7 @@ function edit_click() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    width: 400,
+                    width: 250,
                     title: "Errors",
                     open: function() {
                         $(this).html('User Info Update Failed')
@@ -480,7 +485,7 @@ function save() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    width: 400,
+                    width: 250,
                     title: "Status Update",
                     open: function() {
                         $(this).html(response)
@@ -493,7 +498,7 @@ function save() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    width: 400,
+                    width: 250,
                     title: "Error",
                     open: function() {
                         $(this).html(response)
@@ -532,7 +537,7 @@ function save_m() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    width: 400,
+                    width: 250,
                     title: "Status Update",
                     open: function() {
                         $(this).html(response)
@@ -545,7 +550,7 @@ function save_m() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    width: 400,
+                    width: 250,
                     title: "Error",
                     open: function() {
                         $(this).html(response)
@@ -703,11 +708,11 @@ function random_select() {
     console.log('winner', rand);
     var save_btn = $("<button onclick='save()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
     $('#info').append(append_name).append(append_food).append(append_range);
-    if(save_on == true){
+    if (save_on == true) {
         $('#list').after(save_btn);
-        save_on= false;
+        save_on = false;
     }
-    
+
 }
 
 function random_select_m() {
@@ -892,11 +897,10 @@ function validation() {
         crossDomain: true,
         success: function(response) {
             if (response.success == true) {
-                var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly procceed to login page or hit refresh");
+                var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly please login.");
                 $('body').append(div);
                 console.log('validation: ', response);
             } else if (response.errors == true) {
-
                 var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
                 $('body').append(div);
                 console.log('validation failed:', response)
@@ -945,8 +949,6 @@ function stopRotateWheel() {
         $('#info').append(rest);
         rest_on = true;
     }
-
-    // save();
 }
 
 function easeOut(t, b, c, d) {
@@ -994,7 +996,6 @@ function stopRotateWheel_m() {
         $('#info_m').append(rest);
         rest_on = true;
     }
-    // save();
 }
 
 function easeOut_m(t, b, c, d) {
@@ -1003,25 +1004,20 @@ function easeOut_m(t, b, c, d) {
     return b + c * (tc + -3 * ts + 3 * t);
 }
 $(document).ready(function() {
-
-    // logout_ajax();
-    // $('body').on('click','#edit', function(){
-    //     nav_edit();
-    // })
     $('body').on('click', '#login_page', function() {
         $('.alert.alert-danger').remove();
         $('.alert.alert-success').remove();
         logout_ajax();
     })
     $('body').on('click', '#validate', function() {
-        $('.alert.alert-danger').remove();
-        validation();
-        console.log('validate')
-    })
-    $('body').on('click', '#new_user', function() {
-        console.log('new user');
-        new_user();
-    })
+            $('.alert.alert-danger').remove();
+            validation();
+            console.log('validate')
+        })
+        // $('body').on('click', '#new_user', function() {
+        //     console.log('new user');
+        //     new_user();
+        // })
     $('body').on('touchstart click', '.home', function() {
 
         login_check();
@@ -1039,17 +1035,6 @@ $(document).ready(function() {
         console.log('button worked')
     });
     login_check();
-
-
-    // $('#buttons').on('touchstart click', '#lunch_b', function() {
-    //     add_person_DOM();
-    //     if (first_add) {
-    //         $('#lunch_b').after('<button id="add_all" class="col-xs-4 col-md-3 col-md-offset-1" type="button">Random</button>')
-    //         first_add = false;
-    //     }
-
-    // });
-
     initialize();
     $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
@@ -1057,8 +1042,6 @@ $(document).ready(function() {
         $('#results').before($("<div id='map-canvas2'></div>"))
         random_select();
         send_food_request();
-
-
     })
     $('body').on('click', '#add_all_m', function() {
         console.log('button works');
@@ -1066,11 +1049,8 @@ $(document).ready(function() {
         // $('#results').before($("<div id='map-canvas2_m'></div>"))
         random_select_m();
         send_food_request_m();
-
-
     })
     $('body').on('click', '#add_map', function() {
-
         draw();
         $('#main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
     })
@@ -1078,21 +1058,7 @@ $(document).ready(function() {
         save();
     })
     $('body').on('touchstart click', '.logout', function() {
-            console.log('logout btn')
-            logout();
-        })
-        // $('nav').on('click', '.home', function() {
-        //     console.log('button')
-        //     nav_home();
-        // })
-        // $('nav').on('click', '.lunch', function() {
-        //     nav_lunch();
-        // })
-        // $('nav').on('click', '.friends', function() {
-        //     nav_friends();
-        // })
-        // $('body').on('click', '#btn_friend', function() {
-        //     get_friend_list();
-        // })
-
+        console.log('logout btn')
+        logout();
+    })
 })

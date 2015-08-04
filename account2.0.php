@@ -7,7 +7,7 @@ $result = mysqli_query($con, $query);
 ?>
     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
-      <a class="home navbar-brand hidden-xs">Get Lunch</a>
+        <a class="home navbar-brand hidden-xs">Get Lunch</a>
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -41,8 +41,8 @@ $result = mysqli_query($con, $query);
     <div class="container">
         <div class="row">
             <div class="box">
-            <div class='col-lg-6 col-lg-offset-3 text-center'>
-            <hr>
+                <div class='col-lg-6 col-lg-offset-3 text-center'>
+                    <hr>
                     <h2 class="intro-text text-center">
                         <strong><?php
                         echo $_SESSION['first_name'].' '.$_SESSION['last_name'];
@@ -65,22 +65,22 @@ $result = mysqli_query($con, $query);
                     ?>
                             <button class="edit col-md-3 col-md-offset-6" type="button" onclick="edit_click()">submit</button>
                             </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /.container -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Copyright © Get Lunch 2015</p>
+        <!-- /.container -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <p>Copyright © Get Lunch 2015</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-   <div id='dialog-message' class="col-xs-6 col-sm-10 col-md-5 col-lg-5"></div>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        </footer>
+        <div id='dialog-message' class="col-xs-6 col-sm-10 col-md-5 col-lg-5"></div>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
