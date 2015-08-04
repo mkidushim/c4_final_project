@@ -7,7 +7,11 @@ if(isset($_SESSION['user_id'])){
 	$output['success']= true;
 	$query = "SELECT * FROM users WHERE user_id = $userid";
 	$result = mysqli_query($con, $query);
-	$output['userinfo'] = mysqli_fetch_assoc($result);
+	$out = mysqli_fetch_assoc($result);
+	$output['username'] = $out['username'];
+	$output['last_name']= $out['last_name'];
+	$output['first_name']= $out['first_name'];
+	$output['email']= $out['email'];
 	$output['user_id'] = $_SESSION['user_id'];
 
 }

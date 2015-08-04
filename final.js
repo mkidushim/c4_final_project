@@ -276,8 +276,7 @@ function ajax_call() {
                     modal: true,
                     draggable: false,
                     resizable: false,
-                    position: ['center', 'top'],
-                    width: 250,
+                    width: 350,
                     title: "Errors",
                     open: function() {
                         $(this).html(response.errors)
@@ -1035,7 +1034,10 @@ $(document).ready(function() {
         console.log('button worked')
     });
     login_check();
+    if(document.getElementById('map-canvas')){
     initialize();
+    }
+    
     $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         $('#map-canvas').remove();
