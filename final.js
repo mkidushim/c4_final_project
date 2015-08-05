@@ -8,7 +8,7 @@ var winner_array = [];
 var friend_array = [];
 var friend_list = "";
 var lunch_object;
-var user_info;
+var user_info ={};
 var colors = ["#B8D430", "#3AB745", "#029990", "#3501CB",
     "#2E2C75", "#673A7E", "#CC0071", "#F80120",
     "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"
@@ -270,7 +270,7 @@ function ajax_call() {
             if (response.success == true) {
                 console.log('User information:  ', response)
                 to_landing();
-                user_info = response;
+                user_info = response.first_name;
             } else if (response.success == false) {
                 $("#dialog-message").dialog({
                     modal: true,
@@ -358,7 +358,8 @@ function login_check() {
             if (response.success == true) {
                 to_landing();
                 console.log("login check working: ", response);
-                user_info = response.userinfo;
+                user_info = response.first_name;
+                $('#name').val(user_info);
             } else if (response.errors == true) {
                 console.log("login check errors: ", response)
             }
@@ -375,6 +376,7 @@ function to_landing() {
         success: function(response) {
             $('body').html(response);
             initialize();
+            $('#name').val(user_info);
         }
 
     });
@@ -427,6 +429,7 @@ function nav_lunch() {
         success: function(response) {
             $('body').html(response);
             initialize();
+            $('#name').val(user_info);
         }
     });
 }
@@ -1003,6 +1006,7 @@ function easeOut_m(t, b, c, d) {
     return b + c * (tc + -3 * ts + 3 * t);
 }
 $(document).ready(function() {
+
     $('body').on('click', '#login_page', function() {
         $('.alert.alert-danger').remove();
         $('.alert.alert-success').remove();
@@ -1036,6 +1040,7 @@ $(document).ready(function() {
     login_check();
     if(document.getElementById('map-canvas')){
     initialize();
+
     }
     
     $('body').on('touchstart click', '#add_all', function() {

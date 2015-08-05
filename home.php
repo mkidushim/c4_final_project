@@ -12,8 +12,8 @@ $output = [];
   				$_SESSION['username'] = $all['username'];
   				$_SESSION['first_name'] = $all['first_name'];
   				$_SESSION['last_name'] = $all['last_name'];
-  				$all['success']= true;
-  				$output_string = json_encode($all);
+  				$_SESSION['success']= true;
+  				$output_string = json_encode($_SESSION);
 				
 			}
 		else{
