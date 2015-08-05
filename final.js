@@ -360,6 +360,7 @@ function login_check() {
                 console.log("login check working: ", response);
                 user_info = response.first_name;
                 $('#name').val(user_info);
+                $('#name_m').val(user_info);
             } else if (response.errors == true) {
                 console.log("login check errors: ", response)
             }
@@ -377,6 +378,7 @@ function to_landing() {
             $('body').html(response);
             initialize();
             $('#name').val(user_info);
+            $('#name_m').val(user_info);
         }
 
     });
@@ -430,6 +432,7 @@ function nav_lunch() {
             $('body').html(response);
             initialize();
             $('#name').val(user_info);
+            $('#name_m').val(user_info);
         }
     });
 }
