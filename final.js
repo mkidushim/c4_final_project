@@ -923,7 +923,7 @@ function spin() {
 }
 
 function rotateWheel() {
-    spinTime += 30;
+    spinTime += 20;
     if (spinTime >= spinTimeTotal) {
         stopRotateWheel();
         return;
