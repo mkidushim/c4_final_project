@@ -36,10 +36,10 @@
         <div class="box hidden-xs hidden-sm">
             <hr>
             <h2 class="intro-text text-center">
-                 Type in the name, food and range for everyone you want to go to lunch with then hit random. When the action stops and you are satisfied with your choice please hit save.
+                 Type in each persons name, the type of food or name of the restaurant corresponding to what that person would like to eat and the maximum number of miles you want to drive from your location.  
             </h2>
             <hr>
-            <form id="lunch" class="col-md-12">
+            <form id="lunch" class="col-md-11 col-md-offset-1">
                 <input id="name" class="text-center col-md-4" type="text" name="name" placeholder="Name">
                 <input id="food" class="text-center col-md-5" type="text" name="food1" placeholder="Type of Food/Restaurant">
                 <input id="range" class="text-center col-md-1" type="number" min="5" step="5" max="50" value="5" name="range" placeholder="Miles Away">
@@ -48,18 +48,18 @@
                     <button id="add_rest_names" class="col-md-1" type="button">Save</button>-->
             </form>
             
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div id="map-canvas"></div>
                 <div id="results" class="panel">
                     <h2>Results</h2>
                     <ul id="places"></ul>
                 </div>
             </div>
-            <div id="list" class="col-md-3">
+            <div id="list" class="col-md-2">
                 <ul id="info" class="list-group">
                 </ul>
             </div>
-            <canvas id="wheelcanvas" class="col-md-4" width="400" height="500"></canvas>
+            <canvas id="wheelcanvas" class="col-md-4" width="400" height="430"></canvas>
             <div class="clearfix"></div>
         </div>
         <!-- <div id="list" class="col-md-6 col-md-offset-0">

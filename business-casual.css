@@ -6,10 +6,6 @@ body {
     background-size: cover;
     -o-background-size: cover;
 }
-..ui-dialog.ui-widget.ui-widget-content{
-    width: 400px;
-    max-width: 400px;
-}
 
 .create {
     border-radius: 5px;
@@ -78,7 +74,9 @@ button#lunch_b, button#add_all{
 #map-canvas2_m {
     height: 325px;
 }
-
+#map-canvas, #map-canvas2{
+    top: 45px;
+}
 
 /*#map-canvas2 {
     height: 450px;
@@ -86,10 +84,13 @@ button#lunch_b, button#add_all{
 
 .list-group-item-success {
     list-style-type: none;
+    top: 65px;
 }
-
 #info {
-    margin-top: 20px;
+    margin-top: 45px;
+}
+.winner{
+    bottom: 105px;
 }
 
 h1,
@@ -265,7 +266,7 @@ footer p {
     font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     right: 15px;
-    top: 50%;
+    top: 65%;
     margin-top: -135px;
     height: 280px;
     width: 140px;

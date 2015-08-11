@@ -1097,13 +1097,17 @@ $(document).ready(function() {
         initialize();
 
     }
-
+    $('body').on('touchstart click', '#new_user', function(){
+        console.log('new user button working')
+        new_user();
+    })
     $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         $('#map-canvas').remove();
         $('#results').before($("<div id='map-canvas2'></div>"))
         random_select();
         send_food_request();
+        $('#list').addClass('winner');
     })
     $('body').on('click', '#add_all_m', function() {
         console.log('button works');
