@@ -24,6 +24,7 @@ var first_add = true;
 var save_on = true;
 var placesList;
 var rest_on = false;
+var add_all_click = false, random_click = false;
 
 function send_food_request() {
     //taking out dynamic values inputing static to test
@@ -272,6 +273,7 @@ function ajax_call() {
                 console.log('User information:  ', response)
                 to_landing();
                 user_info = response.first_name;
+                add_all_click = false, random_click = false;
             } else if (response.success == false) {
                 $("#dialog-message").dialog({
                     modal: true,
@@ -380,6 +382,8 @@ function to_landing() {
             initialize();
             $('#name').val(user_info);
             $('#name_m').val(user_info);
+            first_add = true;
+            add_all_click = false, random_click = false;
         }
 
     });
@@ -407,6 +411,7 @@ function nav_friends() {
         cache: false,
         success: function(response) {
             $('.main_content').html(response);
+
         }
     });
 }
@@ -419,6 +424,7 @@ function nav_edit() {
         cache: false,
         success: function(response) {
             $('body').html(response);
+
         }
     });
 }
@@ -434,6 +440,10 @@ function nav_lunch() {
             initialize();
             $('#name').val(user_info);
             $('#name_m').val(user_info);
+            $('#top').show();
+            first_add = true;
+            add_all_click = false, random_click = false;
+
         }
     });
 }
@@ -446,10 +456,10 @@ function logout_ajax() {
         crossDomain: true,
         success: function(response) {
             $('body').html(response);
-            $('form').on('click', '#login', function() {
-                ajax_call();
-                console.log('button worked')
-            });
+            // $('body').on('click', '#login', function() {
+            //     ajax_call();
+            //     console.log('button worked')
+            // });
         }
     })
 }
@@ -714,16 +724,20 @@ function add_person_DOM() {
         });
     } 
     else {
-        if (first_add) {
+        if (first_add == true) {
             $('#lunch_b').after('<button id="add_all" class="col-md-1" type="button">Random</button>')
             first_add = false;
         }
         $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
         add_person_object();
+        $('#name').val("");
+        $('#food').val("");
+
     }
 }
 
 function random_select() {
+    $('#top').hide();
     $('#info > li').remove();
     var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
     winner_array.push(rand);
@@ -1101,20 +1115,49 @@ $(document).ready(function() {
         console.log('new user button working')
         new_user();
     })
+    $('body').on('touchstart click', '#lunch_b', function() {
+        if(random_click == false){
+             add_person_DOM();
+        }
+       else if (random_click == true) {
+        console.log('no go');
+        return
+       }
+    });
     $('body').on('touchstart click', '#add_all', function() {
-        console.log('button works');
+        
+        
+       if (add_all_click === false){
         $('#map-canvas').remove();
         $('#results').before($("<div id='map-canvas2'></div>"))
         random_select();
         send_food_request();
         $('#list').addClass('winner');
+        add_all_click = true;
+        random_click = true;
+       }
+       else if (add_all_click === true){
+        console.log('button works');
+        return
+       }
+        // $('#map-canvas').remove();
+        // $('#results').before($("<div id='map-canvas2'></div>"))
+        // random_select();
+        // send_food_request();
+        // $('#list').addClass('winner');
     })
     $('body').on('click', '#add_all_m', function() {
         console.log('button works');
         // $('#map-canvas_m').remove();
         // $('#results').before($("<div id='map-canvas2_m'></div>"))
+       if (add_all_click = true){
+        return
+       }
+       else if (add_all_click = false){
         random_select_m();
         send_food_request_m();
+       }
+        
     })
     $('body').on('click', '#add_map', function() {
         draw();

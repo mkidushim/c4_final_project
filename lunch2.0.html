@@ -34,6 +34,7 @@
 <div class="container">
     <div class="row">
         <div class="box hidden-xs hidden-sm">
+        <div id="top">
             <hr>
             <h2 class="intro-text text-center">
                  Type in each persons name, the type of food or name of the restaurant corresponding to what that person would like to eat and the maximum number of miles you want to drive from your location.  
@@ -43,11 +44,11 @@
                 <input id="name" class="text-center col-md-4" type="text" name="name" placeholder="Name">
                 <input id="food" class="text-center col-md-5" type="text" name="food1" placeholder="Type of Food/Restaurant">
                 <input id="range" class="text-center col-md-1" type="number" min="5" step="5" max="50" value="5" name="range" placeholder="Miles Away">
-                <button type="button" onclick="add_person_DOM();" id="lunch_b" class="lunch_b col-md-1">Add</button>
+                <button type="button" id="lunch_b" class="lunch_b col-md-1">Add</button>
                 <!-- <button id="add_all" class="col-xs-4 col-md-2" type="button">Random</button>
                     <button id="add_rest_names" class="col-md-1" type="button">Save</button>-->
             </form>
-            
+            </div>
             <div class="col-md-6">
                 <div id="map-canvas"></div>
                 <div id="results" class="panel">
