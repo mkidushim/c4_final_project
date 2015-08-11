@@ -8,7 +8,7 @@ var winner_array = [];
 var friend_array = [];
 var friend_list = "";
 var lunch_object;
-var user_info ={};
+var user_info = {};
 var colors = ["#B8D430", "#3AB745", "#029990", "#3501CB",
     "#2E2C75", "#673A7E", "#CC0071", "#F80120",
     "#F35B20", "#FB9A00", "#FFCC00", "#FEF200"
@@ -74,7 +74,8 @@ function send_food_request() {
             });
             google.maps.event.addListenerOnce(map_o, 'idle', function() {
                 draw();
-                $('#wheelcanvas').before('<button type="button" class="edit col-md-3" onclick="spin();" style="float: left;">Spin</button');
+                $('#save').after('<button type="button" class="edit col-md-2 col-md-offset-1" onclick="spin();" style="float: left;">Spin</button');
+
                 spin();
                 $('#results').show();
             });
@@ -215,7 +216,7 @@ function callback(results, status) {
 
 function callback_l(results, status, pagination) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < 11; i++) {
+        for (var i = 0; i < 6; i++) {
             createMarker_l(results[i]);
 
         }
@@ -639,11 +640,6 @@ function add_person_DOM_m() {
 }
 
 function add_person_DOM() {
-
-    if (first_add) {
-        $('#lunch_b').after('<button id="add_all" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
-        first_add = false;
-    }
     console.log("add_person_DOM called");
     var name = $('#name').val();
     var food = $('#food').val();
@@ -666,9 +662,65 @@ function add_person_DOM() {
             class: "list-group-item list-group-item-info"
         });
     var line = $("<br/>")
-    $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
-    add_person_object();
-
+    if (food === "" && name === "" && $('#range').val() === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Form Empty: Please Enter All Fields")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+    } else if (food === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Food Input Empty: Please enter the type of food or name of the restaurant.")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+        console.log("no food entered");
+        return
+    } else if (name === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Name Input Empty: Please enter your name or the name of a friend.")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+    }else if ($('#range').val() === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Range Input Empty: Please enter the radius in miles.")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+    } 
+    else {
+        if (first_add) {
+            $('#lunch_b').after('<button id="add_all" class="col-md-1" type="button">Random</button>')
+            first_add = false;
+        }
+        $('#info').append(append_name).append(append_food_response).append(append_range).append(line);
+        add_person_object();
+    }
 }
 
 function random_select() {
@@ -711,10 +763,10 @@ function random_select() {
     $('#info').append(append_friends);
 
     console.log('winner', rand);
-    var save_btn = $("<button onclick='save()' class='col-md-4 col-md-offset-1 edit'>Save</button>")
+    var save_btn = $("<button onclick='save()' id='save' class='col-md-4 col-md-offset-4 edit'>Save</button>")
     $('#info').append(append_name).append(append_food).append(append_range);
     if (save_on == true) {
-        $('#list').after(save_btn);
+        $('.clearfix').after(save_btn);
         save_on = false;
     }
 
@@ -940,10 +992,10 @@ function stopRotateWheel() {
     var arcd = arc * 180 / Math.PI;
     var index = Math.floor((360 - degrees % 360) / arcd);
     ctx.save();
-    ctx.font = '14px segoe UI';
+    ctx.font = '20px segoe UI bold';
     var text = lunch_array[index]
     winner_array[0].restaurant = lunch_array[index];
-    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 420);
     ctx.restore();
     var rest = $(
         "<li>", {
@@ -1041,11 +1093,11 @@ $(document).ready(function() {
         console.log('button worked')
     });
     login_check();
-    if(document.getElementById('map-canvas')){
-    initialize();
+    if (document.getElementById('map-canvas')) {
+        initialize();
 
     }
-    
+
     $('body').on('touchstart click', '#add_all', function() {
         console.log('button works');
         $('#map-canvas').remove();

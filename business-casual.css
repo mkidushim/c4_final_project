@@ -25,7 +25,11 @@ body {
     color: black;
 }
 
-#wheelcanvas,#wheelcanvas_m {
+#wheelcanvas{
+position: relative;
+right: 35px;
+}
+#wheelcanvas_m {
     position: relative;
     right: 120px;
 }
@@ -44,6 +48,12 @@ button.edit {
     box-shadow: 1px 1px 10px 1px;
     background-color: inherit;
     margin-top: 10px;
+}
+button#lunch_b, button#add_all{
+   border-radius: 5px;
+    box-shadow: 1px 1px 10px 1px;
+    background-color: inherit; 
+
 }
 
 #validate,
@@ -258,7 +268,7 @@ footer p {
     top: 50%;
     margin-top: -135px;
     height: 280px;
-    width: 200px;
+    width: 140px;
     padding: 5px;
     z-index: 5;
     border: 1px solid #999;
@@ -275,7 +285,7 @@ footer p {
     padding: 0;
     margin: 0;
     height: 235px;
-    width: 200px;
+    width: 130px;
     overflow-y: scroll;
 }
 
