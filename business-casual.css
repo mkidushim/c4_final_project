@@ -82,7 +82,7 @@ button#lunch_b, button#add_all{
     height: 450px;
 }*/
 
-.list-group-item-success {
+#info > .list-group-item-success {
     list-style-type: none;
     top: 65px;
 }

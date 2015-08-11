@@ -25,6 +25,7 @@ var save_on = true;
 var placesList;
 var rest_on = false;
 var add_all_click = false, random_click = false;
+var add_all_click_m = false;
 
 function send_food_request() {
     //taking out dynamic values inputing static to test
@@ -273,7 +274,7 @@ function ajax_call() {
                 console.log('User information:  ', response)
                 to_landing();
                 user_info = response.first_name;
-                add_all_click = false, random_click = false;
+                add_all_click = false, add_all_click_m = false, random_click = false;
             } else if (response.success == false) {
                 $("#dialog-message").dialog({
                     modal: true,
@@ -441,8 +442,9 @@ function nav_lunch() {
             $('#name').val(user_info);
             $('#name_m').val(user_info);
             $('#top').show();
+            $('#top_m').show();
             first_add = true;
-            add_all_click = false, random_click = false;
+            add_all_click_m = false, add_all_click = false, random_click = false;
 
         }
     });
@@ -646,7 +648,8 @@ function add_person_DOM_m() {
     var line = $("<br/>")
     $('#info_m').append(append_name).append(append_food_response).append(append_range).append(line);
     add_person_object_m();
-
+    $('#name_m').val("");
+    $('#food_m').val("");
 }
 
 function add_person_DOM() {
@@ -1147,15 +1150,18 @@ $(document).ready(function() {
         // $('#list').addClass('winner');
     })
     $('body').on('click', '#add_all_m', function() {
-        console.log('button works');
+        
         // $('#map-canvas_m').remove();
         // $('#results').before($("<div id='map-canvas2_m'></div>"))
-       if (add_all_click = true){
-        return
-       }
-       else if (add_all_click = false){
+       
+      if (add_all_click_m == false){
         random_select_m();
         send_food_request_m();
+        add_all_click = true;
+        $('#top_m').hide();
+       }
+       else if (add_all_click_m === true){
+        console.log('button failed');
        }
         
     })
