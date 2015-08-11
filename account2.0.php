@@ -59,7 +59,7 @@ $result = mysqli_query($con, $query);
                         $user = $row['username'];
                         $user_id= $row['user_id'];
                         echo "<p>Username: ".$user."</p><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
-                        echo "<div class='col-lg-6 col-lg-offset-3 text-center'><hr class='col-xs-10 col-md-7 col-md-offset-2'><h2 class='col-md-6 col-md-offset-3 intro-text text-center'><strong>Edit Account</strong></h2><hr class='col-xs-10 col-md-7 col-md-offset-2'><form><input class='name col-md-6 col-md-offset-3 text-center' value='".$first_n."'><input class='last col-md-6 col-md-offset-3 text-center' value='".$last_n."'></input><br/><input class='email col-md-6 col-md-offset-3 text-center' value='".$email."'></input>";
+                        echo "<div class='col-lg-6 col-lg-offset-3 text-center'><hr class='col-xs-10 col-md-7 col-md-offset-2'><h2 class='col-md-6 col-md-offset-3 intro-text text-center'><strong>Edit Account</strong></h2><hr class='col-xs-10 col-md-7 col-md-offset-2'><form><input class='name col-md-6 col-md-offset-3 text-center' value='".$first_n."'><input class='last col-md-6 col-md-offset-3 text-center' value='".$last_n."'></input><br/><input class='email col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2 text-center' value='".$email."'></input>";
                     }
 
                     ?>
@@ -81,7 +81,7 @@ $result = mysqli_query($con, $query);
         </footer>
         <div id='dialog-message' class="col-xs-6 col-sm-10 col-md-5 col-lg-5"></div>
         <!-- Bootstrap Core JavaScript -->
-       <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+        <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
             <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
  -->

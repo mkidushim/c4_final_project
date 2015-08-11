@@ -24,7 +24,8 @@ var first_add = true;
 var save_on = true;
 var placesList;
 var rest_on = false;
-var add_all_click = false, random_click = false;
+var add_all_click = false,
+    random_click = false;
 var add_all_click_m = false;
 
 function send_food_request() {
@@ -620,10 +621,7 @@ function add_person_object() {
 
 function add_person_DOM_m() {
 
-    if (first_add) {
-        $('#lunch_bm').after('<button id="add_all_m" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
-        first_add = false;
-    }
+   
     console.log("add_person_DOM called");
     var name = $('#name_m').val();
     var food = $('#food_m').val();
@@ -646,10 +644,66 @@ function add_person_DOM_m() {
             class: "list-group-item list-group-item-info"
         });
     var line = $("<br/>")
-    $('#info_m').append(append_name).append(append_food_response).append(append_range).append(line);
-    add_person_object_m();
-    $('#name_m').val("");
-    $('#food_m').val("");
+    if (food === "" && name === "" && $('#range_m').val() === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Form Empty: Please Enter All Fields")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+    } else if (food === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Food Input Empty: Please enter the type of food or name of the restaurant.")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+        console.log("no food entered");
+        return
+    } else if (name === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Name Input Empty: Please enter your name or the name of a friend.")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+    } else if ($('#range_m').val() === "") {
+        $("#dialog-message").dialog({
+            modal: true,
+            draggable: false,
+            resizable: false,
+            width: 250,
+            title: "Error",
+            open: function() {
+                $(this).html("Range Input Empty: Please enter the radius in miles.")
+            },
+            dialogClass: 'ui-dialog-osx',
+        });
+    } else {
+        $('#info_m').append(append_name).append(append_food_response).append(append_range).append(line);
+        add_person_object_m();
+        $('#name_m').val("");
+        $('#food_m').val("");
+         if (first_add) {
+        $('#lunch_bm').after('<button id="add_all_m" class="edit col-xs-7 col-xs-offset-1 col-md-4 col-md-offset-3" type="button">Random</button>')
+        first_add = false;
+    }
+    }
 }
 
 function add_person_DOM() {
@@ -700,7 +754,7 @@ function add_person_DOM() {
             dialogClass: 'ui-dialog-osx',
         });
         console.log("no food entered");
-        return
+        
     } else if (name === "") {
         $("#dialog-message").dialog({
             modal: true,
@@ -713,7 +767,7 @@ function add_person_DOM() {
             },
             dialogClass: 'ui-dialog-osx',
         });
-    }else if ($('#range').val() === "") {
+    } else if ($('#range').val() === "") {
         $("#dialog-message").dialog({
             modal: true,
             draggable: false,
@@ -725,8 +779,7 @@ function add_person_DOM() {
             },
             dialogClass: 'ui-dialog-osx',
         });
-    } 
-    else {
+    } else {
         if (first_add == true) {
             $('#lunch_b').after('<button id="add_all" class="col-md-1" type="button">Random</button>')
             first_add = false;
@@ -776,404 +829,400 @@ function random_select() {
             text: "Friends: " + friend_list,
             class: "list-group-item list-group-item-success text-center"
         });
+        $('#info').append(append_friends);
 
-    $('#info').append(append_friends);
-
-    console.log('winner', rand);
-    var save_btn = $("<button onclick='save()' id='save' class='col-md-4 col-md-offset-4 edit'>Save</button>")
-    $('#info').append(append_name).append(append_food).append(append_range);
-    if (save_on == true) {
-        $('.clearfix').after(save_btn);
-        save_on = false;
-    }
-
-}
-
-function random_select_m() {
-    $('#info_m > li').remove();
-    var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
-
-    winner_array.push(rand);
-    var append_name = $(
-        "<li>", {
-            text: "Winner: " + rand.name_m,
-            class: "list-group-item list-group-item-success text-center"
-        });
-    var append_food = $(
-        "<li>", {
-            text: "Food: " + rand.food_m,
-            class: "list-group-item list-group-item-success text-center"
-        });
-    var append_range = $(
-        "<li>", {
-            text: "Range: " + rand.range_m,
-            class: "list-group-item list-group-item-success text-center"
-        });
-    for (var i = 0; i < lunch_appoint_array.length; i++) {
-        if (lunch_appoint_array[i].name_m === rand.name_m) {
-            console.log(lunch_appoint_array[i])
-
-        } else {
-            console.log(lunch_appoint_array[i].name_m)
-            friend_list += lunch_appoint_array[i].name_m + " ";
-            winner_array[0].friend = friend_list
-
+        console.log('winner', rand);
+        var save_btn = $("<button onclick='save()' id='save' class='col-md-4 col-md-offset-4 edit'>Save</button>")
+        $('#info').append(append_name).append(append_food).append(append_range);
+        if (save_on == true) {
+            $('.clearfix').after(save_btn);
+            save_on = false;
         }
 
     }
-    var append_friends = $(
-        "<li>", {
-            text: "Friends: " + friend_list,
-            class: "list-group-item list-group-item-success text-center"
-        });
 
-    $('#info_m').append(append_friends);
+    function random_select_m() {
+        $('#info_m > li').remove();
+        var rand = lunch_appoint_array[Math.floor(Math.random() * lunch_appoint_array.length)];
 
-    console.log('winner', rand);
-    var save_btn = $("<button onclick='save_m()' class='col-xs-5 col-xs-offset-3 edit'>Save</button>")
-    $('#info_m').append(append_name).append(append_food).append(append_range);
-    if (save_on == true) {
-        $('.clearfix').after(save_btn);
-        save_on = false;
-    }
+        winner_array.push(rand);
+        var append_name = $(
+            "<li>", {
+                text: "Winner: " + rand.name_m,
+                class: "list-group-item list-group-item-success text-center"
+            });
+        var append_food = $(
+            "<li>", {
+                text: "Food: " + rand.food_m,
+                class: "list-group-item list-group-item-success text-center"
+            });
+        var append_range = $(
+            "<li>", {
+                text: "Range: " + rand.range_m,
+                class: "list-group-item list-group-item-success text-center"
+            });
+        for (var i = 0; i < lunch_appoint_array.length; i++) {
+            if (lunch_appoint_array[i].name_m === rand.name_m) {
+                console.log(lunch_appoint_array[i])
 
-}
+            } else {
+                console.log(lunch_appoint_array[i].name_m)
+                friend_list += lunch_appoint_array[i].name_m + " ";
+                winner_array[0].friend = friend_list
 
-function draw() {
-    drawRouletteWheel();
-}
-
-function draw_m() {
-    drawRouletteWheel_m();
-}
-
-function drawRouletteWheel() {
-    var canvas = document.getElementById("wheelcanvas");
-    if (canvas.getContext) {
-        var outsideRadius = 120;
-        var textRadius = 130;
-        var insideRadius = 80;
-        ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, 500, 500);
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.font = 'bold 10px segoe UI';
-        for (var i = 0; i < 6; i++) {
-            var angle = startAngle + i * arc;
-            ctx.fillStyle = colors[i];
-            ctx.beginPath();
-            ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
-            ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
-            ctx.stroke();
-            ctx.fill();
-            ctx.save();
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
-            ctx.shadowBlur = 0;
-            // ctx.shadowColor = "black";
-            ctx.fillStyle = "black";
-            ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
-            ctx.rotate(angle + arc / 2 + Math.PI / 2);
-            var text = lunch_array[i];
-            ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
-            ctx.restore();
-        }
-        //Draw Arrow
-        ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-        ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-        ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-        ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
-        ctx.fill();
-    }
-}
-
-function drawRouletteWheel_m() {
-    var canvas = document.getElementById("wheelcanvas_m");
-    if (canvas.getContext) {
-        var outsideRadius = 120;
-        var textRadius = 130;
-        var insideRadius = 80;
-        ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, 500, 500);
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.font = 'bold 10px segoe UI';
-        for (var i = 0; i < 6; i++) {
-            var angle = startAngle + i * arc;
-            ctx.fillStyle = colors[i];
-            ctx.beginPath();
-            ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
-            ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
-            ctx.stroke();
-            ctx.fill();
-            ctx.save();
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
-            ctx.shadowBlur = 0;
-            // ctx.shadowColor = "black";
-            ctx.fillStyle = "black";
-            ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
-            ctx.rotate(angle + arc / 2 + Math.PI / 2);
-            var text = lunch_array[i];
-            ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
-            ctx.restore();
-        }
-        //Draw Arrow
-        ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-        ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-        ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-        ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-        ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
-        ctx.fill();
-    }
-}
-
-function new_user() {
-    $.ajax({
-        url: 'account_create.html',
-        method: "POST",
-        dataType: 'html',
-        crossDomain: true,
-        success: function(response) {
-            // $('body').on('click', '#validate',function(){
-            //     validation();
-            // })
-            $('.main_content').html(response);
-        }
-    });
-}
-
-function validation() {
-    var user_email = $('#N_user_email').val();
-    $.ajax({
-        url: 'validate.php',
-        method: "POST",
-        data: {
-            username: $('#N_user_name').val(),
-            email: user_email,
-            firstname: $('#N_first_name').val(),
-            lastname: $('#N_last_name').val(),
-            password: $('#N_password1').val(),
-
-        },
-        dataType: 'JSON',
-        crossDomain: true,
-        success: function(response) {
-            if (response.success == true) {
-                var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly please login.");
-                $('body').append(div);
-                console.log('validation: ', response);
-            } else if (response.errors == true) {
-                var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
-                $('body').append(div);
-                console.log('validation failed:', response)
             }
 
         }
-    });
-}
+        var append_friends = $(
+            "<li>", {
+                text: "Friends: " + friend_list,
+                class: "list-group-item list-group-item-success text-center"
+            });
 
-function spin() {
-    spinAngleStart = Math.random() * 10 + 10;
-    spinTime = 0;
-    spinTimeTotal = Math.random() * 3 + 4 * 1000;
-    rotateWheel();
-}
+        $('#info_m').append(append_friends);
 
-function rotateWheel() {
-    spinTime += 20;
-    if (spinTime >= spinTimeTotal) {
-        stopRotateWheel();
-        return;
-    }
-    var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-    startAngle += (spinAngle * Math.PI / 180);
-    drawRouletteWheel();
-    spinTimeout = setTimeout('rotateWheel()', 30);
-}
-
-function stopRotateWheel() {
-    clearTimeout(spinTimeout);
-    var degrees = startAngle * 180 / Math.PI + 90;
-    var arcd = arc * 180 / Math.PI;
-    var index = Math.floor((360 - degrees % 360) / arcd);
-    ctx.save();
-    ctx.font = '20px segoe UI bold';
-    var text = lunch_array[index]
-    winner_array[0].restaurant = lunch_array[index];
-    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 420);
-    ctx.restore();
-    var rest = $(
-        "<li>", {
-            text: "Restaurant: " + winner_array[0].restaurant,
-            class: "list-group-item list-group-item-success text-center"
-        });
-    if (rest_on = false) {
-        $('#info').append(rest);
-        rest_on = true;
-    }
-}
-
-function easeOut(t, b, c, d) {
-    var ts = (t /= d) * t;
-    var tc = ts * t;
-    return b + c * (tc + -3 * ts + 3 * t);
-}
-
-function spin_m() {
-    spinAngleStart = Math.random() * 10 + 10;
-    spinTime = 0;
-    spinTimeTotal = Math.random() * 3 + 4 * 1000;
-    rotateWheel_m();
-}
-
-function rotateWheel_m() {
-    spinTime += 30;
-    if (spinTime >= spinTimeTotal) {
-        stopRotateWheel_m();
-        return;
-    }
-    var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-    startAngle += (spinAngle * Math.PI / 180);
-    drawRouletteWheel_m();
-    spinTimeout = setTimeout('rotateWheel_m()', 30);
-}
-
-function stopRotateWheel_m() {
-    clearTimeout(spinTimeout);
-    var degrees = startAngle * 180 / Math.PI + 90;
-    var arcd = arc * 180 / Math.PI;
-    var index = Math.floor((360 - degrees % 360) / arcd);
-    ctx.save();
-    ctx.font = '14px segoe UI';
-    var text = lunch_array[index]
-    winner_array[0].restaurant = lunch_array[index];
-    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
-    ctx.restore();
-    var rest = $(
-        "<li>", {
-            text: "Restaurant: " + winner_array[0].restaurant,
-            class: "list-group-item list-group-item-success text-center"
-        });
-    if (rest_on = false) {
-        $('#info_m').append(rest);
-        rest_on = true;
-    }
-}
-
-function easeOut_m(t, b, c, d) {
-    var ts = (t /= d) * t;
-    var tc = ts * t;
-    return b + c * (tc + -3 * ts + 3 * t);
-}
-$(document).ready(function() {
-
-    $('body').on('click', '#login_page', function() {
-        $('.alert.alert-danger').remove();
-        $('.alert.alert-success').remove();
-        logout_ajax();
-    })
-    $('body').on('click', '#validate', function() {
-            $('.alert.alert-danger').remove();
-            validation();
-            console.log('validate')
-        })
-        // $('body').on('click', '#new_user', function() {
-        //     console.log('new user');
-        //     new_user();
-        // })
-    $('body').on('touchstart click', '.home', function() {
-
-        login_check();
-        lunch_appoint_array = [];
-        winner_array = [];
-    })
-    $('body').on('touchstart click', '.lunch', function() {
-        nav_lunch();
-    })
-    $('body').on('touchstart click', '.account', function() {
-        nav_edit();
-    })
-    $('form').on('click', '#login', function() {
-        ajax_call();
-        console.log('button worked')
-    });
-    login_check();
-    if (document.getElementById('map-canvas')) {
-        initialize();
-
-    }
-    $('body').on('touchstart click', '#new_user', function(){
-        console.log('new user button working')
-        new_user();
-    })
-    $('body').on('touchstart click', '#lunch_b', function() {
-        if(random_click == false){
-             add_person_DOM();
+        console.log('winner', rand);
+        var save_btn = $("<button onclick='save_m()' class='col-xs-5 col-xs-offset-3 edit'>Save</button>")
+        $('#info_m').append(append_name).append(append_food).append(append_range);
+        if (save_on == true) {
+            $('.clearfix').after(save_btn);
+            save_on = false;
         }
-       else if (random_click == true) {
-        console.log('no go');
-        return
-       }
-    });
-    $('body').on('touchstart click', '#add_all', function() {
-        
-        
-       if (add_all_click === false){
-        $('#map-canvas').remove();
-        $('#results').before($("<div id='map-canvas2'></div>"))
-        random_select();
-        send_food_request();
-        $('#list').addClass('winner');
-        add_all_click = true;
-        random_click = true;
-       }
-       else if (add_all_click === true){
-        console.log('button works');
-        return
-       }
-        // $('#map-canvas').remove();
-        // $('#results').before($("<div id='map-canvas2'></div>"))
-        // random_select();
-        // send_food_request();
-        // $('#list').addClass('winner');
+
+    }
+
+    function draw() {
+        drawRouletteWheel();
+    }
+
+    function draw_m() {
+        drawRouletteWheel_m();
+    }
+
+    function drawRouletteWheel() {
+        var canvas = document.getElementById("wheelcanvas");
+        if (canvas.getContext) {
+            var outsideRadius = 120;
+            var textRadius = 130;
+            var insideRadius = 80;
+            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 500, 500);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.font = 'bold 10px segoe UI';
+            for (var i = 0; i < 6; i++) {
+                var angle = startAngle + i * arc;
+                ctx.fillStyle = colors[i];
+                ctx.beginPath();
+                ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
+                ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+                ctx.stroke();
+                ctx.fill();
+                ctx.save();
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.shadowBlur = 0;
+                // ctx.shadowColor = "black";
+                ctx.fillStyle = "black";
+                ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                var text = lunch_array[i];
+                ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                ctx.restore();
+            }
+            //Draw Arrow
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
+            ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
+            ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
+            ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
+            ctx.fill();
+        }
+    }
+
+    function drawRouletteWheel_m() {
+        var canvas = document.getElementById("wheelcanvas_m");
+        if (canvas.getContext) {
+            var outsideRadius = 120;
+            var textRadius = 130;
+            var insideRadius = 80;
+            ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 500, 500);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.font = 'bold 10px segoe UI';
+            for (var i = 0; i < 6; i++) {
+                var angle = startAngle + i * arc;
+                ctx.fillStyle = colors[i];
+                ctx.beginPath();
+                ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
+                ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+                ctx.stroke();
+                ctx.fill();
+                ctx.save();
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.shadowBlur = 0;
+                // ctx.shadowColor = "black";
+                ctx.fillStyle = "black";
+                ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 250 + Math.sin(angle + arc / 2) * textRadius);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                var text = lunch_array[i];
+                ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                ctx.restore();
+            }
+            //Draw Arrow
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
+            ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
+            ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
+            ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
+            ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
+            ctx.fill();
+        }
+    }
+
+    function new_user() {
+        $.ajax({
+            url: 'account_create.html',
+            method: "POST",
+            dataType: 'html',
+            crossDomain: true,
+            success: function(response) {
+                // $('body').on('click', '#validate',function(){
+                //     validation();
+                // })
+                $('.main_content').html(response);
+            }
+        });
+    }
+
+    function validation() {
+        var user_email = $('#N_user_email').val();
+        $.ajax({
+            url: 'validate.php',
+            method: "POST",
+            data: {
+                username: $('#N_user_name').val(),
+                email: user_email,
+                firstname: $('#N_first_name').val(),
+                lastname: $('#N_last_name').val(),
+                password: $('#N_password1').val(),
+
+            },
+            dataType: 'JSON',
+            crossDomain: true,
+            success: function(response) {
+                if (response.success == true) {
+                    var div = $('<div>').addClass('alert alert-success col-md-12').html("Account Created Successfuly please login.");
+                    $('body').append(div);
+                    console.log('validation: ', response);
+                } else if (response.errors == true) {
+                    var div = $('<div>').addClass('alert alert-danger col-md-12').html("Username already in use!");
+                    $('body').append(div);
+                    console.log('validation failed:', response)
+                }
+
+            }
+        });
+    }
+
+    function spin() {
+        spinAngleStart = Math.random() * 10 + 10;
+        spinTime = 0;
+        spinTimeTotal = Math.random() * 3 + 4 * 1000;
+        rotateWheel();
+    }
+
+    function rotateWheel() {
+        spinTime += 20;
+        if (spinTime >= spinTimeTotal) {
+            stopRotateWheel();
+            return;
+        }
+        var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+        startAngle += (spinAngle * Math.PI / 180);
+        drawRouletteWheel();
+        spinTimeout = setTimeout('rotateWheel()', 30);
+    }
+
+    function stopRotateWheel() {
+        clearTimeout(spinTimeout);
+        var degrees = startAngle * 180 / Math.PI + 90;
+        var arcd = arc * 180 / Math.PI;
+        var index = Math.floor((360 - degrees % 360) / arcd);
+        ctx.save();
+        ctx.font = '20px segoe UI bold';
+        var text = lunch_array[index]
+        winner_array[0].restaurant = lunch_array[index];
+        ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 420);
+        ctx.restore();
+        var rest = $(
+            "<li>", {
+                text: "Restaurant: " + winner_array[0].restaurant,
+                class: "list-group-item list-group-item-success text-center"
+            });
+        if (rest_on = false) {
+            $('#info').append(rest);
+            rest_on = true;
+        }
+    }
+
+    function easeOut(t, b, c, d) {
+        var ts = (t /= d) * t;
+        var tc = ts * t;
+        return b + c * (tc + -3 * ts + 3 * t);
+    }
+
+    function spin_m() {
+        spinAngleStart = Math.random() * 10 + 10;
+        spinTime = 0;
+        spinTimeTotal = Math.random() * 3 + 4 * 1000;
+        rotateWheel_m();
+    }
+
+    function rotateWheel_m() {
+        spinTime += 30;
+        if (spinTime >= spinTimeTotal) {
+            stopRotateWheel_m();
+            return;
+        }
+        var spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+        startAngle += (spinAngle * Math.PI / 180);
+        drawRouletteWheel_m();
+        spinTimeout = setTimeout('rotateWheel_m()', 30);
+    }
+
+    function stopRotateWheel_m() {
+        clearTimeout(spinTimeout);
+        var degrees = startAngle * 180 / Math.PI + 90;
+        var arcd = arc * 180 / Math.PI;
+        var index = Math.floor((360 - degrees % 360) / arcd);
+        ctx.save();
+        ctx.font = '14px segoe UI';
+        var text = lunch_array[index]
+        winner_array[0].restaurant = lunch_array[index];
+        ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+        ctx.restore();
+        var rest = $(
+            "<li>", {
+                text: "Restaurant: " + winner_array[0].restaurant,
+                class: "list-group-item list-group-item-success text-center"
+            });
+        if (rest_on = false) {
+            $('#info_m').append(rest);
+            rest_on = true;
+        }
+    }
+
+    function easeOut_m(t, b, c, d) {
+        var ts = (t /= d) * t;
+        var tc = ts * t;
+        return b + c * (tc + -3 * ts + 3 * t);
+    }
+    $(document).ready(function() {
+
+        $('body').on('click', '#login_page', function() {
+            $('.alert.alert-danger').remove();
+            $('.alert.alert-success').remove();
+            logout_ajax();
+        })
+        $('body').on('click', '#validate', function() {
+                $('.alert.alert-danger').remove();
+                validation();
+                console.log('validate')
+            })
+            // $('body').on('click', '#new_user', function() {
+            //     console.log('new user');
+            //     new_user();
+            // })
+        $('body').on('touchstart click', '.home', function() {
+
+            login_check();
+            lunch_appoint_array = [];
+            winner_array = [];
+        })
+        $('body').on('touchstart click', '.lunch', function() {
+            nav_lunch();
+        })
+        $('body').on('touchstart click', '.account', function() {
+            nav_edit();
+        })
+        $('form').on('click', '#login', function() {
+            ajax_call();
+            console.log('button worked')
+        });
+        login_check();
+        if (document.getElementById('map-canvas')) {
+            initialize();
+
+        }
+        $('body').on('touchstart click', '#new_user', function() {
+            console.log('new user button working')
+            new_user();
+        })
+        $('body').on('touchstart click', '#lunch_b', function() {
+            if (random_click == false) {
+                add_person_DOM();
+            } else if (random_click == true) {
+                console.log('no go');
+                return
+            }
+        });
+        $('body').on('touchstart click', '#add_all', function() {
+
+
+            if (add_all_click === false) {
+                $('#map-canvas').remove();
+                $('#results').before($("<div id='map-canvas2'></div>"))
+                random_select();
+                send_food_request();
+                $('#list').addClass('winner');
+                add_all_click = true;
+                random_click = true;
+            } else if (add_all_click === true) {
+                console.log('button works');
+                return
+            }
+            // $('#map-canvas').remove();
+            // $('#results').before($("<div id='map-canvas2'></div>"))
+            // random_select();
+            // send_food_request();
+            // $('#list').addClass('winner');
+        })
+        $('body').on('click', '#add_all_m', function() {
+
+            // $('#map-canvas_m').remove();
+            // $('#results').before($("<div id='map-canvas2_m'></div>"))
+
+            if (add_all_click_m == false) {
+                random_select_m();
+                send_food_request_m();
+                add_all_click = true;
+                $('#top_m').hide();
+            } else if (add_all_click_m === true) {
+                console.log('button failed');
+            }
+
+        })
+        $('body').on('click', '#add_map', function() {
+            draw();
+            $('#main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
+        })
+        $('body').on('click', '#add_rest_names', function() {
+            save();
+        })
+        $('body').on('touchstart click', '.logout', function() {
+            console.log('logout btn')
+            logout();
+        })
     })
-    $('body').on('click', '#add_all_m', function() {
-        
-        // $('#map-canvas_m').remove();
-        // $('#results').before($("<div id='map-canvas2_m'></div>"))
-       
-      if (add_all_click_m == false){
-        random_select_m();
-        send_food_request_m();
-        add_all_click = true;
-        $('#top_m').hide();
-       }
-       else if (add_all_click_m === true){
-        console.log('button failed');
-       }
-        
-    })
-    $('body').on('click', '#add_map', function() {
-        draw();
-        $('#main_content').append('<input type="button" value="spin" onclick="spin();" style="float: left;">');
-    })
-    $('body').on('click', '#add_rest_names', function() {
-        save();
-    })
-    $('body').on('touchstart click', '.logout', function() {
-        console.log('logout btn')
-        logout();
-    })
-})
