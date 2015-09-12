@@ -173,7 +173,10 @@ hr {
     font-weight: 400;
     letter-spacing: 1px;
 }
-
+.intro-text_small {
+    font-size: .75em;
+    font-weight: 200;
+}
 .img-border {
     float: none;
     margin: 0 auto 0;
