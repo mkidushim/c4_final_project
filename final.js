@@ -450,7 +450,22 @@ function nav_lunch() {
         }
     });
 }
+function nav_about() {
+    $.ajax({
+        url: 'about.html',
+        method: 'POST',
+        dataType: 'html',
+        cache: false,
+        success: function(response) {
+            $('body').html(response);            
+            $('#top').show();
+            $('#top_m').show();
+            first_add = true;
+            add_all_click_m = false, add_all_click = false, random_click = false;
 
+        }
+    });
+}
 function logout_ajax() {
     $.ajax({
         url: 'login.html',
@@ -1153,6 +1168,9 @@ function random_select() {
         })
         $('body').on('touchstart click', '.lunch', function() {
             nav_lunch();
+        })
+        $('body').on('touchstart click', '.about', function() {
+            nav_about();
         })
         $('body').on('touchstart click', '.account', function() {
             nav_edit();
