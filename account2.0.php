@@ -43,7 +43,7 @@ $result = mysqli_query($con, $query);
     </nav>
     <div class="container">
         <div class="row">
-            <div class="box">
+            <div class="box col-md-12">
                 <div class='col-lg-6 col-lg-offset-3 text-center'>
                     <hr>
                     <h2 class="intro-text text-center">
@@ -61,8 +61,8 @@ $result = mysqli_query($con, $query);
                         $email = $row['email'];
                         $user = $row['username'];
                         $user_id= $row['user_id'];
-                        echo "<p>Username: ".$user."</p><p class='col-xs-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
-                        echo "<div class='col-lg-6 col-lg-offset-3 text-center'><hr class='col-xs-10 col-md-7 col-md-offset-2'><h2 class='col-md-6 col-md-offset-3 intro-text text-center'><strong>Edit Account</strong></h2><hr class='col-xs-10 col-md-7 col-md-offset-2'><form><input class='name col-md-6 col-md-offset-3 text-center' value='".$first_n."'><input class='last col-md-6 col-md-offset-3 text-center' value='".$last_n."'></input><br/><input class='email col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2 text-center' value='".$email."'></input>";
+                        echo "<p>Username: ".$user."</p><p class='col-xs-12 col-sm-12 col-lg-12 col-md-12'>First Name: ".$first_n."</p><br><p class='col-xs-12 col-md-12'>Last Name: ".$last_n."</p><br/><p class='col-xs-12 col-md-12'>E-mail: ".$email."</p></div></div>";
+                        echo "<div class='col-lg-6 col-lg-offset-3 text-center'><hr class='col-xs-10 col-md-6 col-md-offset-3'><h2 class='col-md-6 col-md-offset-3 intro-text text-center'><strong>Edit Account</strong></h2><hr class='col-xs-10 col-md-6 col-md-offset-3'><form><input class='name col-md-6 col-md-offset-3 text-center' value='".$first_n."'><input class='last col-md-6 col-md-offset-3 text-center' value='".$last_n."'></input><br/><input class='email col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2 text-center' value='".$email."'></input>";
                     }
 
                     ?>
