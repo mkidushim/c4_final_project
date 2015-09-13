@@ -10,6 +10,9 @@ ol > li {
     list-style-position: inside;
     
 }
+.list-group.about li{
+text-align: center;
+}
 .create {
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px;
